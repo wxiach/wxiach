@@ -1,0 +1,35 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+import { SITE_TTITLE, SITE_DESCRIPTION, AUTHOR } from "../consts";
+
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("post")).sort(
+	(a, b) => a.data.date.valueOf() - b.data.date.valueOf(),
+);
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TTITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header title={SITE_TTITLE} />
+		<main>
+			{
+				posts.map((post) => (
+					<li>
+						<a href={`/post/${post.slug}/`}>
+							<h2>{post.data.title}</h2>
+						</a>
+					</li>
+				))
+			}
+		</main>
+		<Footer author={AUTHOR} />
+	</body>
+</html>
