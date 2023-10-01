@@ -1,11 +1,92 @@
 ---
+import { Image } from "astro:assets";
+import sun from "../assets/sun.svg";
+import moon from "../assets/moon.svg";
+
 interface Props {
-    title: string;
+  title: string;
 }
 
 const { title } = Astro.props;
 ---
 
-<div>
-    <h1>{title}</h1>
+<div class="h-2"></div>
+<div class="backdrop-blur bg-opacity-60 w-full sticky top-0">
+  <div class="max-w-screen-lg m-auto h-16 flex justify-between items-center">
+    <h1 class="text-3xl">{title}</h1>
+    <div id="toggle-color-scheme" class="h-6 w-6 cursor-pointer"></div>
+  </div>
 </div>
+
+<script>
+  const DARK_MODE_QUERY = "(prefers-color-scheme: dark)";
+  const MOTION_REDUCTION_QUERY = "(prefers-reduced-motion: reduce)";
+
+  const systemPrefersDark = window.matchMedia(DARK_MODE_QUERY).matches;
+  const systemPrefersReduce = window.matchMedia(MOTION_REDUCTION_QUERY).matches;
+
+  const userPrefersDark =
+    localStorage.theme === "dark" ||
+    (!("theme" in localStorage) && systemPrefersDark);
+  document.documentElement.classList[userPrefersDark ? "add" : "remove"](
+    "dark",
+  );
+
+  const toggleColorScheme = (event: MouseEvent) => {
+    const isDark = document.documentElement.classList.contains("dark");
+
+    // Browser doesn't support view transitions or user prefers reduced motion
+    if (!document.startViewTransition || systemPrefersReduce) {
+      document.documentElement.classList.toggle("dark");
+      localStorage.theme = isDark ? "light" : "dark";
+      return;
+    }
+
+    const { clientX: x, clientY: y } = event;
+    const endRadius = Math.hypot(
+      Math.max(x, innerWidth - x),
+      Math.max(y, innerHeight - y),
+    );
+
+    const transition = document.startViewTransition(() => {
+      document.documentElement.classList.toggle("dark");
+      localStorage.theme = isDark ? "light" : "dark";
+    });
+
+    transition.ready.then(() => {
+      const clipPath = [
+        `circle(0px at ${x}px ${y}px)`,
+        `circle(${endRadius}px at ${x}px ${y}px)`,
+      ];
+
+      document.documentElement.animate(
+        {
+          clipPath: isDark ? [...clipPath].reverse() : clipPath,
+        },
+        {
+          duration: 400,
+          easing: "ease-in",
+          pseudoElement: isDark
+            ? "::view-transition-old(root)"
+            : "::view-transition-new(root)",
+        },
+      );
+    });
+  };
+
+  const button = document.getElementById("toggle-color-scheme");
+  button?.addEventListener("click", toggleColorScheme);
+</script>
+
+<style>
+  #toggle-color-scheme {
+    background-image: url(../assets/moon.svg);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  html.dark #toggle-color-scheme {
+    background-image: url(../assets/sun.svg);
+  }
+</style>

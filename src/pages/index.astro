@@ -8,28 +8,94 @@ import { SITE_TTITLE, SITE_DESCRIPTION, AUTHOR } from "../consts";
 import { getCollection } from "astro:content";
 
 const posts = (await getCollection("post")).sort(
-	(a, b) => a.data.date.valueOf() - b.data.date.valueOf(),
+  (a, b) => a.data.date.valueOf() - b.data.date.valueOf(),
 );
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<BaseHead title={SITE_TTITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header title={SITE_TTITLE} />
-		<main>
-			{
-				posts.map((post) => (
-					<li>
-						<a href={`/post/${post.slug}/`}>
-							<h2>{post.data.title}</h2>
-						</a>
-					</li>
-				))
-			}
-		</main>
-		<Footer author={AUTHOR} />
-	</body>
+  <head>
+    <BaseHead title={SITE_TTITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body class="h-screen bg-white dark:bg-black text-black dark:text-white">
+    <Header title={SITE_TTITLE} />
+    <main class="max-w-screen-lg m-auto">
+      {
+        posts.map((post) => (
+          <li>
+            <a href={`/post/${post.slug}/`}>
+              <h2>{post.data.title}</h2>
+            </a>
+          </li>
+        ))
+      }
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+      <h1>hello world</h1>
+    </main>
+    <Footer author={AUTHOR} />
+  </body>
 </html>
