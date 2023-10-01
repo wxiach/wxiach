@@ -3,6 +3,8 @@ import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 
+import "lxgw-wenkai-lite-webfont";
+
 import { SITE_TTITLE, SITE_DESCRIPTION, AUTHOR } from "../consts";
 
 import { getCollection } from "astro:content";
@@ -29,7 +31,7 @@ const posts = (await getCollection("post")).sort(
           </li>
         ))
       }
-      <h1>hello world</h1>
+      <h1>落霞与孤鹜齐飞，秋水共长天一色</h1>
       <h1>hello world</h1>
       <h1>hello world</h1>
       <h1>hello world</h1>
