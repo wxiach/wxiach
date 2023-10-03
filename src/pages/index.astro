@@ -1,11 +1,5 @@
 ---
-import BaseHead from "../components/BaseHead.astro";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
-
-import "lxgw-wenkai-lite-webfont";
-
-import { SITE_TTITLE, SITE_DESCRIPTION, AUTHOR } from "../consts";
+import BaseLayout from "../layouts/BaseLayout.astro";
 
 import { getCollection } from "astro:content";
 
@@ -14,90 +8,20 @@ const posts = (await getCollection("post")).sort(
 );
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <BaseHead title={SITE_TTITLE} description={SITE_DESCRIPTION} />
-  </head>
-  <body class="h-screen bg-white dark:bg-black text-black dark:text-white">
-    <Header title={SITE_TTITLE} />
-    <main class="max-w-screen-lg m-auto">
-      {
-        posts.map((post) => (
-          <li>
-            <a href={`/post/${post.slug}/`}>
-              <h2>{post.data.title}</h2>
-            </a>
-          </li>
-        ))
-      }
-      <h1>落霞与孤鹜齐飞，秋水共长天一色</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-      <h1>hello world</h1>
-    </main>
-    <Footer author={AUTHOR} />
-  </body>
-</html>
+<BaseLayout>
+  <div class="container" slot="main">
+    {
+      posts.map((post) => (
+        <li class="list-none flex flex-col py-4  ">
+          <div class="text-sm text-[#a7a9be] before:content-['#']">
+            {post.data.category}
+          </div>
+          <a href={`/post/${post.slug}/`}>
+            <h1 class="text-2xl">{post.data.title}</h1>
+          </a>
+          <div class="text-sm text-[#a7a9be]">{post.data.date}</div>
+        </li>
+      ))
+    }
+  </div>
+</BaseLayout>
