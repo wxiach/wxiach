@@ -1,4 +1,6 @@
 ---
+import { SOCIAL } from "@consts";
+
 interface Props {
   title: string;
 }
@@ -12,8 +14,8 @@ const { title } = Astro.props;
   <div class="flex justify-between items-center">
     <a href="/"><h1 class="text-xl font-bold">{title}</h1></a>
     <div class="flex items-center gap-4">
-      <a href="">Github</a>
-      <a href="">Twitter</a>
+      <a href={SOCIAL.GITHUB} target="_blank">Github</a>
+      <a href={SOCIAL.TWITTER} target="_blank">Twitter</a>
       <div
         transition:persist
         id="toggle-color-scheme"
