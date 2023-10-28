@@ -1,11 +1,13 @@
-export const SITE = {
-    WEBSITE: "blog.weixiaochen.cn",
-    TITLE: "wxiach",
-    DESCRIPTION: "",
-    AUTHOR: "wxiach",
+export const site = {
+    website: "blog.weixiaochen.cn",
+    title: "wxiach",
+    description: "",
+    author: "wxiach",
 }
 
-export const SOCIAL = {
-    GITHUB: "https://github.com/wxiach",
-    TWITTER: "https://twitter.com/aozTLnIBES1renM",
+export const email = "weixiaochen0914@gmail.com"
+
+export const social = {
+    github: "https://github.com/wxiach",
+    twitter: "https://twitter.com/aozTLnIBES1renM",
 }
