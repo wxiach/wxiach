@@ -14,7 +14,7 @@
       localStorage.theme === "dark" ||
       (!("theme" in localStorage) && systemPrefersDark);
     document.documentElement.classList[userPrefersDark ? "add" : "remove"](
-      "dark",
+      "dark"
     );
   };
 

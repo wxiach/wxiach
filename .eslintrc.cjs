@@ -1,18 +1,21 @@
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
   env: {
-    node: true,
     es2022: true,
     browser: true,
   },
-  extends: ["eslint:recommended", "plugin:astro/recommended"],
+  extends: [
+    "eslint:recommended",
+    "plugin:astro/recommended",
+    "plugin:prettier/recommended",
+  ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: "latest",
     sourceType: "module",
   },
   rules: {
-    "max-len": ["error", { "code": 120 }]
+    "max-len": ["error", { code: 120 }],
   },
   overrides: [
     {
