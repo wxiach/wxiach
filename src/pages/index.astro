@@ -1,10 +1,12 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import ColorSchemeToggle from "@components/ColorSchemeToggle.astro";
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 import { site } from "@consts";
 
-const posts = (await getCollection("post")).sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
+const posts: CollectionEntry<"post">[] = (await getCollection("post")).sort(
+  (a: CollectionEntry<"post">, b: CollectionEntry<"post">) => a.data.date.valueOf() - b.data.date.valueOf()
+);
 ---
 
 <BaseLayout>
@@ -22,7 +24,7 @@ const posts = (await getCollection("post")).sort((a, b) => a.data.date.valueOf()
       posts.map(post => (
         <li class="flex list-none flex-col py-4">
           <div class="text-sm text-[#a7a9be] before:content-['#']">{post.data.category}</div>
-          <a href={`/post/${post.slug}/`}>
+          <a href={`/post/${post.id}/`}>
             <h1 class="text-2xl">{post.data.title}</h1>
           </a>
           <div class="text-sm text-[#a7a9be]">{post.data.date}</div>
