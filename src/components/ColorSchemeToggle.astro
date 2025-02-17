@@ -2,20 +2,15 @@
 
 ---
 
-<div transition:persist id="toggle-color-scheme" class="h-5 w-5 cursor-pointer">
-</div>
+<div transition:persist id="toggle-color-scheme" class="h-5 w-5 cursor-pointer"></div>
 
 <script>
   const initialColorScheme = () => {
     const DARK_MODE_QUERY = "(prefers-color-scheme: dark)";
     const systemPrefersDark = window.matchMedia(DARK_MODE_QUERY).matches;
 
-    const userPrefersDark =
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) && systemPrefersDark);
-    document.documentElement.classList[userPrefersDark ? "add" : "remove"](
-      "dark"
-    );
+    const userPrefersDark = localStorage.theme === "dark" || (!("theme" in localStorage) && systemPrefersDark);
+    document.documentElement.classList[userPrefersDark ? "add" : "remove"]("dark");
   };
 
   initialColorScheme();
