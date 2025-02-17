@@ -4,16 +4,11 @@ import ColorSchemeToggle from "@components/ColorSchemeToggle.astro";
 import { getCollection } from "astro:content";
 import { site } from "@consts";
 
-const posts = (await getCollection("post")).sort(
-  (a, b) => a.data.date.valueOf() - b.data.date.valueOf()
-);
+const posts = (await getCollection("post")).sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
 ---
 
 <BaseLayout>
-  <div
-    slot="header"
-    class="max-w-screen-md mx-auto p-4 flex justify-between items-center"
-  >
+  <div slot="header" class="mx-auto flex max-w-screen-md items-center justify-between p-4">
     <a href="/">
       <h1 class="text-2xl font-bold text-black dark:text-white">
         {site.title}
@@ -24,11 +19,9 @@ const posts = (await getCollection("post")).sort(
 
   <div>
     {
-      posts.map((post) => (
-        <li class="list-none flex flex-col py-4  ">
-          <div class="text-sm text-[#a7a9be] before:content-['#']">
-            {post.data.category}
-          </div>
+      posts.map(post => (
+        <li class="flex list-none flex-col py-4">
+          <div class="text-sm text-[#a7a9be] before:content-['#']">{post.data.category}</div>
           <a href={`/post/${post.slug}/`}>
             <h1 class="text-2xl">{post.data.title}</h1>
           </a>
