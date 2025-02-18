@@ -1,7 +1,6 @@
 ---
 import { type CollectionEntry, getCollection, render } from "astro:content";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import ColorSchemeToggle from "@/components/ColorSchemeToggle.astro";
 import { site } from "@/consts";
 
 export async function getStaticPaths() {
@@ -25,7 +24,6 @@ const { Content } = await render(post);
         {site.title}
       </h1>
     </a>
-    <ColorSchemeToggle />
   </div>
 
   <article class="prose lg:prose-base dark:prose-invert">
