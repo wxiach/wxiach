@@ -1,8 +1,8 @@
 ---
-import BaseLayout from "@layouts/BaseLayout.astro";
-import ColorSchemeToggle from "@components/ColorSchemeToggle.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import ColorSchemeToggle from "@/components/ColorSchemeToggle.astro";
 import { getCollection, type CollectionEntry } from "astro:content";
-import { site } from "@consts";
+import { site } from "@/consts";
 
 const posts: CollectionEntry<"post">[] = (await getCollection("post")).sort(
   (a: CollectionEntry<"post">, b: CollectionEntry<"post">) => a.data.date.valueOf() - b.data.date.valueOf()
