@@ -1,15 +1,14 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
-import { getCollection, type CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
 import { site } from "@consts";
 import { ModeToggle } from "@components/ModeToggle";
 
-const posts: CollectionEntry<"post">[] = (await getCollection("post")).sort(
-  (a: CollectionEntry<"post">, b: CollectionEntry<"post">) =>
-    a.data.date.valueOf() - b.data.date.valueOf()
+const posts = (await getCollection("posts")).sort(
+  (a, b) => a.data.date.valueOf() - b.data.date.valueOf()
 );
 
-const musings = (await getCollection("musing")).sort(
+const musings = (await getCollection("musings")).sort(
   (a, b) => a.data.date.valueOf() - b.data.date.valueOf()
 );
 ---
