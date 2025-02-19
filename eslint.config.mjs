@@ -1,9 +1,6 @@
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
-  env: {
-    es2022: true,
-    browser: true,
-  },
+  env: { node: true, es2022: true, browser: true },
   extends: ["eslint:recommended", "plugin:astro/recommended", "plugin:prettier/recommended"],
   parser: "@typescript-eslint/parser",
   parserOptions: {
