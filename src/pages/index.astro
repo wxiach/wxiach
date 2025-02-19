@@ -3,6 +3,7 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { site } from "@consts";
 import { ModeToggle } from "@components/ModeToggle";
+import Musing from "@components/Musing.astro";
 
 const posts = (await getCollection("post")).sort(
   (a, b) => a.data.date.valueOf() - b.data.date.valueOf()
@@ -61,7 +62,9 @@ const musings = (await getCollection("musing")).sort(
           <div class="text-sm text-[#a7a9be]">
             {new Date(musing.data.date).toLocaleDateString()}
           </div>
-          <div>{musing.body}</div>
+          <div>
+            <Musing musing={musing} />
+          </div>
         </li>
       ))
     }
