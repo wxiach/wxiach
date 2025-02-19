@@ -5,4 +5,6 @@ const { musing } = Astro.props;
 const { Content } = await render(musing);
 ---
 
-<div><Content /></div>
+<article class="prose lg:prose-base dark:prose-invert">
+  <Content />
+</article>
