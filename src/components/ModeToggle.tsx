@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Moon, Sun } from "lucide-react";
-
 import { Button } from "@assets/components/ui/button";
 import {
   DropdownMenu,
@@ -8,14 +7,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@assets/components/ui/dropdown-menu";
+import { useThemeStore } from "stores/useThemeStore";
 
 export function ModeToggle() {
-  const [theme, setThemeState] = React.useState<"theme-light" | "dark" | "system">("theme-light");
-
-  React.useEffect(() => {
-    const isDarkMode = document.documentElement.classList.contains("dark");
-    setThemeState(isDarkMode ? "dark" : "theme-light");
-  }, []);
+  const { theme, setTheme } = useThemeStore();
 
   React.useEffect(() => {
     const isDark =
@@ -34,9 +29,9 @@ export function ModeToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setThemeState("theme-light")}>Light</DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setThemeState("dark")}>Dark</DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setThemeState("system")}>System</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("theme-light")}>Light</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("dark")}>Dark</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("system")}>System</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
