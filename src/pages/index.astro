@@ -8,6 +8,10 @@ const posts: CollectionEntry<"post">[] = (await getCollection("post")).sort(
   (a: CollectionEntry<"post">, b: CollectionEntry<"post">) =>
     a.data.date.valueOf() - b.data.date.valueOf()
 );
+
+const musings = (await getCollection("musing")).sort(
+  (a, b) => a.data.date.valueOf() - b.data.date.valueOf()
+);
 ---
 
 <script is:inline>
@@ -48,6 +52,17 @@ const posts: CollectionEntry<"post">[] = (await getCollection("post")).sort(
             <h1 class="text-2xl">{post.data.title}</h1>
           </a>
           <div class="text-sm text-[#a7a9be]">{post.data.date}</div>
+        </li>
+      ))
+    }
+
+    {
+      musings.map(musing => (
+        <li class="flex list-none flex-col py-4">
+          <div class="text-sm text-[#a7a9be]">
+            {new Date(musing.data.date).toLocaleDateString()}
+          </div>
+          <div>{musing.body}</div>
         </li>
       ))
     }
