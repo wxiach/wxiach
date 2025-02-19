@@ -1,13 +1,13 @@
 import * as React from "react";
 import { Moon, Sun } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@assets/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@assets/components/ui/dropdown-menu";
 
 export function ModeToggle() {
   const [theme, setThemeState] = React.useState<"theme-light" | "dark" | "system">("theme-light");
@@ -19,7 +19,8 @@ export function ModeToggle() {
 
   React.useEffect(() => {
     const isDark =
-      theme === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      theme === "dark" ||
+      (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
     document.documentElement.classList[isDark ? "add" : "remove"]("dark");
   }, [theme]);
 
