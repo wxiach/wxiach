@@ -4,14 +4,14 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import { site } from "@consts";
 
 export async function getStaticPaths() {
-  const posts = await getCollection("posts");
+  const posts = await getCollection("post");
   return posts.map(post => ({
     params: { slug: post.id },
     props: post,
   }));
 }
 
-type Props = CollectionEntry<"posts">;
+type Props = CollectionEntry<"post">;
 const post = Astro.props;
 const { title, date, category } = post.data;
 const { Content } = await render(post);
