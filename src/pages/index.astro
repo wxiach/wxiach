@@ -1,20 +1,20 @@
 ---
 import BaseLayout from "@/layouts/base-layout.astro";
-import { getCollection } from "astro:content";
-import { site } from "@/consts";
-import { ThemeToggle } from "@/components/theme-toggle";
-import Musing from "@/components/musing.astro";
-import { SiteAvatar } from "@/components/site-avatar";
+import { getCollection, type DataEntryMap } from "astro:content";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import Musing from "@/components/musing.astro";
 import NavigationMenus from "@/components/navigation-menus";
+import { SiteAvatar } from "@/components/site-avatar";
+import { site } from "@/consts";
 
-const posts = (await getCollection("post")).sort(
-  (a, b) => a.data.date.valueOf() - b.data.date.valueOf()
-);
+const getSortedCollectionSlice = async (collectionName: keyof DataEntryMap) => {
+  return (await getCollection(collectionName))
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+    .slice(0, 5);
+};
 
-const musings = (await getCollection("musing")).sort(
-  (a, b) => a.data.date.valueOf() - b.data.date.valueOf()
-);
+const posts = await getSortedCollectionSlice("post");
+const musings = await getSortedCollectionSlice("musing");
 ---
 
 <BaseLayout>
@@ -27,16 +27,13 @@ const musings = (await getCollection("musing")).sort(
       <SiteAvatar client:load />
       <div class="flex flex-col gap-y-1">
         <h1 class="text-2xl font-black">{site.title}</h1>
-        <p class="text-base text-[#a7a9be]">{site.description}</p>
+        <p class="text-base text-[#a7a9be]">{site.hitokoto}</p>
       </div>
     </div>
 
-    <div class="flex flex-col gap-y-4 text-base">
+    <div class="prose dark:prose-invert">
       <p>👋 Hi,</p>
-      <p>
-        Welcome to my site. I am a developer, creator, and designer. My blog documents my creative
-        process, shares my experiences, and explores various technologies.
-      </p>
+      <p>{site.introduction}</p>
     </div>
     <section class="flex flex-col gap-y-6">
       <div class="font-bold">Posts</div>
