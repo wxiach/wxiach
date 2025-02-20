@@ -24,7 +24,9 @@ const { Content } = await render(post);
       </h1>
     </a>
   </div>
-
+  <div onclick="(() => (history.length === 1) ? window.location = '/' : history.back())()">
+    go back
+  </div>
   <article class="prose lg:prose-base dark:prose-invert">
     <div class="mb-12">
       <h1 class="text-3xl">{title}</h1>

@@ -1,22 +1,30 @@
 ---
 import BaseLayout from "@/layouts/base-layout.astro";
 import { getCollection } from "astro:content";
+import Breadcrumbs from "@/components/breadcrumbs";
 
 const posts = await getCollection("post");
 const categories = [...new Set(posts.map(post => post.data.category))];
 ---
 
 <BaseLayout>
+  <Breadcrumbs items={[{ text: "Posts" }]} />
   <ul>
     {
       categories.map(category => (
         <li>
-          <a href={`/posts/categories/${category}`}>{category}</a>
+          <a href={`/posts/${category}`}>{category}</a>
         </li>
       ))
     }
   </ul>
   <ul>
-    {posts.map(post => <li>{post.data.title}</li>)}
+    {
+      posts.map(post => (
+        <li>
+          <a href={`/posts/${post.id}`}>{post.data.title}</a>
+        </li>
+      ))
+    }
   </ul>
 </BaseLayout>

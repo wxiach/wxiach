@@ -6,7 +6,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import Musing from "@/components/musing.astro";
 import { SiteAvatar } from "@/components/site-avatar";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
-import NavigationMenuBar from "@/components/navigation-menu-bar";
+import NavigationMenus from "@/components/navigation-menus";
 
 const posts = (await getCollection("post")).sort(
   (a, b) => a.data.date.valueOf() - b.data.date.valueOf()
@@ -39,7 +39,7 @@ const musings = (await getCollection("musing")).sort(
 <BaseLayout>
   <div slot="header" class="mx-auto mt-20 flex flex-col gap-y-8">
     <div class="flex justify-end gap-x-4">
-      <NavigationMenuBar client:load />
+      <NavigationMenus client:load />
       <ThemeToggle client:load />
     </div>
     <div class="flex gap-x-6">

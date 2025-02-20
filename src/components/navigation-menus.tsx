@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { nav } from "@/consts";
 
-const NavigationMenuBar = () => {
+const NavigationMenus = () => {
   return (
     <NavigationMenu>
       <NavigationMenuList>
@@ -20,4 +20,4 @@ const NavigationMenuBar = () => {
   );
 };
 
-export default NavigationMenuBar;
+export default NavigationMenus;
