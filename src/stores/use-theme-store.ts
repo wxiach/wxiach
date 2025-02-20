@@ -14,6 +14,6 @@ export const useThemeStore = create<ThemeStore>()(
       theme: "system" as Theme,
       setTheme: (theme: Theme) => set({ theme }),
     }),
-    { name: "theme-storage", storage: createJSONStorage(() => localStorage) }
+    { name: "theme", storage: createJSONStorage(() => localStorage) }
   )
 );
