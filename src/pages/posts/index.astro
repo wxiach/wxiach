@@ -1,5 +1,22 @@
 ---
+import BaseLayout from "@/layouts/base-layout.astro";
+import { getCollection } from "astro:content";
 
+const posts = await getCollection("post");
+const categories = [...new Set(posts.map(post => post.data.category))];
 ---
 
-<div>This is post</div>
+<BaseLayout>
+  <ul>
+    {
+      categories.map(category => (
+        <li>
+          <a href={`/posts/categories/${category}`}>{category}</a>
+        </li>
+      ))
+    }
+  </ul>
+  <ul>
+    {posts.map(post => <li>{post.data.title}</li>)}
+  </ul>
+</BaseLayout>

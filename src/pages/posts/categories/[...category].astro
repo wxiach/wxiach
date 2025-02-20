@@ -1,0 +1,22 @@
+---
+import BaseLayout from "@/layouts/base-layout.astro";
+import { getCollection } from "astro:content";
+export async function getStaticPaths() {
+  const posts = await getCollection("post");
+
+  const categories = [...new Set(posts.map(post => post.data.category))];
+
+  return categories.map(category => ({
+    params: { category },
+    props: { categoryPosts: posts.filter(post => post.data.category === category) },
+  }));
+}
+
+const { categoryPosts } = Astro.props;
+---
+
+<BaseLayout>
+  <ul>
+    {categoryPosts.map(post => <li>{post.data.title}</li>)}
+  </ul>
+</BaseLayout>
