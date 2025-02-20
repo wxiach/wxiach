@@ -1,7 +1,7 @@
 export const site = {
   website: "blog.weixiaochen.cn",
   title: "wxiach",
-  description: "",
+  description: "一个迷茫的小孩。",
   author: "wxiach",
 };
 

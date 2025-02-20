@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useThemeStore } from "@/stores/use-theme-store";
 
-export function ModeToggle() {
+export function ThemeToggle() {
   const { theme, setTheme } = useThemeStore();
 
   React.useEffect(() => {

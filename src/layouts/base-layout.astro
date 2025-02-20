@@ -1,21 +1,21 @@
 ---
 import BaseHead from "@/layouts/base-head.astro";
 import { site } from "@/consts";
-import "lxgw-wenkai-lite-webfont";
+import "lxgw-wenkai-screen-webfont";
 ---
 
 <html lang="en">
   <head>
     <BaseHead title={site.title} description={site.description} />
   </head>
-  <body class="h-screen bg-[#fffffe] text-[#0f0e17] dark:bg-[#0f0e17] dark:text-[#fffffe]">
-    <header class="sticky top-0 container mx-auto backdrop-blur-xl dark:border-white/5">
+  <body class="max-h-screen">
+    <header class="mx-auto max-w-screen-sm p-6">
       <slot name="header" />
     </header>
-    <main class="mx-auto max-w-screen-md p-4">
+    <main class="mx-auto max-w-screen-sm p-6">
       <slot />
     </main>
-    <footer class="mx-auto max-w-screen-md p-4">
+    <footer class="mx-auto max-w-screen-sm p-6">
       <slot name="footer" />
     </footer>
   </body>

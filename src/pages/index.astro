@@ -2,8 +2,10 @@
 import BaseLayout from "@/layouts/base-layout.astro";
 import { getCollection } from "astro:content";
 import { site } from "@/consts";
-import { ModeToggle } from "@/components/theme-toggle";
-import Musing from "@/components/Musing.astro";
+import { ThemeToggle } from "@/components/theme-toggle";
+import Musing from "@/components/musing.astro";
+import { SiteAvatar } from "@/components/site-avatar";
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
 
 const posts = (await getCollection("post")).sort(
   (a, b) => a.data.date.valueOf() - b.data.date.valueOf()
@@ -32,41 +34,62 @@ const musings = (await getCollection("musing")).sort(
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
   }
 </script>
-
+<!-- https://cdn.jsdelivr.net/gh/wxiach/image/8b4a768486bb65ffd2dcf727c7e7825c.jpeg -->
 <BaseLayout>
-  <div slot="header" class="mx-auto flex max-w-screen-md items-center justify-between p-4">
-    <a href="/">
-      <h1 class="text-2xl font-bold text-black dark:text-white">
-        {site.title}
-      </h1>
-    </a>
-    <ModeToggle client:load />
+  <div slot="header" class="mx-auto mt-20 flex flex-col gap-y-8">
+    <ThemeToggle client:load />
+    <div class="flex gap-x-6">
+      <SiteAvatar client:load />
+      <div class="flex flex-col gap-y-1">
+        <h1 class="text-2xl font-black">{site.title}</h1>
+        <p class="text-base text-[#a7a9be]">{site.description}</p>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-y-4 text-base">
+      <p>👋 Hi,</p>
+      <p>
+        Welcome to my site. I am a developer, creator, and designer. My blog documents my creative
+        process, shares my experiences, and explores various technologies.
+      </p>
+    </div>
   </div>
 
-  <div>
-    {
-      posts.map(post => (
-        <li class="flex list-none flex-col py-4">
-          <div class="text-sm text-[#a7a9be] before:content-['#']">{post.data.category}</div>
-          <a href={`/post/${post.id}/`}>
-            <h1 class="text-2xl">{post.data.title}</h1>
-          </a>
-          <div class="text-sm text-[#a7a9be]">{post.data.date}</div>
-        </li>
-      ))
-    }
+  <div class="flex flex-col gap-y-10">
+    <section class="flex flex-col gap-y-6">
+      <div class="text-xl font-bold">Posts</div>
+      <div class="flex flex-col gap-y-4">
+        {
+          posts.map(post => (
+            <li class="gap flex list-none flex-row items-center gap-x-6 text-center">
+              <span class="text-sm text-[#a7a9be]">{post.data.date.toLocaleDateString()}</span>
+              <a href={`/post/${post.id}/`}>
+                <h2 class="border-b-1 border-neutral-950 dark:border-neutral-50">
+                  {post.data.title}
+                </h2>
+              </a>
+            </li>
+          ))
+        }
+      </div>
+    </section>
 
-    {
-      musings.map(musing => (
-        <li class="flex list-none flex-col py-4">
-          <div class="text-sm text-[#a7a9be]">
-            {new Date(musing.data.date).toLocaleDateString()}
-          </div>
-          <div>
-            <Musing musing={musing} />
-          </div>
-        </li>
-      ))
-    }
+    <section class="flex flex-col gap-y-6">
+      <div class="text-xl font-bold">Musings</div>
+      <div class="flex flex-col gap-y-4">
+        {
+          musings.map(musing => (
+            <Card>
+              <CardHeader className="text-sm text-[#a7a9be]">
+                {musing.data.date.toLocaleDateString()}
+              </CardHeader>
+              <CardContent>
+                <Musing musing={musing} />
+              </CardContent>
+            </Card>
+          ))
+        }
+      </div>
+    </section>
   </div>
 </BaseLayout>
