@@ -8,23 +8,34 @@ const categories = [...new Set(posts.map(post => post.data.category))];
 ---
 
 <BaseLayout>
-  <Breadcrumbs items={[{ text: "Posts" }]} />
-  <ul>
-    {
-      categories.map(category => (
-        <li>
-          <a href={`/posts/${category}`}>{category}</a>
-        </li>
-      ))
-    }
-  </ul>
-  <ul>
-    {
-      posts.map(post => (
-        <li>
-          <a href={`/posts/${post.id}`}>{post.data.title}</a>
-        </li>
-      ))
-    }
-  </ul>
+  <div slot="header" class="mt-20">
+    <Breadcrumbs className="py-2" items={[{ text: "Posts" }]} />
+  </div>
+
+  <div class="flex flex-col gap-y-10">
+    <section class="flex gap-4">
+      {
+        categories.map(category => (
+          <span class="border-b-1 border-dashed text-sm text-neutral-600">#{category}</span>
+        ))
+      }
+    </section>
+    <section class="flex flex-col gap-y-6">
+      <div class="font-bold">Posts</div>
+      <div class="flex flex-col gap-y-4">
+        {
+          posts.map(post => (
+            <li class="gap flex list-none flex-row items-center gap-x-6 text-center">
+              <span class="text-sm text-[#a7a9be]">{post.data.date.toLocaleDateString()}</span>
+              <a href={`/posts/${post.id}/`}>
+                <h2 class="border-b-1 border-neutral-950 dark:border-neutral-50">
+                  {post.data.title}
+                </h2>
+              </a>
+            </li>
+          ))
+        }
+      </div>
+    </section>
+  </div>
 </BaseLayout>

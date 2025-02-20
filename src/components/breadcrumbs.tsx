@@ -12,23 +12,29 @@ export interface BreadcrumbsItem {
   href?: string;
 }
 
-const Breadcrumbs = (props: { items: BreadcrumbsItem[] }) => {
-  const { items } = props;
+interface BreadcrumbsProps {
+  items: BreadcrumbsItem[];
+  className?: string;
+}
+
+const Breadcrumbs = (props: BreadcrumbsProps) => {
   return (
-    <Breadcrumb>
+    <Breadcrumb className={props.className}>
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink href="/">Home</BreadcrumbLink>
         </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        {items.map((item, index) => (
-          <BreadcrumbItem key={index}>
-            {index < items.length - 1 ? (
-              <BreadcrumbLink href={item.href}>{item.text}</BreadcrumbLink>
-            ) : (
-              <BreadcrumbPage>{item.text}</BreadcrumbPage>
-            )}
-          </BreadcrumbItem>
+        {props.items.map((item, index) => (
+          <>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem key={index}>
+              {index < props.items.length - 1 ? (
+                <BreadcrumbLink href={item.href}>{item.text}</BreadcrumbLink>
+              ) : (
+                <BreadcrumbPage>{item.text}</BreadcrumbPage>
+              )}
+            </BreadcrumbItem>
+          </>
         ))}
       </BreadcrumbList>
     </Breadcrumb>

@@ -11,7 +11,7 @@ const NavigationMenus = () => {
     <NavigationMenu>
       <NavigationMenuList>
         {nav.map(item => (
-          <NavigationMenuItem>
+          <NavigationMenuItem key={item.name}>
             <NavigationMenuLink href={item.href}>{item.name}</NavigationMenuLink>
           </NavigationMenuItem>
         ))}

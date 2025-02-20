@@ -1,8 +1,9 @@
 ---
 import { getCollection, render } from "astro:content";
 import BaseLayout from "@/layouts/base-layout.astro";
-import { site } from "@/consts";
-
+import { cn } from "@/lib/utils";
+import { ChevronLeft } from "lucide-react";
+import { buttonVariants } from "@/components/ui/button";
 export async function getStaticPaths() {
   const posts = await getCollection("post");
   return posts.map(post => ({
@@ -17,21 +18,20 @@ const { Content } = await render(post);
 ---
 
 <BaseLayout>
-  <div slot="header" class="mx-auto flex max-w-screen-md items-center justify-between p-4">
-    <a href="/">
-      <h1 class="text-2xl font-bold text-black dark:text-white">
-        {site.title}
-      </h1>
-    </a>
+  <div slot="header" class="mt-20">
+    <button onclick="history.back()" class={cn(buttonVariants({ variant: "outline", size: "sm" }))}>
+      <div class="flex items-center">
+        <ChevronLeft />
+        <span>Back</span>
+      </div>
+    </button>
   </div>
-  <div onclick="(() => (history.length === 1) ? window.location = '/' : history.back())()">
-    go back
-  </div>
+
   <article class="prose lg:prose-base dark:prose-invert">
     <div class="mb-12">
       <h1 class="text-3xl">{title}</h1>
       <div class="flex items-center gap-2 text-sm text-[#a7a9be]">
-        <span>{date}</span>
+        <span>{date.toLocaleDateString()}</span>
         <span class="before:content-['#']">{category}</span>
       </div>
     </div>
