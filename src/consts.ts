@@ -11,3 +11,10 @@ export const social = {
   github: "https://github.com/wxiach",
   twitter: "https://twitter.com/aozTLnIBES1renM",
 };
+
+export const nav = [
+  { name: "Musings", href: "/musings" },
+  { name: "Posts", href: "/posts" },
+  { name: "Notes", href: "/notes" },
+  { name: "About", href: "/about" },
+];

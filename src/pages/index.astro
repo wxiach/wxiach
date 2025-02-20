@@ -6,6 +6,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import Musing from "@/components/musing.astro";
 import { SiteAvatar } from "@/components/site-avatar";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import NavigationMenuBar from "@/components/navigation-menu-bar";
 
 const posts = (await getCollection("post")).sort(
   (a, b) => a.data.date.valueOf() - b.data.date.valueOf()
@@ -37,7 +38,10 @@ const musings = (await getCollection("musing")).sort(
 <!-- https://cdn.jsdelivr.net/gh/wxiach/image/8b4a768486bb65ffd2dcf727c7e7825c.jpeg -->
 <BaseLayout>
   <div slot="header" class="mx-auto mt-20 flex flex-col gap-y-8">
-    <ThemeToggle client:load />
+    <div class="flex justify-end gap-x-4">
+      <NavigationMenuBar client:load />
+      <ThemeToggle client:load />
+    </div>
     <div class="flex gap-x-6">
       <SiteAvatar client:load />
       <div class="flex flex-col gap-y-1">
@@ -57,13 +61,13 @@ const musings = (await getCollection("musing")).sort(
 
   <div class="flex flex-col gap-y-10">
     <section class="flex flex-col gap-y-6">
-      <div class="text-xl font-bold">Posts</div>
+      <div class="font-bold">Posts</div>
       <div class="flex flex-col gap-y-4">
         {
           posts.map(post => (
             <li class="gap flex list-none flex-row items-center gap-x-6 text-center">
               <span class="text-sm text-[#a7a9be]">{post.data.date.toLocaleDateString()}</span>
-              <a href={`/post/${post.id}/`}>
+              <a href={`/posts/${post.id}/`}>
                 <h2 class="border-b-1 border-neutral-950 dark:border-neutral-50">
                   {post.data.title}
                 </h2>
@@ -75,7 +79,7 @@ const musings = (await getCollection("musing")).sort(
     </section>
 
     <section class="flex flex-col gap-y-6">
-      <div class="text-xl font-bold">Musings</div>
+      <div class="font-bold">Musings</div>
       <div class="flex flex-col gap-y-4">
         {
           musings.map(musing => (
