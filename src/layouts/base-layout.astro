@@ -2,6 +2,7 @@
 import BaseHead from "@/layouts/base-head.astro";
 import { site } from "@/consts";
 import "lxgw-wenkai-screen-webfont";
+import { ThemeToggle } from "@/components/theme-toggle";
 ---
 
 <html lang="en">
@@ -9,8 +10,9 @@ import "lxgw-wenkai-screen-webfont";
     <BaseHead title={site.title} description={site.description} />
   </head>
   <body class="max-h-screen">
-    <header class="mx-auto max-w-screen-sm p-6">
+    <header class="mx-auto mt-20 flex max-w-screen-sm gap-x-6 p-6">
       <slot name="header" />
+      <ThemeToggle client:load />
     </header>
     <main class="mx-auto max-w-screen-sm p-6">
       <slot />

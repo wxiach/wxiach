@@ -8,7 +8,7 @@ const categories = [...new Set(posts.map(post => post.data.category))];
 ---
 
 <BaseLayout>
-  <div slot="header" class="mt-20">
+  <div slot="header" class="flex-1">
     <Breadcrumbs className="py-2" items={[{ text: "Posts" }]} />
   </div>
 

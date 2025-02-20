@@ -13,8 +13,7 @@ export const social = {
 };
 
 export const nav = [
-  { name: "Musings", href: "/musings" },
   { name: "Posts", href: "/posts" },
-  { name: "Notes", href: "/notes" },
+  { name: "Musings", href: "/musings" },
   { name: "About", href: "/about" },
 ];

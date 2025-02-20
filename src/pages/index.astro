@@ -17,31 +17,12 @@ const musings = (await getCollection("musing")).sort(
 );
 ---
 
-<script is:inline>
-  const getThemePreference = () => {
-    if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
-      return localStorage.getItem("theme");
-    }
-    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-  };
-  const isDark = getThemePreference() === "dark";
-  document.documentElement.classList[isDark ? "add" : "remove"]("dark");
-
-  if (typeof localStorage !== "undefined") {
-    const observer = new MutationObserver(() => {
-      const isDark = document.documentElement.classList.contains("dark");
-      localStorage.setItem("theme", isDark ? "dark" : "light");
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
-  }
-</script>
-
 <BaseLayout>
-  <div slot="header" class="mx-auto mt-20 flex flex-col gap-y-8">
-    <div class="flex justify-end gap-x-4">
-      <NavigationMenus client:load />
-      <ThemeToggle client:load />
-    </div>
+  <div slot="header" class="mx-auto flex flex-1 justify-end">
+    <NavigationMenus client:load />
+  </div>
+
+  <div class="flex flex-col gap-y-10">
     <div class="flex gap-x-6">
       <SiteAvatar client:load />
       <div class="flex flex-col gap-y-1">
@@ -57,9 +38,6 @@ const musings = (await getCollection("musing")).sort(
         process, shares my experiences, and explores various technologies.
       </p>
     </div>
-  </div>
-
-  <div class="flex flex-col gap-y-10">
     <section class="flex flex-col gap-y-6">
       <div class="font-bold">Posts</div>
       <div class="flex flex-col gap-y-4">
