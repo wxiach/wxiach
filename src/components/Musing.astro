@@ -1,10 +1,18 @@
 ---
 import { render } from "astro:content";
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
 
 const { musing } = Astro.props;
 const { Content } = await render(musing);
 ---
 
-<article class="prose dark:prose-invert">
-  <Content />
-</article>
+<Card>
+  <CardHeader className="text-sm text-[#a7a9be]">
+    {musing.data.date.toLocaleDateString()}
+  </CardHeader>
+  <CardContent>
+    <article class="prose dark:prose-invert">
+      <Content />
+    </article>
+  </CardContent>
+</Card>

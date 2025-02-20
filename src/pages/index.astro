@@ -1,20 +1,20 @@
 ---
 import BaseLayout from "@/layouts/base-layout.astro";
 import { getCollection, type DataEntryMap } from "astro:content";
-import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import PostItem from "@/components/post-item.astro";
 import Musing from "@/components/musing.astro";
 import NavigationMenus from "@/components/navigation-menus";
 import { SiteAvatar } from "@/components/site-avatar";
 import { site } from "@/consts";
 
-const getSortedCollectionSlice = async (collectionName: keyof DataEntryMap) => {
+const getSortedCollectionSlice = async (collectionName: keyof DataEntryMap, size: number) => {
   return (await getCollection(collectionName))
     .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-    .slice(0, 5);
+    .slice(0, size);
 };
 
-const posts = await getSortedCollectionSlice("post");
-const musings = await getSortedCollectionSlice("musing");
+const posts = await getSortedCollectionSlice("post", 5);
+const musings = await getSortedCollectionSlice("musing", 3);
 ---
 
 <BaseLayout>
@@ -35,39 +35,18 @@ const musings = await getSortedCollectionSlice("musing");
       <p>👋 Hi,</p>
       <p>{site.introduction}</p>
     </div>
+
     <section class="flex flex-col gap-y-6">
       <div class="font-bold">Posts</div>
       <div class="flex flex-col gap-y-4">
-        {
-          posts.map(post => (
-            <li class="gap flex list-none flex-row items-center gap-x-6 text-center">
-              <span class="text-sm text-[#a7a9be]">{post.data.date.toLocaleDateString()}</span>
-              <a href={`/posts/${post.id}/`}>
-                <h2 class="border-b-1 border-neutral-950 dark:border-neutral-50">
-                  {post.data.title}
-                </h2>
-              </a>
-            </li>
-          ))
-        }
+        {posts.map(post => <PostItem post={post} />)}
       </div>
     </section>
 
     <section class="flex flex-col gap-y-6">
       <div class="font-bold">Musings</div>
       <div class="flex flex-col gap-y-4">
-        {
-          musings.map(musing => (
-            <Card>
-              <CardHeader className="text-sm text-[#a7a9be]">
-                {musing.data.date.toLocaleDateString()}
-              </CardHeader>
-              <CardContent>
-                <Musing musing={musing} />
-              </CardContent>
-            </Card>
-          ))
-        }
+        {musings.map(musing => <Musing musing={musing} />)}
       </div>
     </section>
   </div>

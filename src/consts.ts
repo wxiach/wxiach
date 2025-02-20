@@ -17,5 +17,4 @@ export const social = {
 export const nav = [
   { name: "Posts", href: "/posts" },
   { name: "Musings", href: "/musings" },
-  { name: "About", href: "/about" },
 ];

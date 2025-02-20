@@ -2,9 +2,18 @@
 import BaseLayout from "@/layouts/base-layout.astro";
 import { getCollection } from "astro:content";
 import Breadcrumbs from "@/components/breadcrumbs";
+import type { PaginateFunction } from "astro";
+import Paginations from "@/components/paginations";
 
 const posts = await getCollection("post");
 const categories = [...new Set(posts.map(post => post.data.category))];
+
+export async function getStaticPaths({ paginate }: { paginate: PaginateFunction }) {
+  const musings = await getCollection("post");
+  return paginate(musings, { pageSize: 10 });
+}
+
+const { page } = Astro.props;
 ---
 
 <BaseLayout>
@@ -24,7 +33,7 @@ const categories = [...new Set(posts.map(post => post.data.category))];
       <div class="font-bold">Posts</div>
       <div class="flex flex-col gap-y-4">
         {
-          posts.map(post => (
+          page.data.map(post => (
             <li class="gap flex list-none flex-row items-center gap-x-6 text-center">
               <span class="text-sm text-[#a7a9be]">{post.data.date.toLocaleDateString()}</span>
               <a href={`/posts/${post.id}/`}>
@@ -36,6 +45,12 @@ const categories = [...new Set(posts.map(post => post.data.category))];
           ))
         }
       </div>
+      <Paginations
+        currentPage={page.currentPage}
+        totalPages={page.lastPage}
+        baseUrl="/posts/"
+        client:load
+      />
     </section>
   </div>
 </BaseLayout>

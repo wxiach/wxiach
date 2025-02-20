@@ -1,0 +1,33 @@
+---
+import BaseLayout from "@/layouts/base-layout.astro";
+import Breadcrumbs from "@/components/breadcrumbs";
+import { getCollection } from "astro:content";
+import type { PaginateFunction } from "astro";
+import Musing from "@/components/musing.astro";
+import Paginations from "@/components/paginations";
+
+export async function getStaticPaths({ paginate }: { paginate: PaginateFunction }) {
+  const musings = await getCollection("musing");
+  return paginate(musings, { pageSize: 5 });
+}
+
+const { page } = Astro.props;
+---
+
+<BaseLayout>
+  <div slot="header" class="flex-1">
+    <Breadcrumbs className="py-2" items={[{ text: "Musings" }]} />
+  </div>
+  <section class="flex flex-col gap-y-6">
+    <div class="font-bold">Musings</div>
+    <div class="flex flex-col gap-y-4">
+      {page.data.map(musing => <Musing musing={musing} />)}
+    </div>
+    <Paginations
+      currentPage={page.currentPage}
+      totalPages={page.lastPage}
+      baseUrl="/musings/"
+      client:load
+    />
+  </section>
+</BaseLayout>
