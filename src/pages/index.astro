@@ -1,9 +1,9 @@
 ---
-import BaseLayout from "@layouts/BaseLayout.astro";
+import BaseLayout from "@/layouts/base-layout.astro";
 import { getCollection } from "astro:content";
-import { site } from "@consts";
-import { ModeToggle } from "@components/ModeToggle";
-import Musing from "@components/Musing.astro";
+import { site } from "@/consts";
+import { ModeToggle } from "@/components/theme-toggle";
+import Musing from "@/components/Musing.astro";
 
 const posts = (await getCollection("post")).sort(
   (a, b) => a.data.date.valueOf() - b.data.date.valueOf()
