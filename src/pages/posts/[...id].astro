@@ -1,9 +1,6 @@
 ---
 import { getCollection, render } from "astro:content";
-import BaseLayout from "@/layouts/base-layout.astro";
-import { cn } from "@/lib/utils";
-import { ChevronLeft } from "lucide-react";
-import { buttonVariants } from "@/components/ui/button";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 export async function getStaticPaths() {
   const posts = await getCollection("post");
   return posts.map(post => ({
@@ -18,14 +15,7 @@ const { Content } = await render(post);
 ---
 
 <BaseLayout>
-  <div slot="header" class="flex-1">
-    <button onclick="history.back()" class={cn(buttonVariants({ variant: "outline", size: "sm" }))}>
-      <div class="flex items-center">
-        <ChevronLeft />
-        <span>Back</span>
-      </div>
-    </button>
-  </div>
+  <div slot="header" class="flex-1"></div>
 
   <article class="prose lg:prose-base dark:prose-invert">
     <div class="mb-12">

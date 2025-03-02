@@ -1,53 +1,24 @@
 ---
-import BaseLayout from "@/layouts/base-layout.astro";
-import { getCollection, type DataEntryMap } from "astro:content";
-import PostItem from "@/components/post-item.astro";
-import Musing from "@/components/musing.astro";
-import NavigationMenus from "@/components/navigation-menus";
-import { SiteAvatar } from "@/components/site-avatar";
+import { getCollection } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PostItem from "@/components/PostItem.astro";
 import { site } from "@/consts";
 
-const getSortedCollectionSlice = async (collectionName: keyof DataEntryMap, size: number) => {
-  return (await getCollection(collectionName))
-    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-    .slice(0, size);
-};
-
-const posts = await getSortedCollectionSlice("post", 5);
-const musings = await getSortedCollectionSlice("musing", 3);
+const posts = (await getCollection("post")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
 ---
 
 <BaseLayout>
-  <div slot="header" class="mx-auto flex flex-1 justify-end">
-    <NavigationMenus client:load />
+  <div slot="header" class="mx-auto flex flex-col items-start gap-y-6">
+    <h1 class="text-4xl font-bold">{site.title}</h1>
+    <p>{site.hitokoto}</p>
   </div>
 
-  <div class="flex flex-col gap-y-10">
-    <div class="flex gap-x-6">
-      <SiteAvatar client:load />
-      <div class="flex flex-col gap-y-1">
-        <h1 class="text-2xl font-black">{site.title}</h1>
-        <p class="text-base text-[#a7a9be]">{site.hitokoto}</p>
-      </div>
+  <section class="flex flex-col gap-y-6">
+    <div class="font-bold">Posts</div>
+    <div class="flex flex-col gap-y-4">
+      {posts.map(post => <PostItem post={post} />)}
     </div>
-
-    <div class="prose dark:prose-invert">
-      <p>👋 Hi,</p>
-      <p>{site.introduction}</p>
-    </div>
-
-    <section class="flex flex-col gap-y-6">
-      <div class="font-bold">Posts</div>
-      <div class="flex flex-col gap-y-4">
-        {posts.map(post => <PostItem post={post} />)}
-      </div>
-    </section>
-
-    <section class="flex flex-col gap-y-6">
-      <div class="font-bold">Musings</div>
-      <div class="flex flex-col gap-y-4">
-        {musings.map(musing => <Musing musing={musing} />)}
-      </div>
-    </section>
-  </div>
+  </section>
 </BaseLayout>

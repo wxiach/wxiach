@@ -6,9 +6,4 @@ const post = defineCollection({
   schema: z.object({ title: z.string(), date: z.coerce.date(), category: z.string() }),
 });
 
-const musing = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/content/musings" }),
-  schema: z.object({ date: z.coerce.date() }),
-});
-
-export const collections = { post, musing };
+export const collections = { post };
