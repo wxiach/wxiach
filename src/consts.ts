@@ -1,21 +1,16 @@
 export const site = {
-  website: "wxiach.cn",
-  title: "wxiach",
-  author: "wxiach",
-  hitokoto: "👋Hey, I'm wxiach, a lost child.",
+  title: "wxiach's blog",
   description: "",
-  introduction: "",
+  author: "wxiach",
+  hitokoto: "一个迷茫的小孩。",
+  contact: [{ email: "wxiach@gmail.com" }],
+  social: [
+    { github: "https://github.com/wxiach" },
+    { twitter: "https://twitter.com/wxiach" },
+    { weibo: "https://weibo.com/u/7889488509" },
+  ],
+  nav: [
+    { name: "主页", url: "/" },
+    { name: "关于", url: "/about" },
+  ],
 };
-
-export const email = "wxiach@gmail.com";
-
-export const social = {
-  github: "https://github.com/wxiach",
-  twitter: "https://twitter.com/wxiach",
-  weibo: "https://weibo.com/u/7889488509",
-};
-
-export const nav = [
-  { name: "Posts", href: "/posts" },
-  { name: "Musings", href: "/musings" },
-];

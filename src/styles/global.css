@@ -1,7 +1,6 @@
 @import "tailwindcss";
-@plugin "@tailwindcss/typography";
 @plugin "tailwindcss-animate";
-@custom-variant dark (&:where(.dark, .dark *));
+@plugin "@tailwindcss/typography";
 
 body {
   font-family: "LXGW WenKai Screen", sans-serif;

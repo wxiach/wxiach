@@ -1,0 +1,7 @@
+---
+import { site } from "@/consts";
+---
+
+<nav class="flex gap-6">
+  {site.nav.map(({ name, url }) => <a href={url}>{name}</a>)}
+</nav>
