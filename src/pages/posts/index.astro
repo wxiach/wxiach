@@ -1,8 +1,8 @@
 ---
+import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
-import { getCollection } from "astro:content";
 import DateFormatter from "@/components/DateFormatter.astro";
 import Categories from "@/components/Categories.astro";
 
@@ -13,7 +13,7 @@ const posts = (await getCollection("blog")).sort(
 
 <Layout>
   <Header subtitle="博客" />
-  <main class="mx-auto flex min-h-[90vh] max-w-screen-md flex-col gap-2">
+  <main class="mx-auto flex min-h-[90vh] max-w-screen-md flex-col gap-2 p-4">
     {
       posts.map(({ id, data }) => (
         <li class="list-none border-b border-gray-200 py-2">

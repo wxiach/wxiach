@@ -1,6 +1,13 @@
 ---
 import { Image } from "astro:assets";
 import avatar from "@/assets/avatar.png";
+import { cn } from "@/lib/utils";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
 ---
 
-<Image class="size-100 rounded-full object-cover" src={avatar} alt="avatar" />
+<Image class={cn(className, "size-100 rounded-full object-cover")} src={avatar} alt="avatar" />
