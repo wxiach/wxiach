@@ -1,5 +1,11 @@
 ---
 import { site } from "@/consts";
+import { cn } from "@/lib/utils";
+
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
 ---
 
-<h1 class="text-9xl font-bold">{site.author}</h1>
+<h1 class={cn(className, "font-bold")}>{site.author}</h1>

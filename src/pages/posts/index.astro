@@ -4,6 +4,7 @@ import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import { getCollection } from "astro:content";
 import DateFormatter from "@/components/DateFormatter.astro";
+import Categories from "@/components/Categories.astro";
 
 const posts = (await getCollection("blog")).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
@@ -11,15 +12,16 @@ const posts = (await getCollection("blog")).sort(
 ---
 
 <Layout>
-  <Header />
-  <main class="mx-auto flex max-w-screen-sm flex-col gap-2">
+  <Header subtitle="博客" />
+  <main class="mx-auto flex min-h-[90vh] max-w-screen-md flex-col gap-2">
     {
       posts.map(({ id, data }) => (
-        <li class="flex list-none gap-4">
-          <DateFormatter class="min-w-26 text-right text-zinc-600" date={data.date} />
-          <a href={`/posts/${id}`} class="decoration-orange-600 decoration-2">
-            {data.title}
-          </a>
+        <li class="list-none border-b border-gray-200 py-2">
+          <DateFormatter date={data.date} />
+          <div class="flex items-center justify-between">
+            <a href={`/posts/${id}`}>{data.title}</a>
+            <Categories categories={data.categories} />
+          </div>
         </li>
       ))
     }

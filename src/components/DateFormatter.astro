@@ -11,4 +11,6 @@ const { class: className, date } = Astro.props as Props;
 const options: Intl.DateTimeFormatOptions = { month: "short", day: "numeric", year: "numeric" };
 ---
 
-<span class={cn(className)}>{date.toLocaleDateString("en-US", options)}</span>
+<span class={cn(className, "text-sm text-zinc-400")}
+  >{date.toLocaleDateString("en-US", options)}</span
+>

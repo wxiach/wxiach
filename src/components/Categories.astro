@@ -1,0 +1,15 @@
+---
+interface Props {
+  categories?: string[];
+}
+const { categories } = Astro.props;
+---
+
+<div class="flex gap-1">
+  {
+    categories &&
+      categories.map(category => (
+        <span class="text-sm text-zinc-400 before:content-['#']">{category}</span>
+      ))
+  }
+</div>
