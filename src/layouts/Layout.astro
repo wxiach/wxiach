@@ -10,11 +10,9 @@ import Footer from "@/components/Footer.astro";
   <head>
     <Head title={site.title} description={site.description} />
   </head>
-  <body class="bg-gray-50">
+  <body>
     <Header />
-    <main>
-      <slot />
-    </main>
+    <slot />
     <Footer />
   </body>
 </html>

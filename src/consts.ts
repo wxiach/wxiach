@@ -11,6 +11,8 @@ export const site = {
   ],
   nav: [
     { name: "主页", url: "/" },
+    { name: "文章", url: "/posts" },
     { name: "关于", url: "/about" },
+    { name: "友链", url: "/links" },
   ],
 };
