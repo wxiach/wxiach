@@ -2,6 +2,20 @@
 import { site } from "@/consts";
 ---
 
-<nav class="flex gap-6">
-  {site.nav.map(({ name, url }) => <a href={url}>{name}</a>)}
+<nav class="flex gap-2">
+  {
+    site.nav.map(({ name, url }) => (
+      <a class="" href={url}>
+        {name}
+      </a>
+    ))
+  }
+  {
+    site.social.map(({ name, url }) => (
+      <>
+        <span>/</span>
+        <a href={url}>{name}</a>
+      </>
+    ))
+  }
 </nav>

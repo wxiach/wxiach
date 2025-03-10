@@ -1,0 +1,28 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import { getCollection } from "astro:content";
+import DateFormatter from "@/components/DateFormatter.astro";
+
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<Layout>
+  <Header />
+  <main class="mx-auto flex max-w-screen-sm flex-col gap-2">
+    {
+      posts.map(({ id, data }) => (
+        <li class="flex list-none gap-4">
+          <DateFormatter class="min-w-26 text-right text-zinc-600" date={data.date} />
+          <a href={`/posts/${id}`} class="decoration-orange-600 decoration-2">
+            {data.title}
+          </a>
+        </li>
+      ))
+    }
+  </main>
+  <Footer />
+</Layout>

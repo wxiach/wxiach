@@ -1,8 +1,12 @@
 ---
 import { getCollection, render } from "astro:content";
-import BaseLayout from "@/layouts/Layout.astro";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import DateFormatter from "@/components/DateFormatter.astro";
+
 export async function getStaticPaths() {
-  const posts = await getCollection("post");
+  const posts = await getCollection("blog");
   return posts.map(post => ({
     params: { id: post.id },
     props: post,
@@ -10,21 +14,29 @@ export async function getStaticPaths() {
 }
 
 const post = Astro.props;
-const { title, date, category } = post.data;
 const { Content } = await render(post);
 ---
 
-<BaseLayout>
-  <div slot="header" class="flex-1"></div>
-
-  <article class="prose lg:prose-base dark:prose-invert">
-    <div class="mb-12">
-      <h1 class="text-3xl">{title}</h1>
-      <div class="flex items-center gap-2 text-sm text-[#a7a9be]">
-        <span>{date.toLocaleDateString()}</span>
-        <span class="before:content-['#']">{category}</span>
+<Layout>
+  <Header />
+  <main class="mx-auto max-w-screen-sm">
+    <article class="prose lg:prose-base dark:prose-invert">
+      <div class="mb-12">
+        <h1 class="text-3xl">{post.data.title}</h1>
+        <div class="flex items-center gap-2 text-sm text-[#a7a9be]">
+          <DateFormatter date={post.data.date} />
+          <div>
+            {
+              post.data.categories &&
+                post.data.categories.map(category => (
+                  <span class="before:content-['#']">{category}</span>
+                ))
+            }
+          </div>
+        </div>
       </div>
-    </div>
-    <Content />
-  </article>
-</BaseLayout>
+      <Content />
+    </article>
+  </main>
+  <Footer />
+</Layout>

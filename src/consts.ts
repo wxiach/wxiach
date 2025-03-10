@@ -5,14 +5,9 @@ export const site = {
   hitokoto: "一个迷茫的小孩。",
   contact: [{ email: "wxiach@gmail.com" }],
   social: [
-    { github: "https://github.com/wxiach" },
-    { twitter: "https://twitter.com/wxiach" },
-    { weibo: "https://weibo.com/u/7889488509" },
+    { name: "Github", url: "https://github.com/wxiach" },
+    { name: "Twitter", url: "https://twitter.com/wxiach" },
+    { name: "Weibo", url: "https://weibo.com/u/7889488509" },
   ],
-  nav: [
-    { name: "主页", url: "/" },
-    { name: "文章", url: "/posts" },
-    { name: "关于", url: "/about" },
-    { name: "友链", url: "/links" },
-  ],
+  nav: [{ name: "博客", url: "/posts" }],
 };

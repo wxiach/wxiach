@@ -1,13 +1,13 @@
 ---
-import BaseLayout from "@/layouts/Layout.astro";
+import Layout from "@/layouts/Layout.astro";
 import Hitokoto from "@/components/Hitokoto.astro";
 import SiteTitle from "@/components/SiteTitle.astro";
 import Avatar from "@/components/Avatar.astro";
 import Nav from "@/components/Nav.astro";
 ---
 
-<BaseLayout>
-  <main class="flex min-h-[80vh] items-center justify-center gap-100">
+<Layout>
+  <main class="mx-auto flex min-h-[80vh] max-w-screen-lg items-center justify-between">
     <div class="flex flex-col gap-10">
       <SiteTitle />
       <Hitokoto />
@@ -15,4 +15,4 @@ import Nav from "@/components/Nav.astro";
     </div>
     <Avatar />
   </main>
-</BaseLayout>
+</Layout>
