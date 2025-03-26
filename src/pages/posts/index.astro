@@ -1,28 +1,63 @@
 ---
 import { getCollection } from "astro:content";
+import { cn } from "@/lib/utils";
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
-import DateFormatter from "@/components/DateFormatter.astro";
-import Categories from "@/components/Categories.astro";
+import PostItem from "@/components/PostItem.astro";
 
-const posts = (await getCollection("blog")).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
-);
+const posts = await getCollection("blog");
+
+const postsByYear = posts
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .reduce(
+    (acc, post) => {
+      const year = new Date(post.data.date).getFullYear();
+      if (!acc[year]) {
+        acc[year] = [];
+      }
+      acc[year].push(post);
+      return acc;
+    },
+    {} as Record<number, Awaited<ReturnType<typeof getCollection>>>
+  );
 ---
 
-<Layout>
-  <Header subtitle="博客" />
-  <main class="mx-auto flex min-h-[90vh] max-w-screen-md flex-col gap-2 p-4">
+<script>
+  document.addEventListener("click", event => {
+    const target = event.target as HTMLElement;
+    if (target && target.id === "back") {
+      history.back();
+    }
+  });
+</script>
+
+<Layout siteSubTitle="Posts">
+  <header class="flex flex-col gap-16">
+    <div>
+      <button
+        id="back"
+        class={cn(
+          "rounded-2xl border-2 border-zinc-500 px-4 py-2 text-xs cursor-pointer",
+          "hover:bg-zinc-500 hover:text-zinc-100",
+          "transition-colors duration-300"
+        )}
+      >
+        返回
+      </button>
+    </div>
+    <p>目前已经写了 {posts.length} 篇文章，继续加油吧~~😊</p>
+  </header>
+  <main class="flex flex-col gap-16">
     {
-      posts.map(({ id, data }) => (
-        <li class="list-none border-b border-gray-200 py-2">
-          <DateFormatter date={data.date} />
-          <div class="flex items-center justify-between">
-            <a href={`/posts/${id}`}>{data.title}</a>
-            <Categories categories={data.categories} />
-          </div>
-        </li>
+      Object.entries(postsByYear).map(([key, items]) => (
+        <section>
+          <h2 class="py-4 text-4xl">{key}</h2>
+          <ul class="flex flex-col gap-4">
+            {items.map(post => (
+              <PostItem id={post.id} data={post.data} />
+            ))}
+          </ul>
+        </section>
       ))
     }
   </main>

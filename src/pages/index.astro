@@ -1,18 +1,66 @@
 ---
+import { getCollection } from "astro:content";
+import { cn } from "@/lib/utils";
+import Nav from "@/components/Nav.astro";
+import Intro from "@/components/Intro.astro";
+import Footer from "@/components/Footer.astro";
+import Avatar from "@/components/Avatar.astro";
 import Layout from "@/layouts/Layout.astro";
 import Hitokoto from "@/components/Hitokoto.astro";
+import PostItem from "@/components/PostItem.astro";
 import SiteTitle from "@/components/SiteTitle.astro";
-import Avatar from "@/components/Avatar.astro";
-import Nav from "@/components/Nav.astro";
+import SectionTitle from "@/components/SectionTitle.astro";
+
+const posts = (await getCollection("blog"))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 6);
 ---
 
+<script>
+  import { navigate } from "astro:transitions/client";
+
+  document.addEventListener("click", event => {
+    const target = event.target as HTMLElement;
+    if (target && target.id === "more-posts") {
+      navigate("/posts");
+    }
+  });
+</script>
+
 <Layout>
-  <main class="mx-auto flex min-h-[80vh] max-w-screen-lg items-center justify-between p-4">
-    <div class="flex flex-col gap-10">
-      <SiteTitle class="text-6xl sm:text-9xl" />
-      <Hitokoto />
-      <Nav />
-    </div>
-    <Avatar class="hidden sm:block" />
+  <header class="flex flex-col items-center gap-12">
+    <Avatar />
+    <SiteTitle class="text-4xl" />
+    <Hitokoto />
+    <Nav />
+  </header>
+  <main class="flex flex-col gap-32">
+    <section class="flex justify-between gap-48 align-top">
+      <Intro />
+      <SectionTitle title="介绍" description="intro" position="right" />
+    </section>
+    <section class="flex justify-between gap-48 align-top">
+      <SectionTitle title="博客" description="blog" position="left" />
+      <div class="flex flex-1 flex-col gap-4">
+        {posts.map(({ id, data }) => <PostItem id={id} data={data} />)}
+        <div class="flex justify-end pt-16">
+          <button
+            id="more-posts"
+            class={cn(
+              "rounded-2xl border-2 border-zinc-500 px-4 py-2 text-xs cursor-pointer",
+              "hover:bg-zinc-500 hover:text-zinc-100",
+              "transition-colors duration-300"
+            )}
+          >
+            更多文章
+          </button>
+        </div>
+      </div>
+    </section>
+    <section class="flex justify-between gap-48 align-top">
+      <div>暂时还没有作品喔~~</div>
+      <SectionTitle title="作品" description="work" position="right" />
+    </section>
   </main>
+  <Footer />
 </Layout>

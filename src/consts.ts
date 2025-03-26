@@ -1,13 +1,13 @@
 export const site = {
-  title: "wxiach's blog",
-  description: "",
+  title: "wxiach's Blog",
+  description:
+    "wxiach's personal website - 一个享受独处与简约生活的程序员，记录思考、成长与代码。探索技术、随笔、生活感悟，偶尔回顾过往。欢迎交流，共同进步。",
   author: "wxiach",
   hitokoto: "一个迷茫的小孩。",
   contact: [{ email: "wxiach@gmail.com" }],
-  social: [
+  nav: [
     { name: "Github", url: "https://github.com/wxiach" },
-    { name: "Twitter", url: "https://twitter.com/wxiach" },
+    { name: "Twitter", url: "https://twitter.com/iwxiach" },
     { name: "Weibo", url: "https://weibo.com/u/7889488509" },
   ],
-  nav: [{ name: "博客", url: "/posts" }],
 };

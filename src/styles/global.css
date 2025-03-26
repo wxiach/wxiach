@@ -1,0 +1,7 @@
+@import "tailwindcss";
+@plugin "tailwindcss-animate";
+@plugin "@tailwindcss/typography";
+
+body {
+  font-family: "LXGW WenKai Screen", sans-serif;
+}

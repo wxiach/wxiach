@@ -2,6 +2,13 @@
 import { ClientRouter } from "astro:transitions";
 import { site } from "@/consts";
 import "lxgw-wenkai-screen-webfont";
+
+type Props = {
+  siteSubTitle?: string;
+};
+
+const { siteSubTitle } = Astro.props;
+const title = siteSubTitle ? `${site.title} | ${siteSubTitle}` : site.title;
 ---
 
 <!-- Global Metadata -->
@@ -10,8 +17,8 @@ import "lxgw-wenkai-screen-webfont";
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
 <!-- Primary Meta Tags -->
-<title>{site.title}</title>
-<meta name="title" content={site.title} />
+<title>{title}</title>
+<meta name="title" content={title} />
 <meta name="description" content={site.description} />
 
 <ClientRouter />

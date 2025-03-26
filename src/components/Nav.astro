@@ -1,20 +1,23 @@
 ---
 import { site } from "@/consts";
+import { cn } from "@/lib/utils";
 ---
 
 <nav class="flex gap-2">
   {
-    site.nav.map(({ name, url }) => (
-      <a class="" href={url}>
-        {name}
-      </a>
-    ))
-  }
-  {
-    site.social.map(({ name, url }) => (
+    site.nav.map(({ name, url }, index) => (
       <>
-        <span>/</span>
-        <a href={url}>{name}</a>
+        {index != 0 && <span>/</span>}
+        <a href={url} class="group relative inline-block" target="_blank" rel="noopener noreferrer">
+          <span>{name}</span>
+          <span
+            class={cn(
+              "absolute bottom-0 left-0 h-0.5 w-0 rounded-xs bg-zinc-500",
+              "transition-all duration-300",
+              "group-hover:right-auto group-hover:left-0 group-hover:w-full"
+            )}
+          />
+        </a>
       </>
     ))
   }

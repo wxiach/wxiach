@@ -1,0 +1,8 @@
+---
+interface Props {
+  category?: string;
+}
+const { category } = Astro.props;
+---
+
+<span class="text-xs text-zinc-500 before:content-['#']">{category}</span>

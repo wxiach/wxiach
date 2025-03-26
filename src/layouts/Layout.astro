@@ -1,22 +1,19 @@
 ---
 import Head from "@/components/Head.astro";
+import "@/styles/global.css";
+
+type Props = {
+  siteSubTitle?: string;
+};
+
+const { siteSubTitle } = Astro.props;
 ---
-
-<style is:global>
-  @import "tailwindcss";
-  @plugin "tailwindcss-animate";
-  @plugin "@tailwindcss/typography";
-
-  body {
-    font-family: "LXGW WenKai Screen", sans-serif;
-  }
-</style>
 
 <html lang="en">
   <head>
-    <Head />
+    <Head siteSubTitle={siteSubTitle} />
   </head>
-  <body>
+  <body class="mx-auto flex max-w-screen-md flex-col gap-32 px-4 py-32">
     <slot />
   </body>
 </html>

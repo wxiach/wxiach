@@ -1,0 +1,20 @@
+---
+import { cn } from "@/lib/utils";
+
+type Props = {
+  onClick?: () => void;
+};
+
+const buttonId = `button-${Math.random().toString(36).substring(2, 9)}`;
+---
+
+<button id={buttonId}>
+  <slot />
+</button>
+
+<script>
+  document.getElementById("${buttonId}")?.addEventListener("click", () => {
+    console.log("Button clicked!");
+    Astro.props.onClick?.();
+  });
+</script>

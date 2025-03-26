@@ -2,4 +2,18 @@
 import { site } from "@/consts";
 ---
 
-<footer class="flex justify-center text-zinc-400">Copyright © 2025 {site.author}</footer>
+<footer class="flex flex-col items-center gap-2 text-sm text-zinc-500">
+  <span class="my-16 h-1 w-16 rounded-xs bg-zinc-500"></span>
+  <p>
+    Copyright © 2025 {site.author}. All rights reserved.
+  </p>
+  <p>
+    本博客内容遵循 <a
+      class="border-b border-zinc-500 hover:border-zinc-900"
+      href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
+      target="_blank"
+    >
+      CC BY-NC-SA 4.0</a
+    > 许可协议
+  </p>
+</footer>
