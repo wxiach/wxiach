@@ -1,0 +1,144 @@
+---
+
+---
+
+<script is:inline>
+  // Use is:inline to ensure the code is executed directly in the client without Astro processing
+  document.addEventListener("DOMContentLoaded", function () {
+    setupFireworks();
+  });
+
+  document.addEventListener("astro:page-load", function () {
+    setupFireworks();
+  });
+
+  function setupFireworks() {
+    // Clean up old canvas
+    const oldCanvas = document.getElementById("fireworks-canvas");
+    if (oldCanvas) {
+      oldCanvas.remove();
+    }
+
+    // Create new canvas
+    const canvas = document.createElement("canvas");
+    canvas.id = "fireworks-canvas";
+    canvas.style.position = "fixed";
+    canvas.style.top = "0";
+    canvas.style.left = "0";
+    canvas.style.pointerEvents = "none";
+    canvas.style.zIndex = "9999";
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    document.body.appendChild(canvas);
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let particles = [];
+    let animationId;
+    // Add maximum particle limit to prevent performance issues
+    const MAX_PARTICLES = 300;
+
+    // Particle constructor
+    function Particle(x, y, color) {
+      this.x = x;
+      this.y = y;
+      this.color = color;
+      this.velocity = {
+        x: (Math.random() - 0.5) * 12,
+        y: (Math.random() - 0.5) * 12,
+      };
+      this.alpha = 1;
+
+      this.update = function () {
+        this.velocity.y += 0.1;
+        this.x += this.velocity.x;
+        this.y += this.velocity.y;
+        this.alpha -= 0.01;
+
+        ctx.save();
+        ctx.globalAlpha = this.alpha;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+        ctx.restore();
+      };
+    }
+
+    // Create firework effect
+    function createFirework(x, y) {
+      const colors = ["#FFB3BA", "#BAFFC9", "#BAE1FF", "#FFFFBA"];
+      const color = colors[Math.floor(Math.random() * colors.length)];
+
+      // Adjust particle count based on device performance
+      const isMobile = window.innerWidth <= 768;
+      const particleCount = isMobile ? 20 : 40;
+
+      // Check total particles, avoid too many affecting performance
+      if (particles.length > MAX_PARTICLES) {
+        particles = particles.slice(-MAX_PARTICLES / 2);
+      }
+
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle(x, y, color));
+      }
+    }
+
+    // Animation loop
+    function animate() {
+      animationId = requestAnimationFrame(animate);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      particles = particles.filter(particle => {
+        particle.update();
+        return particle.alpha > 0;
+      });
+    }
+
+    // Handle click
+    function handleClick(e) {
+      // More robust interactive element check
+      try {
+        if (
+          !e.target ||
+          ["BUTTON", "A", "INPUT", "TEXTAREA", "SELECT"].includes(e.target.tagName) ||
+          e.target.closest("button, a, [role='button']") ||
+          e.target.classList.contains("cursor-pointer") ||
+          e.target.getAttribute("data-no-fireworks") === "true"
+        ) {
+          return;
+        }
+        createFirework(e.clientX, e.clientY);
+      } catch (err) {
+        console.error("Fireworks error:", err);
+      }
+    }
+
+    // Handle window resize
+    function handleResize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    // Add event listeners
+    document.addEventListener("click", handleClick);
+    window.addEventListener("resize", handleResize);
+
+    // Start animation
+    animate();
+
+    // Cleanup function
+    function cleanup() {
+      document.removeEventListener("click", handleClick);
+      window.removeEventListener("resize", handleResize);
+      cancelAnimationFrame(animationId);
+      canvas.remove();
+    }
+
+    // Set cleanup on page transition
+    document.addEventListener("astro:before-swap", cleanup, { once: true });
+
+    return cleanup;
+  }
+</script>
