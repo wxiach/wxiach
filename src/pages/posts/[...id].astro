@@ -1,9 +1,11 @@
 ---
 import { getCollection, render } from "astro:content";
+import { cn } from "@/lib/utils";
 import Layout from "@/layouts/Layout.astro";
 import Footer from "@/components/Footer.astro";
 import Category from "@/components/Category.astro";
 import DateFormatter from "@/components/DateFormatter.astro";
+import Animated from "@/components/Animated.astro";
 
 export async function getStaticPaths() {
   return (await getCollection("blog")).map(post => ({
@@ -19,15 +21,19 @@ const { Content } = await render(post);
 <Layout siteSubTitle={post.data.title}>
   <main class="mx-auto min-h-[90vh] max-w-screen-md p-4">
     <article class="prose lg:prose-base max-w-screen-md">
-      <div class="mb-12">
-        <h1>{post.data.title}</h1>
-        <div class="flex items-center gap-4">
-          <DateFormatter date={post.data.date} />
-          <Category category={post.data.category} />
+      <Animated>
+        <div class="mb-12">
+          <h1>{post.data.title}</h1>
+          <div class="flex items-center gap-4">
+            <DateFormatter date={post.data.date} />
+            <Category category={post.data.category} />
+          </div>
         </div>
-      </div>
+      </Animated>
       <Content />
     </article>
   </main>
-  <Footer />
+  <Animated delay={800}>
+    <Footer />
+  </Animated>
 </Layout>

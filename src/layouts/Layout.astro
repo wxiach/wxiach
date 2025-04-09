@@ -1,6 +1,7 @@
 ---
 import Head from "@/components/Head.astro";
 import "@/styles/global.css";
+import "@/styles/animations.css";
 
 type Props = {
   siteSubTitle?: string;
@@ -13,7 +14,14 @@ const { siteSubTitle } = Astro.props;
   <head>
     <Head siteSubTitle={siteSubTitle} />
   </head>
-  <body class="mx-auto flex max-w-screen-md flex-col gap-32 px-4 py-32">
+  <body class="mx-auto flex max-w-screen-md flex-col gap-32 overflow-x-hidden px-4 py-32">
     <slot />
   </body>
 </html>
+
+<script>
+  // Ensure page scrolls to top on load
+  window.addEventListener("load", () => {
+    window.scrollTo(0, 0);
+  });
+</script>

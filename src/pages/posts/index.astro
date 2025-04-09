@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import Layout from "@/layouts/Layout.astro";
 import Footer from "@/components/Footer.astro";
 import PostItem from "@/components/PostItem.astro";
+import Animated from "@/components/Animated.astro";
 
 const posts = await getCollection("blog");
 
@@ -31,35 +32,45 @@ const postsByYear = posts
   });
 </script>
 
-<Layout siteSubTitle="Posts">
-  <header class="flex flex-col gap-16">
-    <div>
-      <button
-        id="back"
-        class={cn(
-          "rounded-2xl border-2 border-zinc-500 px-4 py-2 text-xs cursor-pointer",
-          "hover:bg-zinc-500 hover:text-zinc-100",
-          "transition-colors duration-300"
-        )}
-      >
-        返回
-      </button>
-    </div>
-    <p>目前已经写了 {posts.length} 篇文章，继续加油吧~~😊</p>
-  </header>
-  <main class="flex flex-col gap-16">
-    {
-      Object.entries(postsByYear).map(([key, items]) => (
-        <section>
-          <h2 class="py-4 text-4xl">{key}</h2>
-          <ul class="flex flex-col gap-4">
-            {items.map(post => (
-              <PostItem id={post.id} data={post.data} />
-            ))}
-          </ul>
-        </section>
-      ))
-    }
-  </main>
-  <Footer />
+<Layout siteSubTitle="文章">
+  <article class="flex flex-col gap-16">
+    <header class="flex flex-col gap-8">
+      <Animated>
+        <button
+          id="back"
+          class={cn(
+            "rounded-2xl border-2 border-zinc-500 px-4 py-2 text-xs cursor-pointer",
+            "hover:bg-zinc-500 hover:text-zinc-100",
+            "transition-colors duration-300"
+          )}
+        >
+          返回
+        </button>
+      </Animated>
+      <Animated delay={200}>
+        <p>目前已经写了 {posts.length} 篇文章，继续加油吧~~😊</p>
+      </Animated>
+    </header>
+    <main class="flex flex-col gap-16">
+      {
+        Object.entries(postsByYear)
+          .sort(([a], [b]) => Number(b) - Number(a))
+          .map(([year, posts], index) => (
+            <Animated delay={((index + 2) * 200) as 400 | 600 | 800 | 1000 | 1200 | 1400}>
+              <section class="flex flex-col gap-4">
+                <h2 class="text-2xl font-bold">{year}</h2>
+                <ul class="flex flex-col gap-4">
+                  {posts.map(post => (
+                    <PostItem id={post.id} data={post.data} />
+                  ))}
+                </ul>
+              </section>
+            </Animated>
+          ))
+      }
+    </main>
+    <Animated delay={1400}>
+      <Footer />
+    </Animated>
+  </article>
 </Layout>
