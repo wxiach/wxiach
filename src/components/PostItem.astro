@@ -14,10 +14,22 @@ type Props = {
 const { id, data } = Astro.props as Props;
 ---
 
-<li class="list-none border-b-1 border-zinc-200">
-  <DateFormatter date={data.date} />
-  <div class="flex items-center justify-between py-2">
-    <h3><a href={`/posts/${id}`} target="_blank" rel="noopener noreferrer">{data.title}</a></h3>
+<li class="group relative list-none border-b border-zinc-200 py-3">
+  <div class="text-sm text-zinc-400 transition-colors duration-200 group-hover:text-zinc-500">
+    <DateFormatter date={data.date} />
+  </div>
+  <div class="flex items-center justify-between py-1">
+    <h3 class="font-medium text-zinc-800">
+      <a
+        href={`/posts/${id}`}
+        class="relative inline-block transition-colors duration-200 group-hover:text-zinc-900"
+      >
+        {data.title}
+        <span
+          class="absolute top-0 bottom-0 -left-3 w-0.5 origin-bottom scale-y-0 bg-zinc-300 transition-transform duration-200 group-hover:scale-y-100"
+        ></span>
+      </a>
+    </h3>
     <Category category={data.category} />
   </div>
 </li>

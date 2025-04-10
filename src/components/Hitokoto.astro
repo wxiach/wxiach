@@ -1,5 +1,119 @@
 ---
 import { site } from "@/consts";
+
+// Randomly select a hitokoto quote
+const hitokotoList = site.hitokoto;
+const randomIndex = Math.floor(Math.random() * hitokotoList.length);
+const randomHitokoto = hitokotoList[randomIndex];
 ---
 
-<p id="hitokoto" class="text-zinc-500">{site.hitokoto}</p>
+<div class="relative min-h-[1.5rem] text-center">
+  <p
+    id="hitokoto"
+    class="inline-block max-w-md text-center text-zinc-500"
+    data-content={randomHitokoto}
+  >
+    <!-- 初始状态为空，由JavaScript添加内容 -->
+  </p>
+</div>
+
+<style>
+  @keyframes blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+
+  .typing-cursor {
+    display: inline-block;
+    width: 1px;
+    height: 1em;
+    background-color: currentColor;
+    margin-left: 1px;
+    animation: blink 0.8s step-end infinite;
+    vertical-align: middle;
+  }
+
+  @media (max-width: 640px) {
+    #hitokoto {
+      font-size: 0.9rem;
+      max-width: 90vw;
+    }
+  }
+</style>
+
+<script>
+  // Track the current typing animation ID
+  let typingTimeoutId: ReturnType<typeof setTimeout> | null = null;
+  let isTyping = false;
+
+  function initTypewriter(): void {
+    // Clear any ongoing typing animations
+    clearAllTypingTimeouts();
+
+    // Delay startup to ensure fade-in animation is complete
+    typingTimeoutId = setTimeout(() => {
+      setupTypewriter();
+    }, 800);
+  }
+
+  function clearAllTypingTimeouts(): void {
+    // Clear the main typing timer
+    if (typingTimeoutId !== null) {
+      clearTimeout(typingTimeoutId);
+      typingTimeoutId = null;
+    }
+    isTyping = false;
+  }
+
+  function setupTypewriter(): void {
+    const hitokotoElement = document.getElementById("hitokoto");
+    if (!hitokotoElement) return;
+
+    if (isTyping) return; // Prevent restarting while already typing
+
+    const text = hitokotoElement.getAttribute("data-content") || "";
+
+    // Completely clear content
+    hitokotoElement.innerHTML = "";
+
+    // Create new cursor element
+    const cursorElement = document.createElement("span");
+    cursorElement.className = "typing-cursor";
+    hitokotoElement.appendChild(cursorElement);
+
+    let i = 0;
+    const typeSpeed = 80;
+
+    function typeNextCharacter() {
+      if (i < text.length && hitokotoElement) {
+        const char = text.charAt(i);
+        const textNode = document.createTextNode(char);
+        hitokotoElement.insertBefore(textNode, cursorElement);
+        i++;
+
+        const randomDelay = typeSpeed + Math.random() * 40 - 20;
+        typingTimeoutId = setTimeout(typeNextCharacter, randomDelay);
+      } else {
+        isTyping = false;
+      }
+    }
+
+    // Start typing
+    typingTimeoutId = setTimeout(typeNextCharacter, 300);
+  }
+
+  // Event listeners setup
+  function setupEventListeners() {
+    document.addEventListener("DOMContentLoaded", initTypewriter);
+    document.addEventListener("astro:page-load", initTypewriter);
+    document.addEventListener("astro:before-swap", clearAllTypingTimeouts);
+  }
+
+  // Initialize event listeners
+  setupEventListeners();
+</script>

@@ -2,18 +2,30 @@
 import { site } from "@/consts";
 ---
 
-<footer class="flex flex-col items-center gap-2 text-sm text-zinc-500">
-  <span class="my-16 h-1 w-16 rounded-xs bg-zinc-500"></span>
-  <p>
-    Copyright © 2025 {site.author}. All rights reserved.
-  </p>
-  <p>
-    本博客内容遵循 <a
-      class="border-b border-zinc-500 hover:border-zinc-900"
-      href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
-      target="_blank"
-    >
-      CC BY-NC-SA 4.0</a
-    > 许可协议
-  </p>
+<footer class="mt-16 flex flex-col items-center text-sm text-zinc-400">
+  <div class="flex w-full items-center justify-center pb-12">
+    <div class="h-px w-8 bg-gradient-to-r from-transparent via-zinc-300 to-transparent"></div>
+    <div class="mx-3 h-1 w-1 rounded-full bg-zinc-300"></div>
+    <div class="h-px w-8 bg-gradient-to-l from-transparent via-zinc-300 to-transparent"></div>
+  </div>
+
+  <div class="flex flex-col items-center gap-3 font-normal tracking-wide">
+    <p>
+      Copyright © 2025 <span class="font-medium text-zinc-500">{site.author}</span>. All rights
+      reserved.
+    </p>
+    <p>
+      本博客内容遵循 <a
+        class="group relative font-medium text-zinc-500 transition-all duration-200 hover:text-zinc-700"
+        href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span class="relative z-10">CC BY-NC-SA 4.0</span>
+        <span
+          class="absolute bottom-0 left-0 h-px w-full scale-x-0 bg-zinc-400 transition-transform duration-200 group-hover:scale-x-100"
+        ></span>
+      </a> 许可协议
+    </p>
+  </div>
 </footer>

@@ -44,6 +44,13 @@
     // Reduce maximum particle limit to improve performance
     const MAX_PARTICLES = 150;
 
+    // Long press detection variables
+    let isLongPress = false;
+    let pressTimer = null;
+    let startCoords = { x: 0, y: 0 };
+    const LONG_PRESS_THRESHOLD = 300; // milliseconds
+    const MOVE_THRESHOLD = 5; // pixels, allowed small movement
+
     // Particle constructor
     function Particle(x, y, color) {
       this.x = x;
@@ -107,8 +114,60 @@
       });
     }
 
-    // Handle click
+    // Mouse down event handler
+    function handleMouseDown(e) {
+      // Record starting point
+      startCoords = { x: e.clientX, y: e.clientY };
+
+      // Clear any existing timer
+      if (pressTimer !== null) {
+        clearTimeout(pressTimer);
+      }
+
+      // Set long press flag to false
+      isLongPress = false;
+
+      // Start long press detection timer
+      pressTimer = setTimeout(() => {
+        isLongPress = true;
+      }, LONG_PRESS_THRESHOLD);
+    }
+
+    // Mouse move event handler
+    function handleMouseMove(e) {
+      // If movement exceeds threshold, cancel long press detection
+      if (
+        pressTimer !== null &&
+        (Math.abs(e.clientX - startCoords.x) > MOVE_THRESHOLD ||
+          Math.abs(e.clientY - startCoords.y) > MOVE_THRESHOLD)
+      ) {
+        clearTimeout(pressTimer);
+        pressTimer = null;
+      }
+    }
+
+    // Mouse up event handler
+    function handleMouseUp() {
+      // Clear long press timer
+      if (pressTimer !== null) {
+        clearTimeout(pressTimer);
+        pressTimer = null;
+      }
+    }
+
+    // Click event handler
     function handleClick(e) {
+      // If long press detected, don't trigger fireworks
+      if (isLongPress) {
+        return;
+      }
+
+      // Check if text is being selected
+      const selection = window.getSelection();
+      if (selection && selection.toString().length > 0) {
+        return;
+      }
+
       // More robust interactive element check
       try {
         if (
@@ -133,7 +192,34 @@
     }
 
     // Add event listeners
+    document.addEventListener("mousedown", handleMouseDown);
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
     document.addEventListener("click", handleClick);
+
+    // Add touch event support
+    const touchStartHandler = e => {
+      if (e.touches.length > 0) {
+        handleMouseDown({
+          clientX: e.touches[0].clientX,
+          clientY: e.touches[0].clientY,
+        });
+      }
+    };
+
+    const touchMoveHandler = e => {
+      if (e.touches.length > 0) {
+        handleMouseMove({
+          clientX: e.touches[0].clientX,
+          clientY: e.touches[0].clientY,
+        });
+      }
+    };
+
+    document.addEventListener("touchstart", touchStartHandler);
+    document.addEventListener("touchmove", touchMoveHandler);
+    document.addEventListener("touchend", handleMouseUp);
+
     window.addEventListener("resize", handleResize);
 
     // Start animation
@@ -141,8 +227,23 @@
 
     // Cleanup function
     function cleanup() {
+      document.removeEventListener("mousedown", handleMouseDown);
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
       document.removeEventListener("click", handleClick);
+
+      // Remove touch event listeners
+      document.removeEventListener("touchstart", touchStartHandler);
+      document.removeEventListener("touchmove", touchMoveHandler);
+      document.removeEventListener("touchend", handleMouseUp);
+
       window.removeEventListener("resize", handleResize);
+
+      if (pressTimer !== null) {
+        clearTimeout(pressTimer);
+        pressTimer = null;
+      }
+
       if (window.fireworksAnimationId) {
         cancelAnimationFrame(window.fireworksAnimationId);
         window.fireworksAnimationId = null;
