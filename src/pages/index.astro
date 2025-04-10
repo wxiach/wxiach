@@ -1,16 +1,16 @@
 ---
 import { getCollection } from "astro:content";
 import { cn } from "@/lib/utils";
+import Layout from "@/layouts/Layout.astro";
+import FadeInElement from "@/components/FadeInElement.astro";
 import Nav from "@/components/Nav.astro";
 import Intro from "@/components/Intro.astro";
 import Footer from "@/components/Footer.astro";
 import Avatar from "@/components/Avatar.astro";
-import Layout from "@/layouts/Layout.astro";
 import Hitokoto from "@/components/Hitokoto.astro";
 import PostItem from "@/components/PostItem.astro";
 import SiteTitle from "@/components/SiteTitle.astro";
 import SectionTitle from "@/components/SectionTitle.astro";
-import Animated from "@/components/Animated.astro";
 
 const posts = (await getCollection("blog"))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
@@ -23,6 +23,7 @@ const posts = (await getCollection("blog"))
   document.addEventListener("click", event => {
     const target = event.target as HTMLElement;
     if (target && target.id === "more-posts") {
+      window.scrollTo(0, 0);
       navigate("/posts");
     }
   });
@@ -30,27 +31,27 @@ const posts = (await getCollection("blog"))
 
 <Layout>
   <header class="flex flex-col items-center gap-12">
-    <Animated>
+    <FadeInElement>
       <Avatar />
-    </Animated>
-    <Animated delay={200}>
+    </FadeInElement>
+    <FadeInElement delay={200}>
       <SiteTitle class="text-4xl" />
-    </Animated>
-    <Animated delay={400}>
+    </FadeInElement>
+    <FadeInElement delay={400}>
       <Hitokoto />
-    </Animated>
-    <Animated delay={600}>
+    </FadeInElement>
+    <FadeInElement delay={600}>
       <Nav />
-    </Animated>
+    </FadeInElement>
   </header>
   <main class="flex flex-col gap-32">
-    <Animated delay={800}>
+    <FadeInElement delay={800}>
       <section class="flex justify-between gap-48 align-top">
         <Intro />
         <SectionTitle title="介绍" description="intro" position="right" />
       </section>
-    </Animated>
-    <Animated delay={1000}>
+    </FadeInElement>
+    <FadeInElement delay={1000}>
       <section class="flex justify-between gap-48 align-top">
         <SectionTitle title="博客" description="blog" position="left" />
         <div class="flex flex-1 flex-col gap-4">
@@ -59,7 +60,7 @@ const posts = (await getCollection("blog"))
             <button
               id="more-posts"
               class={cn(
-                "rounded-2xl border-2 border-zinc-500 px-4 py-2 text-xs cursor-pointer",
+                "rounded-2xl border-2 border-zinc-500 px-4 py-2 text-xs cursor-pointer hover:cursor-pointer",
                 "hover:bg-zinc-500 hover:text-zinc-100",
                 "transition-colors duration-300"
               )}
@@ -69,15 +70,15 @@ const posts = (await getCollection("blog"))
           </div>
         </div>
       </section>
-    </Animated>
-    <Animated delay={1200}>
+    </FadeInElement>
+    <FadeInElement delay={1200}>
       <section class="flex justify-between gap-48 align-top">
         <div>暂时还没有作品喔~~</div>
         <SectionTitle title="作品" description="work" position="right" />
       </section>
-    </Animated>
+    </FadeInElement>
   </main>
-  <Animated delay={1400}>
+  <FadeInElement delay={1400}>
     <Footer />
-  </Animated>
+  </FadeInElement>
 </Layout>

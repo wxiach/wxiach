@@ -19,6 +19,12 @@
       oldCanvas.remove();
     }
 
+    // Clean up possible existing animation ID
+    if (window.fireworksAnimationId) {
+      cancelAnimationFrame(window.fireworksAnimationId);
+      window.fireworksAnimationId = null;
+    }
+
     // Create new canvas
     const canvas = document.createElement("canvas");
     canvas.id = "fireworks-canvas";
@@ -35,9 +41,8 @@
     if (!ctx) return;
 
     let particles = [];
-    let animationId;
-    // Add maximum particle limit to prevent performance issues
-    const MAX_PARTICLES = 300;
+    // Reduce maximum particle limit to improve performance
+    const MAX_PARTICLES = 150;
 
     // Particle constructor
     function Particle(x, y, color) {
@@ -45,8 +50,8 @@
       this.y = y;
       this.color = color;
       this.velocity = {
-        x: (Math.random() - 0.5) * 12,
-        y: (Math.random() - 0.5) * 12,
+        x: (Math.random() - 0.5) * 8, // Reduce speed
+        y: (Math.random() - 0.5) * 8,
       };
       this.alpha = 1;
 
@@ -54,7 +59,7 @@
         this.velocity.y += 0.1;
         this.x += this.velocity.x;
         this.y += this.velocity.y;
-        this.alpha -= 0.01;
+        this.alpha -= 0.02; // Speed up fade out
 
         ctx.save();
         ctx.globalAlpha = this.alpha;
@@ -73,7 +78,7 @@
 
       // Adjust particle count based on device performance
       const isMobile = window.innerWidth <= 768;
-      const particleCount = isMobile ? 20 : 40;
+      const particleCount = isMobile ? 15 : 30; // Reduce particle count
 
       // Check total particles, avoid too many affecting performance
       if (particles.length > MAX_PARTICLES) {
@@ -87,7 +92,13 @@
 
     // Animation loop
     function animate() {
-      animationId = requestAnimationFrame(animate);
+      // If page is not visible, pause animation
+      if (document.hidden) {
+        window.fireworksAnimationId = requestAnimationFrame(animate);
+        return;
+      }
+
+      window.fireworksAnimationId = requestAnimationFrame(animate);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       particles = particles.filter(particle => {
@@ -111,7 +122,7 @@
         }
         createFirework(e.clientX, e.clientY);
       } catch (err) {
-        console.error("Fireworks error:", err);
+        // Error silently handled
       }
     }
 
@@ -132,12 +143,25 @@
     function cleanup() {
       document.removeEventListener("click", handleClick);
       window.removeEventListener("resize", handleResize);
-      cancelAnimationFrame(animationId);
+      if (window.fireworksAnimationId) {
+        cancelAnimationFrame(window.fireworksAnimationId);
+        window.fireworksAnimationId = null;
+      }
       canvas.remove();
     }
 
     // Set cleanup on page transition
     document.addEventListener("astro:before-swap", cleanup, { once: true });
+
+    // Optimize for page visibility changes
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden && window.fireworksAnimationId) {
+        cancelAnimationFrame(window.fireworksAnimationId);
+        window.fireworksAnimationId = null;
+      } else if (!document.hidden && !window.fireworksAnimationId) {
+        animate();
+      }
+    });
 
     return cleanup;
   }

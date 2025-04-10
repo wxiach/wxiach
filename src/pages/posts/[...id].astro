@@ -5,7 +5,7 @@ import Layout from "@/layouts/Layout.astro";
 import Footer from "@/components/Footer.astro";
 import Category from "@/components/Category.astro";
 import DateFormatter from "@/components/DateFormatter.astro";
-import Animated from "@/components/Animated.astro";
+import FadeInElement from "@/components/FadeInElement.astro";
 
 export async function getStaticPaths() {
   return (await getCollection("blog")).map(post => ({
@@ -21,7 +21,7 @@ const { Content } = await render(post);
 <Layout siteSubTitle={post.data.title}>
   <main class="mx-auto min-h-[90vh] max-w-screen-md p-4">
     <article class="prose lg:prose-base max-w-screen-md">
-      <Animated>
+      <FadeInElement>
         <div class="mb-12">
           <h1>{post.data.title}</h1>
           <div class="flex items-center gap-4">
@@ -29,11 +29,11 @@ const { Content } = await render(post);
             <Category category={post.data.category} />
           </div>
         </div>
-      </Animated>
+      </FadeInElement>
       <Content />
     </article>
   </main>
-  <Animated delay={800}>
+  <FadeInElement delay={800}>
     <Footer />
-  </Animated>
+  </FadeInElement>
 </Layout>

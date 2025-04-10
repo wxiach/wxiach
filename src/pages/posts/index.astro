@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import Layout from "@/layouts/Layout.astro";
 import Footer from "@/components/Footer.astro";
 import PostItem from "@/components/PostItem.astro";
-import Animated from "@/components/Animated.astro";
+import FadeInElement from "@/components/FadeInElement.astro";
 
 const posts = await getCollection("blog");
 
@@ -35,7 +35,7 @@ const postsByYear = posts
 <Layout siteSubTitle="文章">
   <article class="flex flex-col gap-16">
     <header class="flex flex-col gap-8">
-      <Animated>
+      <FadeInElement>
         <button
           id="back"
           class={cn(
@@ -46,17 +46,17 @@ const postsByYear = posts
         >
           返回
         </button>
-      </Animated>
-      <Animated delay={200}>
+      </FadeInElement>
+      <FadeInElement delay={200}>
         <p>目前已经写了 {posts.length} 篇文章，继续加油吧~~😊</p>
-      </Animated>
+      </FadeInElement>
     </header>
     <main class="flex flex-col gap-16">
       {
         Object.entries(postsByYear)
           .sort(([a], [b]) => Number(b) - Number(a))
           .map(([year, posts], index) => (
-            <Animated delay={((index + 2) * 200) as 400 | 600 | 800 | 1000 | 1200 | 1400}>
+            <FadeInElement delay={((index + 2) * 200) as 400 | 600 | 800 | 1000 | 1200 | 1400}>
               <section class="flex flex-col gap-4">
                 <h2 class="text-2xl font-bold">{year}</h2>
                 <ul class="flex flex-col gap-4">
@@ -65,12 +65,12 @@ const postsByYear = posts
                   ))}
                 </ul>
               </section>
-            </Animated>
+            </FadeInElement>
           ))
       }
     </main>
-    <Animated delay={1400}>
+    <FadeInElement delay={1400}>
       <Footer />
-    </Animated>
+    </FadeInElement>
   </article>
 </Layout>

@@ -1,0 +1,59 @@
+---
+// Avatar click animation effect
+---
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", function () {
+    setupAvatarAnimation();
+  });
+
+  document.addEventListener("astro:page-load", function () {
+    setupAvatarAnimation();
+  });
+
+  // Cleanup function for animation effects
+  function cleanupAvatarAnimation() {
+    // Clean up avatar click event
+    const avatar = document.querySelector('img[alt="avatar"]');
+    if (avatar && avatar._animation_click) {
+      avatar.removeEventListener("click", avatar._animation_click);
+      avatar._animation_click = null;
+    }
+  }
+
+  // ========== Avatar Animation ==========
+  function setupAvatarAnimation() {
+    // Clean up existing animation effects
+    cleanupAvatarAnimation();
+
+    const avatar = document.querySelector('img[alt="avatar"]');
+    if (!avatar) return;
+
+    // Animation activation
+    function handleClick(e) {
+      // Prevent triggering other events
+      e.stopPropagation();
+
+      // Rotation and glow effects
+      avatar.style.transition = "all 1s ease";
+      avatar.style.transform = "rotate(360deg)";
+      avatar.style.filter = "brightness(1.5)";
+
+      // Reset styles
+      setTimeout(() => {
+        avatar.style.transform = "";
+        avatar.style.filter = "";
+        avatar.style.transition = "";
+      }, 1000);
+    }
+
+    // Save listener reference for cleanup
+    avatar._animation_click = handleClick;
+
+    // Add event listener
+    avatar.addEventListener("click", avatar._animation_click);
+
+    // Register cleanup function
+    document.addEventListener("astro:before-swap", cleanupAvatarAnimation, { once: true });
+  }
+</script>

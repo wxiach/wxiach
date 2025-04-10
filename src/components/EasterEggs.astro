@@ -1,0 +1,60 @@
+---
+// Avatar Easter Egg only
+---
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", function () {
+    setupAvatarEasterEgg();
+  });
+
+  document.addEventListener("astro:page-load", function () {
+    setupAvatarEasterEgg();
+  });
+
+  // Cleanup function for easter egg effects
+  function cleanupAvatarEasterEgg() {
+    // Clean up avatar click event
+    const avatar = document.querySelector('img[alt="avatar"]');
+    if (avatar && avatar._easterEgg_click) {
+      avatar.removeEventListener("click", avatar._easterEgg_click);
+      avatar._easterEgg_click = null;
+    }
+  }
+
+  // ========== Avatar Easter Egg ==========
+  function setupAvatarEasterEgg() {
+    // First clean up existing easter egg effects
+    cleanupAvatarEasterEgg();
+
+    const avatar = document.querySelector('img[alt="avatar"]');
+    if (!avatar) return;
+
+    // Easter egg activation
+    function handleClick(e) {
+      // Prevent triggering other events
+      e.stopPropagation();
+
+      // Directly activate easter egg, no counting needed
+      // Rotation and glow effects
+      avatar.style.transition = "all 1s ease";
+      avatar.style.transform = "rotate(360deg)";
+      avatar.style.filter = "brightness(1.5)";
+
+      // Reset styles
+      setTimeout(() => {
+        avatar.style.transform = "";
+        avatar.style.filter = "";
+        avatar.style.transition = "";
+      }, 1000);
+    }
+
+    // Save listener reference for cleanup
+    avatar._easterEgg_click = handleClick;
+
+    // Add event listener
+    avatar.addEventListener("click", avatar._easterEgg_click);
+
+    // Register cleanup function
+    document.addEventListener("astro:before-swap", cleanupAvatarEasterEgg, { once: true });
+  }
+</script>
