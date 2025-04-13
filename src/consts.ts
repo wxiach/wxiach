@@ -12,7 +12,7 @@ export const site = {
   ],
   contact: [{ email: "wxiach@gmail.com" }],
   nav: [
-    { name: "Github", url: "https://github.com/wxiach" },
+    { name: "GitHub", url: "https://github.com/wxiach" },
     { name: "Twitter", url: "https://twitter.com/iwxiach" },
     { name: "Weibo", url: "https://weibo.com/u/7889488509" },
   ],

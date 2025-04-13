@@ -1,8 +1,14 @@
 ---
 import { site } from "@/consts";
+import ThemeToggle from "./ThemeToggle.astro";
 ---
 
 <footer class="mt-24 flex flex-col items-center text-xs text-zinc-400 dark:text-zinc-500">
+  <!-- Theme toggle at the top of footer -->
+  <div class="mb-8 flex justify-center">
+    <ThemeToggle />
+  </div>
+
   <!-- Simplified minimal divider -->
   <div class="mb-8 flex w-full max-w-xs items-center justify-center">
     <div class="h-px w-full bg-zinc-200 dark:bg-zinc-800"></div>

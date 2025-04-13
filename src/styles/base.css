@@ -4,13 +4,15 @@
 
 /* Base element styles with smooth dark mode transitions */
 html {
-  transition: color-scheme 0.3s ease;
+  /* 移除色彩模式的过渡动画 */
+  /* transition: color-scheme 0.3s ease; */
 }
 
 html, body, * {
-  transition-property: background-color, border-color, color, fill, stroke;
+  /* 移除所有元素的颜色过渡动画 */
+  /* transition-property: background-color, border-color, color, fill, stroke;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 300ms;
+  transition-duration: 300ms; */
 }
 
 /* Selection styling */

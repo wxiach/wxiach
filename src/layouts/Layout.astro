@@ -3,7 +3,6 @@ import "@/styles/global.css";
 import "@/styles/animations.css";
 import Head from "@/components/Head.astro";
 import Fireworks from "@/components/Fireworks.astro";
-import ThemeToggle from "@/components/ThemeToggle.astro";
 
 type Props = {
   siteSubTitle?: string;
@@ -60,9 +59,6 @@ const { siteSubTitle } = Astro.props;
   <body
     class="mx-auto flex max-w-screen-md flex-col gap-12 overflow-x-hidden bg-white px-4 py-16 text-zinc-900 md:gap-32 md:py-32 dark:bg-zinc-900 dark:text-zinc-100"
   >
-    <div class="fixed top-4 right-4 z-50">
-      <ThemeToggle />
-    </div>
     <slot />
     <Fireworks />
   </body>

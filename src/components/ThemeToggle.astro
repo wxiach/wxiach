@@ -1,45 +1,185 @@
 ---
 /**
  * Theme Toggle Component
- * Simple toggle button for switching between light and dark mode
+ * Elegant icon-only segmented control for switching between light and dark mode
  */
 ---
 
-<button
-  id="theme-toggle"
-  class="inline-flex h-9 w-9 items-center justify-center rounded-md border bg-white p-2 text-zinc-700 hover:bg-zinc-100 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700"
-  aria-label="Toggle dark mode"
-  onclick="window.themeManager && window.themeManager.toggleTheme()"
->
-  <!-- Sun icon (visible in dark mode) -->
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    class="hidden h-5 w-5 dark:block"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-  >
-    <path
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
-      d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-    ></path>
-  </svg>
+<div class="theme-toggle-container">
+  <div class="theme-toggle">
+    <button
+      id="light-mode-toggle"
+      class="theme-option"
+      aria-label="Switch to light mode"
+      onclick="window.themeManager && window.themeManager.setTheme('light')"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="icon"
+      >
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+    </button>
+    <button
+      id="dark-mode-toggle"
+      class="theme-option"
+      aria-label="Switch to dark mode"
+      onclick="window.themeManager && window.themeManager.setTheme('dark')"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="icon"
+      >
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    </button>
+    <div class="active-indicator"></div>
+  </div>
+</div>
 
-  <!-- Moon icon (visible in light mode) -->
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    class="block h-5 w-5 dark:hidden"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-  >
-    <path
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
-      d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-    ></path>
-  </svg>
-</button>
+<style>
+  .theme-toggle-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .theme-toggle {
+    position: relative;
+    display: flex;
+    border-radius: 20px;
+    border: 1px solid rgba(150, 150, 150, 0.1);
+    padding: 2px;
+    background-color: #f5f5f5;
+    width: 80px;
+    height: 36px;
+  }
+
+  .theme-option {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 18px;
+    color: #71717a;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+
+  .icon {
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+  }
+
+  .active-indicator {
+    position: absolute;
+    z-index: 0;
+    top: 2px;
+    left: 2px;
+    width: calc(50% - 2px);
+    height: calc(100% - 4px);
+    border-radius: 18px;
+    background-color: white;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  :global(.dark) .theme-toggle {
+    background-color: #2a2a2a;
+    border-color: rgba(255, 255, 255, 0.05);
+  }
+
+  :global(.dark) .active-indicator {
+    background-color: #3f3f46;
+    transform: translateX(calc(100% - 0px));
+  }
+
+  :global(.dark) .theme-option {
+    color: #a1a1aa;
+  }
+
+  #light-mode-toggle.active {
+    color: #18181b;
+  }
+
+  #light-mode-toggle.active .icon {
+    opacity: 1;
+  }
+
+  #dark-mode-toggle.active {
+    color: #e4e4e7;
+  }
+
+  #dark-mode-toggle.active .icon {
+    opacity: 1;
+  }
+</style>
+
+<script is:inline>
+  // Add setTheme method to themeManager
+  if (window.themeManager) {
+    window.themeManager.setTheme = function (theme) {
+      localStorage.theme = theme;
+      this.applyTheme();
+    };
+  }
+
+  // Add active state to buttons
+  function updateActiveButton() {
+    const isDark = document.documentElement.classList.contains("dark");
+    const lightBtn = document.getElementById("light-mode-toggle");
+    const darkBtn = document.getElementById("dark-mode-toggle");
+
+    if (lightBtn && darkBtn) {
+      if (isDark) {
+        lightBtn.classList.remove("active");
+        darkBtn.classList.add("active");
+      } else {
+        darkBtn.classList.remove("active");
+        lightBtn.classList.add("active");
+      }
+    }
+  }
+
+  // Update buttons on load and theme change
+  document.addEventListener("DOMContentLoaded", updateActiveButton);
+  document.addEventListener("astro:after-swap", updateActiveButton);
+
+  // Observer for theme changes
+  const observer = new MutationObserver(function (mutations) {
+    mutations.forEach(function (mutation) {
+      if (mutation.attributeName === "class") {
+        updateActiveButton();
+      }
+    });
+  });
+
+  observer.observe(document.documentElement, { attributes: true });
+</script>
