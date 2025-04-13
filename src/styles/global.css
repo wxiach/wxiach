@@ -6,6 +6,9 @@
 /* Import Tailwind CSS */
 @import "tailwindcss";
 
+/* Configure dark mode variant - manual toggle with .dark class */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* Load plugins */
 @plugin "tailwindcss-animate";
 @plugin "@tailwindcss/typography";
@@ -15,5 +18,6 @@
 
 /* Import modular CSS files */
 @import "./theme.css";
+@import "./base.css";
 @import "./typography.css";
 @import "./animations.css"; 

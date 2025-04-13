@@ -3,6 +3,7 @@ import "@/styles/global.css";
 import "@/styles/animations.css";
 import Head from "@/components/Head.astro";
 import Fireworks from "@/components/Fireworks.astro";
+import ThemeToggle from "@/components/ThemeToggle.astro";
 
 type Props = {
   siteSubTitle?: string;
@@ -15,29 +16,53 @@ const { siteSubTitle } = Astro.props;
   <head>
     <Head siteSubTitle={siteSubTitle} />
     <script is:inline>
-      // Scroll to top on page load (refresh)
-      window.onload = function () {
-        window.scrollTo(0, 0);
-      };
+      // Theme initialization and management script
+      (function () {
+        // Apply theme based on localStorage or system preference
+        function applyTheme() {
+          const isDark =
+            localStorage.theme === "dark" ||
+            (!("theme" in localStorage) &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches);
 
-      // Handle back/forward navigation
-      if ("scrollRestoration" in history) {
-        // Modern browsers
-        history.scrollRestoration = "manual";
-      }
-
-      // Backup method using pageshow event
-      window.addEventListener("pageshow", function (event) {
-        if (event.persisted) {
-          // Page was loaded from back/forward cache
-          window.scrollTo(0, 0);
+          if (isDark) {
+            document.documentElement.classList.add("dark");
+          } else {
+            document.documentElement.classList.remove("dark");
+          }
         }
-      });
+
+        // Initial theme application
+        applyTheme();
+
+        // Handle page transitions in Astro
+        document.addEventListener("astro:after-swap", applyTheme);
+
+        // Add a global handler to update all open tabs when theme changes
+        window.addEventListener("storage", e => {
+          if (e.key === "theme") {
+            applyTheme();
+          }
+        });
+
+        // Make these functions available globally
+        window.themeManager = {
+          applyTheme: applyTheme,
+          toggleTheme: function () {
+            const isDark = document.documentElement.classList.contains("dark");
+            localStorage.theme = isDark ? "light" : "dark";
+            applyTheme();
+          },
+        };
+      })();
     </script>
   </head>
   <body
     class="mx-auto flex max-w-screen-md flex-col gap-12 overflow-x-hidden bg-white px-4 py-16 text-zinc-900 md:gap-32 md:py-32 dark:bg-zinc-900 dark:text-zinc-100"
   >
+    <div class="fixed top-4 right-4 z-50">
+      <ThemeToggle />
+    </div>
     <slot />
     <Fireworks />
   </body>

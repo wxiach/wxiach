@@ -1,0 +1,41 @@
+/* 
+ * Base styles for the entire site
+ */
+
+/* Base element styles with smooth dark mode transitions */
+html {
+  transition: color-scheme 0.3s ease;
+}
+
+html, body, * {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+/* Selection styling */
+::selection {
+  background-color: rgb(var(--selection-bg));
+  color: rgb(var(--selection-text));
+}
+
+/* Custom scrollbar - only needed for webkit browsers */
+@media (min-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-white dark:bg-zinc-900;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-zinc-300 dark:bg-zinc-700;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-zinc-400 dark:bg-zinc-600;
+  }
+} 
