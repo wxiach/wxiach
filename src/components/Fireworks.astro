@@ -44,6 +44,9 @@
     // Reduce maximum particle limit to improve performance
     const MAX_PARTICLES = 150;
 
+    // Track if animation is active
+    let animationActive = false;
+
     // Long press detection variables
     let isLongPress = false;
     let pressTimer = null;
@@ -61,20 +64,30 @@
         y: (Math.random() - 0.5) * 8,
       };
       this.alpha = 1;
+      this.decay = 0.015 + Math.random() * 0.015; // Vary decay rate for more natural fade
+      this.size = 2 + Math.random() * 2; // Vary particle size
 
       this.update = function () {
         this.velocity.y += 0.1;
         this.x += this.velocity.x;
         this.y += this.velocity.y;
-        this.alpha -= 0.02; // Speed up fade out
+        this.alpha -= this.decay; // Use variable decay rate for smoother fade
+
+        // Don't render very faint particles to avoid the "hanging" effect
+        if (this.alpha <= 0.01) {
+          this.alpha = 0;
+          return false;
+        }
 
         ctx.save();
         ctx.globalAlpha = this.alpha;
         ctx.beginPath();
-        ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fillStyle = this.color;
         ctx.fill();
         ctx.restore();
+
+        return true;
       };
     }
 
@@ -95,6 +108,19 @@
       for (let i = 0; i < particleCount; i++) {
         particles.push(new Particle(x, y, color));
       }
+
+      // Start animation if not already running
+      if (!animationActive) {
+        startAnimation();
+      }
+    }
+
+    // Start animation loop
+    function startAnimation() {
+      if (!animationActive) {
+        animationActive = true;
+        window.fireworksAnimationId = requestAnimationFrame(animate);
+      }
     }
 
     // Animation loop
@@ -105,13 +131,21 @@
         return;
       }
 
-      window.fireworksAnimationId = requestAnimationFrame(animate);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      particles = particles.filter(particle => {
-        particle.update();
-        return particle.alpha > 0;
-      });
+      // Filter out invisible particles immediately
+      const hasParticles = particles.length > 0;
+      particles = particles.filter(particle => particle.update());
+
+      // Continue animation if particles exist
+      if (particles.length > 0) {
+        window.fireworksAnimationId = requestAnimationFrame(animate);
+      } else {
+        // Last particles just disappeared
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        window.fireworksAnimationId = null;
+        animationActive = false;
+      }
     }
 
     // Mouse down event handler
@@ -182,6 +216,7 @@
         createFirework(e.clientX, e.clientY);
       } catch (err) {
         // Error silently handled
+        console.error("Fireworks error:", err);
       }
     }
 
@@ -216,14 +251,28 @@
       }
     };
 
+    const touchEndHandler = e => {
+      handleMouseUp();
+      // Also trigger click for touch end
+      if (!isLongPress && e.changedTouches.length > 0) {
+        const touch = e.changedTouches[0];
+        const clickEvent = {
+          clientX: touch.clientX,
+          clientY: touch.clientY,
+          target: document.elementFromPoint(touch.clientX, touch.clientY),
+        };
+        handleClick(clickEvent);
+      }
+    };
+
     document.addEventListener("touchstart", touchStartHandler);
     document.addEventListener("touchmove", touchMoveHandler);
-    document.addEventListener("touchend", handleMouseUp);
+    document.addEventListener("touchend", touchEndHandler);
 
     window.addEventListener("resize", handleResize);
 
-    // Start animation
-    animate();
+    // No need to start animation immediately - will start on first click
+    // Animation will now start only when particles are created
 
     // Cleanup function
     function cleanup() {
@@ -235,7 +284,7 @@
       // Remove touch event listeners
       document.removeEventListener("touchstart", touchStartHandler);
       document.removeEventListener("touchmove", touchMoveHandler);
-      document.removeEventListener("touchend", handleMouseUp);
+      document.removeEventListener("touchend", touchEndHandler);
 
       window.removeEventListener("resize", handleResize);
 
@@ -259,8 +308,9 @@
       if (document.hidden && window.fireworksAnimationId) {
         cancelAnimationFrame(window.fireworksAnimationId);
         window.fireworksAnimationId = null;
-      } else if (!document.hidden && !window.fireworksAnimationId) {
-        animate();
+        animationActive = false;
+      } else if (!document.hidden && particles.length > 0 && !animationActive) {
+        startAnimation();
       }
     });
 
