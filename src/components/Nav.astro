@@ -3,25 +3,20 @@ import { site } from "@/consts";
 import { cn } from "@/lib/utils";
 ---
 
-<nav class="flex gap-3">
+<nav class="flex items-center gap-4">
   {
     site.nav.map(({ name, url }, index) => (
       <>
-        {index != 0 && <span class="text-zinc-400">/</span>}
-        <a
-          href={url}
-          class="group relative inline-block cursor-pointer hover:cursor-pointer"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <span class="font-medium text-zinc-700 transition-colors duration-200 group-hover:text-zinc-900">
+        {index != 0 && <span class="text-xs text-zinc-300 dark:text-zinc-600">/</span>}
+        <a href={url} class="group relative inline-block" target="_blank" rel="noopener noreferrer">
+          <span class="text-sm tracking-wide text-zinc-600 transition-all duration-300 group-hover:text-zinc-800 dark:text-zinc-400 dark:group-hover:text-zinc-200">
             {name}
           </span>
           <span
             class={cn(
-              "absolute bottom-0 left-0 h-0.5 w-0 rounded-xs bg-zinc-400",
-              "transition-all duration-300",
-              "group-hover:right-auto group-hover:left-0 group-hover:w-full"
+              "absolute -bottom-1 left-0 h-px w-0 bg-zinc-300 dark:bg-zinc-700",
+              "transition-all duration-300 ease-out",
+              "opacity-0 group-hover:w-full group-hover:opacity-100"
             )}
           />
         </a>

@@ -1,45 +1,31 @@
-/* Prose content animation styles */
+/* 
+ * Animation styles
+ * Contains all animation keyframes and animation utilities
+ */
+
+/* Fade up animation */
 @keyframes fadeUp {
   from {
     opacity: 0;
     transform: translateY(20px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-.prose>* {
+/* Prose content animation */
+.prose > * {
   opacity: 0;
   animation: fadeUp 0.8s ease-out forwards;
 }
 
-.prose>*:nth-child(1) {
-  animation-delay: 200ms;
-}
-
-.prose>*:nth-child(2) {
-  animation-delay: 300ms;
-}
-
-.prose>*:nth-child(3) {
-  animation-delay: 400ms;
-}
-
-.prose>*:nth-child(4) {
-  animation-delay: 500ms;
-}
-
-.prose>*:nth-child(5) {
-  animation-delay: 600ms;
-}
-
-.prose>*:nth-child(6) {
-  animation-delay: 700ms;
-}
-
-.prose>*:nth-child(n + 7) {
-  animation-delay: 800ms;
-}
+/* Sequential animation delays for prose content */
+.prose > *:nth-child(1) { animation-delay: 200ms; }
+.prose > *:nth-child(2) { animation-delay: 300ms; }
+.prose > *:nth-child(3) { animation-delay: 400ms; }
+.prose > *:nth-child(4) { animation-delay: 500ms; }
+.prose > *:nth-child(5) { animation-delay: 600ms; }
+.prose > *:nth-child(6) { animation-delay: 700ms; }
+.prose > *:nth-child(n + 7) { animation-delay: 800ms; }

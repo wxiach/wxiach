@@ -2,30 +2,33 @@
 import { site } from "@/consts";
 ---
 
-<footer class="mt-16 flex flex-col items-center text-sm text-zinc-400">
-  <div class="flex w-full items-center justify-center pb-12">
-    <div class="h-px w-8 bg-gradient-to-r from-transparent via-zinc-300 to-transparent"></div>
-    <div class="mx-3 h-1 w-1 rounded-full bg-zinc-300"></div>
-    <div class="h-px w-8 bg-gradient-to-l from-transparent via-zinc-300 to-transparent"></div>
+<footer class="mt-24 flex flex-col items-center text-xs text-zinc-400 dark:text-zinc-500">
+  <!-- Simplified minimal divider -->
+  <div class="mb-8 flex w-full max-w-xs items-center justify-center">
+    <div class="h-px w-full bg-zinc-200 dark:bg-zinc-800"></div>
   </div>
 
-  <div class="flex flex-col items-center gap-3 font-normal tracking-wide">
-    <p>
-      Copyright © 2025 <span class="font-medium text-zinc-500">{site.author}</span>. All rights
-      reserved.
+  <div class="flex flex-col items-center gap-4 font-light tracking-wide">
+    <p class="flex items-center gap-2">
+      <span class="text-zinc-300 dark:text-zinc-700">&#169;</span>
+      <span>{new Date().getFullYear()}</span>
+      <span class="text-zinc-300 dark:text-zinc-700">&#8226;</span>
+      <span class="font-normal text-zinc-500 dark:text-zinc-400">{site.author}</span>
     </p>
-    <p>
-      本博客内容遵循 <a
-        class="group relative font-medium text-zinc-500 transition-all duration-200 hover:text-zinc-700"
+
+    <p class="flex flex-wrap items-center justify-center gap-2 text-center">
+      <span>Content licensed under</span>
+      <a
+        class="group relative font-normal text-zinc-500 transition-all duration-200 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-300"
         href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
         target="_blank"
         rel="noopener noreferrer"
       >
         <span class="relative z-10">CC BY-NC-SA 4.0</span>
         <span
-          class="absolute bottom-0 left-0 h-px w-full scale-x-0 bg-zinc-400 transition-transform duration-200 group-hover:scale-x-100"
+          class="absolute -bottom-0.5 left-0 h-px w-full scale-x-0 bg-zinc-400 transition-transform duration-200 group-hover:scale-x-100 dark:bg-zinc-500"
         ></span>
-      </a> 许可协议
+      </a>
     </p>
   </div>
 </footer>

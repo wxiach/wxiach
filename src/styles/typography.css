@@ -1,0 +1,35 @@
+/* 
+ * Typography styles - minimal approach
+ * Only includes essential base styles that can't be easily achieved with utility classes
+ */
+
+/* Base font settings - this is necessary as it's a site-wide font choice */
+body {
+  font-family: "LXGW WenKai Screen", sans-serif;
+}
+
+/* Selection styles - these enhance user experience and can't be done easily with utilities */
+::selection {
+  background-color: var(--selection-bg);
+  color: var(--selection-text);
+  text-shadow: none;
+}
+
+::-moz-selection {
+  background-color: var(--selection-bg);
+  color: var(--selection-text);
+  text-shadow: none;
+}
+
+/* Selection style for code blocks */
+pre code::selection,
+code::selection {
+  background-color: rgba(161, 161, 170, 0.3); /* zinc-400 with transparency */
+  color: inherit;
+}
+
+pre code::-moz-selection,
+code::-moz-selection {
+  background-color: rgba(161, 161, 170, 0.3); /* zinc-400 with transparency */
+  color: inherit;
+} 

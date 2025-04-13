@@ -1,108 +1,19 @@
+/* 
+ * Main stylesheet entry point
+ * Configures Tailwind and imports all style modules
+ */
+
+/* Import Tailwind CSS */
 @import "tailwindcss";
+
+/* Load plugins */
 @plugin "tailwindcss-animate";
 @plugin "@tailwindcss/typography";
 
-:root {
-  /* Text colors */
-  --text-primary: #18181b;
-  /* zinc-900 for main text */
-  --text-secondary: #3f3f46;
-  /* zinc-700 for secondary text */
-  --text-tertiary: #71717a;
-  /* zinc-500 for less important text */
-  --text-muted: #a1a1aa;
-  /* zinc-400 for dates, metadata */
+/* Configure source files for scanning */
+@source "./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}";
 
-  /* Selection colors */
-  --selection-bg: #d4d4d8;
-  /* zinc-300 */
-  --selection-text: #18181b;
-  /* zinc-900 */
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    /* Dark mode selection colors */
-    --selection-bg: #52525b;
-    /* zinc-600 */
-    --selection-text: #f4f4f5;
-    /* zinc-100 */
-  }
-}
-
-body {
-  font-family: "LXGW WenKai Screen", sans-serif;
-  color: var(--text-primary);
-  line-height: 1.65;
-}
-
-/* Custom text selection styles */
-::selection {
-  background-color: var(--selection-bg);
-  color: var(--selection-text);
-  text-shadow: none;
-}
-
-::-moz-selection {
-  background-color: var(--selection-bg);
-  color: var(--selection-text);
-  text-shadow: none;
-}
-
-/* Selection style for code blocks */
-pre code::selection,
-code::selection {
-  background-color: rgba(161, 161, 170, 0.3);
-  /* zinc-400 with transparency */
-  color: inherit;
-}
-
-pre code::-moz-selection,
-code::-moz-selection {
-  background-color: rgba(161, 161, 170, 0.3);
-  /* zinc-400 with transparency */
-  color: inherit;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: var(--text-primary);
-  line-height: 1.3;
-}
-
-/* Typography base styles */
-h1 {
-  font-weight: 700;
-  /* bold */
-  letter-spacing: -0.025em;
-}
-
-h2 {
-  font-weight: 600;
-  /* semibold */
-  letter-spacing: -0.015em;
-}
-
-h3,
-h4,
-h5,
-h6 {
-  font-weight: 500;
-  /* medium */
-}
-
-p,
-li,
-blockquote {
-  color: var(--text-secondary);
-}
-
-time,
-small,
-.text-muted {
-  color: var(--text-tertiary);
-}
+/* Import modular CSS files */
+@import "./theme.css";
+@import "./typography.css";
+@import "./animations.css"; 

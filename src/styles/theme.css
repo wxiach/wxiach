@@ -1,0 +1,24 @@
+/* 
+ * Theme configuration - minimal approach
+ * Only essential theme variables that support the minimal global styles
+ */
+
+@theme {
+  /* Custom theme variables can be defined here if needed */
+  /* Prefer using Tailwind's built-in design tokens when possible */
+}
+
+/* Essential variables for selection styling */
+:root {
+  /* Selection colors */
+  --selection-bg: #d4d4d8; /* zinc-300 */
+  --selection-text: #18181b; /* zinc-900 */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dark mode selection colors */
+    --selection-bg: #52525b; /* zinc-600 */
+    --selection-text: #f4f4f5; /* zinc-100 */
+  }
+} 

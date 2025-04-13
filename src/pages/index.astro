@@ -59,9 +59,13 @@ const posts = (await getCollection("blog"))
             <button
               id="more-posts"
               class={cn(
-                "rounded-2xl border-2 border-zinc-300 px-4 py-2 text-xs font-medium text-zinc-700 cursor-pointer",
-                "hover:border-zinc-400 hover:text-zinc-900",
-                "transition-all duration-300"
+                "relative px-4 py-1.5 text-xs tracking-wide",
+                "bg-transparent text-zinc-500 dark:text-zinc-500",
+                "border border-zinc-200 dark:border-zinc-800 rounded-sm",
+                "hover:bg-zinc-50/50 dark:hover:bg-zinc-800/30",
+                "hover:border-zinc-300 dark:hover:border-zinc-700",
+                "hover:text-zinc-700 dark:hover:text-zinc-400",
+                "transition-all duration-300 cursor-pointer"
               )}
             >
               更多文章
@@ -72,7 +76,7 @@ const posts = (await getCollection("blog"))
     </FadeInElement>
     <FadeInElement delay={1200}>
       <section class="flex justify-between gap-48 align-top">
-        <div class="font-normal text-zinc-500">暂时还没有作品喔~~</div>
+        <div class="font-normal text-zinc-500 dark:text-zinc-400">暂时还没有作品喔~~</div>
         <SectionTitle title="作品" description="work" position="right" />
       </section>
     </FadeInElement>

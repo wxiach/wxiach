@@ -8,9 +8,13 @@ interface Props {
 
 const { class: className, date } = Astro.props as Props;
 
-const options: Intl.DateTimeFormatOptions = { month: "short", day: "numeric", year: "numeric" };
+// 分别获取月日和年份
+const monthDay = date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+const year = date.toLocaleDateString("en-US", { year: "numeric" });
 ---
 
-<span class={cn(className, "text-xs font-normal text-zinc-400 tabular-nums tracking-tight")}
-  >{date.toLocaleDateString("en-US", options)}</span
->
+<span class={cn(className, "inline-flex items-center gap-1.5 text-xs tabular-nums tracking-tight")}>
+  <span class="font-normal text-zinc-500 dark:text-zinc-400">{monthDay}</span>
+  <span class="text-zinc-300 dark:text-zinc-700">·</span>
+  <span class="font-light text-zinc-400 dark:text-zinc-500">{year}</span>
+</span>
