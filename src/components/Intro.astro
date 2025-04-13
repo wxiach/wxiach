@@ -2,21 +2,42 @@
 
 ---
 
-<div class="flex max-w-xl flex-col gap-8">
-  <p class="leading-relaxed text-zinc-700 dark:text-zinc-300">
-    👋 Hi, I'm <span class="font-medium text-zinc-900 dark:text-zinc-100">wxiach</span>. Welcome to
-    my personal website. I'm a code farmer who enjoys solitude and simple things. Here, I share my
-    projects and thoughts. Feel free to look around.
-  </p>
+<div class="flex max-w-xl flex-col gap-4">
+  <div class="flex flex-col gap-8">
+    <!-- 英文介绍 -->
+    <div class="flex flex-col gap-4">
+      <p class="leading-relaxed text-zinc-700 dark:text-zinc-300">
+        👋 Hi, I'm <span class="font-medium text-zinc-900 dark:text-zinc-100">wxiach</span>. I'm a
+        developer who enjoys coding, minimalist design, and quiet moments.
+      </p>
 
-  <div class="flex items-center space-x-5 opacity-50">
-    <div class="h-[0.5px] flex-1 bg-zinc-300 dark:bg-zinc-700"></div>
-    <span class="text-xs text-zinc-400 dark:text-zinc-500">···</span>
-    <div class="h-[0.5px] flex-1 bg-zinc-300 dark:bg-zinc-700"></div>
+      <p class="leading-relaxed text-zinc-700 dark:text-zinc-300">
+        This website is where I share my projects and thoughts. Thanks for stopping by.
+      </p>
+    </div>
+
+    <!-- 中文介绍 -->
+    <div class="border-t border-dashed border-zinc-200 pt-4 dark:border-zinc-800">
+      <div class="flex flex-col gap-4">
+        <p class="leading-relaxed text-zinc-600 dark:text-zinc-400">
+          鄙人生性愚钝，闲静少言，不幕荣利。好 <code
+            class="hover:text-tomato dark:hover:text-tomato cursor-pointer rounded bg-zinc-100/50 px-1 text-zinc-700 transition-colors duration-300 dark:bg-zinc-800/50 dark:text-zinc-300"
+            >&lt;code /&gt;</code
+          >，不求甚解，每有会意，便懒于外卖。
+        </p>
+
+        <p class="leading-relaxed text-zinc-600 dark:text-zinc-400">
+          性宅舍，以课不能常得，故弃课而憩之。同舍知其如此，或劝之。常著文章自娱，颇示己志。
+        </p>
+      </div>
+    </div>
   </div>
-
-  <p class="leading-relaxed text-zinc-700 dark:text-zinc-300">
-    鄙人生性愚钝，闲静少言，不幕荣利。好 Coding，
-    不求甚解，每有会意，便懒于外卖。性宅舍，以课不能常得，故弃课而憩之。同舍知其如此，或劝之。常著文章自娱，颇示己志。
-  </p>
 </div>
+
+<style>
+  /* 定义tomato颜色，网站唯一的彩色元素 */
+  code:hover {
+    --tomato: #ff6347;
+    color: var(--tomato);
+  }
+</style>
