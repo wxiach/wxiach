@@ -52,6 +52,10 @@ const { siteSubTitle } = Astro.props;
             localStorage.theme = isDark ? "light" : "dark";
             applyTheme();
           },
+          setTheme: function (theme) {
+            localStorage.theme = theme;
+            this.applyTheme();
+          },
         };
       })();
     </script>

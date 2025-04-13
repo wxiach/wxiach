@@ -2,17 +2,9 @@
  * Base styles for the entire site
  */
 
-/* Base element styles with smooth dark mode transitions */
-html {
-  /* 移除色彩模式的过渡动画 */
-  /* transition: color-scheme 0.3s ease; */
-}
-
-html, body, * {
-  /* 移除所有元素的颜色过渡动画 */
-  /* transition-property: background-color, border-color, color, fill, stroke;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 300ms; */
+/* Disable transitions during theme switching */
+.disable-transitions * {
+  transition: none !important;
 }
 
 /* Selection styling */

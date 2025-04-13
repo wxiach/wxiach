@@ -1,5 +1,5 @@
 export const site = {
-  title: "wxiach's Blog",
+  title: "wxiach's blog",
   description:
     "wxiach's personal website - 一个享受独处与简约生活的程序员，记录思考、成长与代码。探索技术、随笔、生活感悟，偶尔回顾过往。欢迎交流，共同进步。",
   author: "wxiach",
