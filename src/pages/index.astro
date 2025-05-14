@@ -12,9 +12,7 @@ import PostItem from "@/components/PostItem.astro";
 import SiteTitle from "@/components/SiteTitle.astro";
 import SectionTitle from "@/components/SectionTitle.astro";
 
-const posts = (await getCollection("blog"))
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 6);
+const posts = (await getCollection("blog")).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()).slice(0, 6);
 ---
 
 <script>
@@ -29,12 +27,12 @@ const posts = (await getCollection("blog"))
 </script>
 
 <Layout>
-  <header class="flex flex-col items-center gap-12">
+  <header class="mb-32 flex flex-col items-center gap-12">
     <FadeInElement>
       <Avatar />
     </FadeInElement>
     <FadeInElement delay={200}>
-      <SiteTitle class="text-4xl" />
+      <SiteTitle class="text-3xl" />
     </FadeInElement>
     <FadeInElement delay={400}>
       <Hitokoto />

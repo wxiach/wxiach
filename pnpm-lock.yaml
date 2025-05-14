@@ -14,9 +14,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
-      lxgw-wenkai-screen-webfont:
-        specifier: ^1.7.0
-        version: 1.7.0
+      lxgw-wenkai-screen-web:
+        specifier: ^1.510.0
+        version: 1.510.0
       sharp:
         specifier: ^0.34.1
         version: 0.34.1
@@ -2056,8 +2056,8 @@ packages:
   lru-cache@10.4.3:
     resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
 
-  lxgw-wenkai-screen-webfont@1.7.0:
-    resolution: {integrity: sha512-xvfF4V26Mb335xKg3uxljz+V2nq4F5ek0ku9pmyKgT0Dzo/d2rHi7WpnqgvM9mlXAcAKOrxrcDmUZiIs/ZQ9bQ==}
+  lxgw-wenkai-screen-web@1.510.0:
+    resolution: {integrity: sha512-Y48Pn62YEWBjM2VlFYGq1Z1R2UlizE9+k2nZIbx5gPmTRSvTEwCu7VHbqf7EqXa4RidlkU6akmxEqsjljHmDkg==}
 
   magic-string@0.30.17:
     resolution: {integrity: sha512-sNPKHvyjVf7gyjwS4xGTaW/mCnF8wnjtifKBEhxfZ7E/S8tQ0rssrwGNn6q8JH/ohItJfSQp9mBtQYuTlH5QnA==}
@@ -5319,7 +5319,7 @@ snapshots:
 
   lru-cache@10.4.3: {}
 
-  lxgw-wenkai-screen-webfont@1.7.0: {}
+  lxgw-wenkai-screen-web@1.510.0: {}
 
   magic-string@0.30.17:
     dependencies:

@@ -4,6 +4,7 @@
  */
 
 /* Base font settings - this is necessary as it's a site-wide font choice */
+
 body {
   font-family: "LXGW WenKai Screen", sans-serif;
 }
@@ -45,4 +46,4 @@ code::-moz-selection {
 .dark .prose blockquote {
   color: #a1a1aa; /* zinc-400 */
   border-left-color: #52525b; /* zinc-600 */
-} 
+}
