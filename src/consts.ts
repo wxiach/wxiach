@@ -1,15 +1,9 @@
 export const site = {
-  title: "无畏小生的茶馆",
+  title: "Soren's Blog",
   description:
-    "wxiach's personal website - 一个享受独处与简约生活的程序员，记录思考、成长与代码。探索技术、随笔、生活感悟，偶尔回顾过往。欢迎交流，共同进步。",
+    "Soren Wei的个人博客，专注于分享编程技术、代码心得、个人成长感悟与生活随笔。探索简约生活，记录程序员的思考与点滴。",
   author: "Soren  Wei",
-  hitokoto: [
-    "一个迷茫的小孩。",
-    "孤独症患者。",
-    "享受独处的人。",
-    "热爱生活的代码工匠。",
-    "思考与反思中前行。",
-  ],
+  hitokoto: ["一个迷茫的小孩。", "孤独症患者。", "享受独处的人。", "热爱生活的代码工匠。", "思考与反思中前行。"],
   contact: [{ email: "wxiach@gmail.com" }],
   nav: [
     { name: "GitHub", url: "https://github.com/wxiach" },

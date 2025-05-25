@@ -1,23 +1,23 @@
 /* 
- * Main stylesheet entry point
- * Configures Tailwind and imports all style modules
+ * 主要样式表入口点
+ * 配置Tailwind并导入所有样式模块
  */
 
-/* Import Tailwind CSS */
+/* 导入Tailwind CSS */
 @import "tailwindcss";
 
-/* Configure dark mode variant - manual toggle with .dark class */
+/* 配置暗黑模式变体 - 使用.dark类手动切换 */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Load plugins */
+/* 加载插件 */
 @plugin "tailwindcss-animate";
 @plugin "@tailwindcss/typography";
 
-/* Configure source files for scanning */
+/* 配置要扫描的源文件 */
 @source "./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}";
 
-/* Import modular CSS files */
+/* 导入模块化CSS文件 */
 @import "./theme.css";
 @import "./base.css";
 @import "./typography.css";
-@import "./animations.css"; 
+@import "./animations.css";

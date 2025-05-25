@@ -1,35 +1,8 @@
 /* 
- * Base styles for the entire site
+ * 整个网站的基础样式
  */
 
-/* Disable transitions during theme switching */
+/* 在主题切换期间禁用过渡 */
 .disable-transitions * {
   transition: none !important;
 }
-
-/* Selection styling */
-::selection {
-  background-color: rgb(var(--selection-bg));
-  color: rgb(var(--selection-text));
-}
-
-/* Custom scrollbar - only needed for webkit browsers */
-@media (min-width: 768px) {
-  ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-
-  ::-webkit-scrollbar-track {
-    @apply bg-white dark:bg-zinc-900;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    @apply bg-zinc-300 dark:bg-zinc-700;
-    border-radius: 4px;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    @apply bg-zinc-400 dark:bg-zinc-600;
-  }
-} 

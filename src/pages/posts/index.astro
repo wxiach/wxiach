@@ -29,7 +29,7 @@ const postsByYear = posts
   document.addEventListener("click", event => {
     const target = event.target as HTMLElement;
     if (target && target.id === "back") {
-      // Navigate directly without scrolling first
+      // 直接导航，不先滚动
       navigate("/");
     }
   });

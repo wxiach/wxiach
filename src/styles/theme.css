@@ -1,21 +1,13 @@
 /* 
- * Theme configuration for Tailwind CSS v4
+ * Tailwind CSS v4的主题配置
  */
 
-/* Basic theme setup */
+/* 基本主题设置 */
 :root {
   color-scheme: light;
-  
-  /* Selection colors */
-  --selection-bg: 212 212 216; /* zinc-300 */
-  --selection-text: 24 24 27; /* zinc-900 */
 }
 
-/* These styles apply when .dark class is present on html element */
+/* 当html元素上存在.dark类时应用这些样式 */
 .dark {
   color-scheme: dark;
-  
-  /* Selection colors */
-  --selection-bg: 82 82 91; /* zinc-600 */
-  --selection-text: 244 244 245; /* zinc-100 */
-} 
+}

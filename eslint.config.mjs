@@ -23,8 +23,8 @@ module.exports = {
       },
     },
     {
-      // Define the configuration for `<script>` tag.
-      // Script in `<script>` is assigned a virtual file name with the `.js` extension.
+      // 定义 `<script>` 标签的配置。
+      // `<script>` 中的脚本被分配了带有 `.js` 扩展名的虚拟文件名。
       files: ["**/*.astro/*.js", "*.astro/*.js"],
       parser: "@typescript-eslint/parser",
     },

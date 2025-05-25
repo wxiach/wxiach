@@ -1,9 +1,9 @@
 /* 
- * Animation styles
- * Contains all animation keyframes and animation utilities
+ * 动画样式
+ * 包含所有动画关键帧和动画实用工具
  */
 
-/* Fade up animation */
+/* 向上淡入动画 */
 @keyframes fadeUp {
   from {
     opacity: 0;
@@ -15,17 +15,31 @@
   }
 }
 
-/* Prose content animation */
+/* 文章内容动画 */
 .prose > * {
   opacity: 0;
   animation: fadeUp 0.8s ease-out forwards;
 }
 
-/* Sequential animation delays for prose content */
-.prose > *:nth-child(1) { animation-delay: 200ms; }
-.prose > *:nth-child(2) { animation-delay: 300ms; }
-.prose > *:nth-child(3) { animation-delay: 400ms; }
-.prose > *:nth-child(4) { animation-delay: 500ms; }
-.prose > *:nth-child(5) { animation-delay: 600ms; }
-.prose > *:nth-child(6) { animation-delay: 700ms; }
-.prose > *:nth-child(n + 7) { animation-delay: 800ms; }
+/* 文章内容的顺序动画延迟 */
+.prose > *:nth-child(1) {
+  animation-delay: 200ms;
+}
+.prose > *:nth-child(2) {
+  animation-delay: 300ms;
+}
+.prose > *:nth-child(3) {
+  animation-delay: 400ms;
+}
+.prose > *:nth-child(4) {
+  animation-delay: 500ms;
+}
+.prose > *:nth-child(5) {
+  animation-delay: 600ms;
+}
+.prose > *:nth-child(6) {
+  animation-delay: 700ms;
+}
+.prose > *:nth-child(n + 7) {
+  animation-delay: 800ms;
+}

@@ -1,48 +1,22 @@
 /* 
- * Typography styles - minimal approach
- * Only includes essential base styles that can't be easily achieved with utility classes
+ * 排版样式 - 极简方法
+ * 仅包含无法用实用类轻松实现的基本样式
  */
 
-/* Base font settings - this is necessary as it's a site-wide font choice */
+/* 基础字体设置 - 这是必要的，因为它是全站字体选择 */
 
 body {
   font-family: "LXGW WenKai Screen", sans-serif;
 }
 
-/* Selection styles - these enhance user experience and can't be done easily with utilities */
-::selection {
-  background-color: var(--selection-bg);
-  color: var(--selection-text);
-  text-shadow: none;
-}
-
-::-moz-selection {
-  background-color: var(--selection-bg);
-  color: var(--selection-text);
-  text-shadow: none;
-}
-
-/* Selection style for code blocks */
-pre code::selection,
-code::selection {
-  background-color: rgba(161, 161, 170, 0.3); /* zinc-400 with transparency */
-  color: inherit;
-}
-
-pre code::-moz-selection,
-code::-moz-selection {
-  background-color: rgba(161, 161, 170, 0.3); /* zinc-400 with transparency */
-  color: inherit;
-}
-
-/* Custom blockquote style - lighter text for better emphasis */
+/* 自定义引用块样式 - 较浅的文本，更好的强调效果 */
 .prose blockquote {
   color: #71717a; /* zinc-500 */
   font-style: italic;
   border-left-color: #d4d4d8; /* zinc-300 */
 }
 
-/* Dark mode blockquote style */
+/* 暗黑模式引用块样式 */
 .dark .prose blockquote {
   color: #a1a1aa; /* zinc-400 */
   border-left-color: #52525b; /* zinc-600 */

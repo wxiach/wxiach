@@ -1,7 +1,7 @@
 ---
 import { site } from "@/consts";
 
-// Randomly select a hitokoto quote
+// 随机选择一条一言引用
 const hitokotoList = site.hitokoto;
 const randomIndex = Math.floor(Math.random() * hitokotoList.length);
 const randomHitokoto = hitokotoList[randomIndex];
@@ -47,22 +47,22 @@ const randomHitokoto = hitokotoList[randomIndex];
 </style>
 
 <script>
-  // Track the current typing animation ID
+  // 跟踪当前打字动画ID
   let typingTimeoutId: ReturnType<typeof setTimeout> | null = null;
   let isTyping = false;
 
   function initTypewriter(): void {
-    // Clear any ongoing typing animations
+    // 清除任何正在进行的打字动画
     clearAllTypingTimeouts();
 
-    // Delay startup to ensure fade-in animation is complete
+    // 延迟启动以确保淡入动画完成
     typingTimeoutId = setTimeout(() => {
       setupTypewriter();
     }, 800);
   }
 
   function clearAllTypingTimeouts(): void {
-    // Clear the main typing timer
+    // 清除主打字计时器
     if (typingTimeoutId !== null) {
       clearTimeout(typingTimeoutId);
       typingTimeoutId = null;
@@ -74,14 +74,14 @@ const randomHitokoto = hitokotoList[randomIndex];
     const hitokotoElement = document.getElementById("hitokoto");
     if (!hitokotoElement) return;
 
-    if (isTyping) return; // Prevent restarting while already typing
+    if (isTyping) return; // 防止在已经打字时重新启动
 
     const text = hitokotoElement.getAttribute("data-content") || "";
 
-    // Completely clear content
+    // 完全清除内容
     hitokotoElement.innerHTML = "";
 
-    // Create new cursor element
+    // 创建新的光标元素
     const cursorElement = document.createElement("span");
     cursorElement.className = "typing-cursor";
     hitokotoElement.appendChild(cursorElement);
@@ -103,17 +103,17 @@ const randomHitokoto = hitokotoList[randomIndex];
       }
     }
 
-    // Start typing
+    // 开始打字
     typingTimeoutId = setTimeout(typeNextCharacter, 300);
   }
 
-  // Event listeners setup
+  // 事件监听器设置
   function setupEventListeners() {
     document.addEventListener("DOMContentLoaded", initTypewriter);
     document.addEventListener("astro:page-load", initTypewriter);
     document.addEventListener("astro:before-swap", clearAllTypingTimeouts);
   }
 
-  // Initialize event listeners
+  // 初始化事件监听器
   setupEventListeners();
 </script>

@@ -31,7 +31,7 @@ const { class: className } = Astro.props;
 </div>
 
 <script>
-  // Rotate avatar when clicked
+  // 点击头像时旋转
   document.addEventListener("DOMContentLoaded", function () {
     setupAvatarRotation();
   });
@@ -49,20 +49,20 @@ const { class: className } = Astro.props;
     let isRotating = false;
 
     container.addEventListener("click", e => {
-      // Prevent default events and propagation
+      // 阻止默认事件和冒泡
       e.preventDefault();
       e.stopPropagation();
 
-      // Prevent multiple animations
+      // 防止多次动画
       if (isRotating) return;
 
       isRotating = true;
 
-      // Apply smooth rotation
+      // 应用平滑旋转
       avatar.style.transition = "transform 3s cubic-bezier(0.1, 0.7, 0.2, 1)";
       avatar.style.transform = "rotate(-360deg) scale(1.02)";
 
-      // Reset after animation completes
+      // 动画完成后重置
       setTimeout(() => {
         avatar.style.transition = "transform 0s";
         avatar.style.transform = "";
@@ -73,7 +73,7 @@ const { class: className } = Astro.props;
       }, 3000);
     });
 
-    // Prevent double-click selection
+    // 防止双击选择
     container.addEventListener("dblclick", e => {
       e.preventDefault();
       e.stopPropagation();
@@ -83,7 +83,7 @@ const { class: className } = Astro.props;
 </script>
 
 <style>
-  /* Prevent selection highlight */
+  /* 防止选择高亮 */
   .avatar-container * {
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;

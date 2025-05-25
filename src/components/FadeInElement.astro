@@ -1,13 +1,13 @@
 ---
 interface Props {
-  delay?: number; // Allow any number as delay
+  delay?: number; // 允许任何数字作为延迟
   class?: string;
-  onlyWhenVisible?: boolean; // Whether to trigger animation only when element enters viewport
+  onlyWhenVisible?: boolean; // 是否仅在元素进入视口时触发动画
 }
 
 const { delay = 0, class: className = "", onlyWhenVisible = false } = Astro.props;
 
-// Map delay to the closest available delay class
+// 将延迟映射到最接近的可用延迟类
 let delayClass = "";
 if (delay > 0) {
   const delays = [200, 400, 600, 800, 1000, 1200, 1400];
@@ -26,7 +26,7 @@ const visibilityClass = onlyWhenVisible ? "visibility-trigger" : "";
 
 {onlyWhenVisible && (
   <script>
-    // Add intersection observer logic to trigger animation only when element enters viewport
+    // 添加交叉观察器逻辑，仅在元素进入视口时触发动画
     document.addEventListener("DOMContentLoaded", () => {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {

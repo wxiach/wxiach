@@ -17,9 +17,9 @@ const { siteSubTitle } = Astro.props;
   <head>
     <Head siteSubTitle={siteSubTitle} />
     <script is:inline>
-      // Theme initialization and management script
+      // 主题初始化和管理脚本
       (function () {
-        // Apply theme based on localStorage or system preference
+        // 根据localStorage或系统偏好应用主题
         function applyTheme() {
           const isDark =
             localStorage.theme === "dark" ||
@@ -32,20 +32,20 @@ const { siteSubTitle } = Astro.props;
           }
         }
 
-        // Initial theme application
+        // 初始主题应用
         applyTheme();
 
-        // Handle page transitions in Astro
+        // 处理Astro中的页面过渡
         document.addEventListener("astro:after-swap", applyTheme);
 
-        // Add a global handler to update all open tabs when theme changes
+        // 添加一个全局处理程序，在主题更改时更新所有打开的标签页
         window.addEventListener("storage", e => {
           if (e.key === "theme") {
             applyTheme();
           }
         });
 
-        // Make these functions available globally
+        // 使这些函数全局可用
         window.themeManager = {
           applyTheme: applyTheme,
           toggleTheme: function () {
