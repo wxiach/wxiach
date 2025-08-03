@@ -1,8 +1,6 @@
 ---
 import { getCollection, render } from "astro:content";
-import { cn } from "@/lib/utils";
 import Layout from "@/layouts/Layout.astro";
-import Footer from "@/components/Footer.astro";
 import Category from "@/components/Category.astro";
 import DateFormatter from "@/components/DateFormatter.astro";
 import FadeInElement from "@/components/FadeInElement.astro";
@@ -19,22 +17,20 @@ const { Content } = await render(post);
 ---
 
 <Layout siteSubTitle={post.data.title}>
-  <main class="mx-auto min-h-[90vh] max-w-screen-md p-4">
-    <article class="prose prose-zinc dark:prose-invert max-w-screen-md">
-      <FadeInElement>
-        <div class="mb-12">
-          <h1 class="mb-8 text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
-            {post.data.title}
-          </h1>
-          <div class="mt-4 flex items-center gap-4">
-            <DateFormatter date={post.data.date} />
-            <Category category={post.data.category} />
-          </div>
+  <article class="prose prose-zinc dark:prose-invert max-w-screen-md">
+    <FadeInElement>
+      <div class="mb-12">
+        <h1 class="mb-8 text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
+          {post.data.title}
+        </h1>
+        <div class="mt-4 flex items-center gap-4">
+          <DateFormatter date={post.data.date} />
+          <Category category={post.data.category} />
         </div>
-      </FadeInElement>
-      <Content />
-    </article>
-  </main>
+      </div>
+    </FadeInElement>
+    <Content />
+  </article>
   <FadeInElement delay={800}>
     <div class="mt-16 flex justify-center">
       <a
@@ -61,6 +57,47 @@ const { Content } = await render(post);
         ></span>
       </a>
     </div>
-    <Footer />
   </FadeInElement>
 </Layout>
+
+<style is:inline>
+  .prose > * {
+    opacity: 0;
+    animation: fadeUp 0.8s ease-out forwards;
+  }
+
+  .prose > *:nth-child(1) {
+    animation-delay: 200ms;
+  }
+  .prose > *:nth-child(2) {
+    animation-delay: 300ms;
+  }
+  .prose > *:nth-child(3) {
+    animation-delay: 400ms;
+  }
+  .prose > *:nth-child(4) {
+    animation-delay: 500ms;
+  }
+  .prose > *:nth-child(5) {
+    animation-delay: 600ms;
+  }
+  .prose > *:nth-child(6) {
+    animation-delay: 700ms;
+  }
+  .prose > *:nth-child(n + 7) {
+    animation-delay: 800ms;
+  }
+
+  /* 引用块样式*/
+  .prose blockquote {
+    color: #71717a; /* zinc-500 */
+    font-style: italic;
+    border-left-color: #d4d4d8; /* zinc-300 */
+  }
+
+  /* 引用块样式(深色模式) */
+  .dark .prose blockquote {
+    color: #a1a1aa; /* zinc-400 */
+    border-left-color: #52525b; /* zinc-600 */
+  }
+</style>

@@ -3,8 +3,9 @@ import { cn } from "@/lib/utils";
 import "@/styles/global.css";
 import "@/styles/animations.css";
 import "lxgw-wenkai-screen-web";
-import Head from "@/components/Head.astro";
-import Fireworks from "@/components/Fireworks.astro";
+import Head from "@/layouts/Head.astro";
+import Header from "@/layouts/Header.astro";
+import Footer from "./Footer.astro";
 
 type Props = {
   siteSubTitle?: string;
@@ -61,14 +62,11 @@ const { siteSubTitle } = Astro.props;
       })();
     </script>
   </head>
-  <body
-    class={cn(
-      "mx-auto flex max-w-screen-md flex-col overflow-x-hidden",
-      "bg-white px-4 py-16 text-zinc-900 md:py-32",
-      "dark:bg-zinc-900 dark:text-zinc-100"
-    )}
-  >
-    <slot />
-    <Fireworks />
+  <body class="bg-white text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100">
+    <Header />
+    <main class={cn("flex gap-32 max-w-screen-md min-h-[90vh] flex-col", "mt-32 mx-auto px-4")}>
+      <slot />
+    </main>
+    <Footer />
   </body>
 </html>

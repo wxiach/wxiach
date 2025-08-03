@@ -3,13 +3,8 @@ import { getCollection } from "astro:content";
 import { cn } from "@/lib/utils";
 import Layout from "@/layouts/Layout.astro";
 import FadeInElement from "@/components/FadeInElement.astro";
-import Nav from "@/components/Nav.astro";
 import Intro from "@/components/Intro.astro";
-import Footer from "@/components/Footer.astro";
-import Avatar from "@/components/Avatar.astro";
-import Hitokoto from "@/components/Hitokoto.astro";
 import PostItem from "@/components/PostItem.astro";
-import SiteTitle from "@/components/SiteTitle.astro";
 import SectionTitle from "@/components/SectionTitle.astro";
 
 const posts = (await getCollection("blog")).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()).slice(0, 6);
@@ -26,60 +21,41 @@ const posts = (await getCollection("blog")).sort((a, b) => b.data.date.valueOf()
   });
 </script>
 
-<Layout siteSubTitle="程序员Soren的技术、思考与生活记录">
-  <header class="mb-32 flex flex-col items-center gap-12">
-    <FadeInElement>
-      <Avatar />
-    </FadeInElement>
-    <FadeInElement delay={200}>
-      <SiteTitle class="text-3xl" />
-    </FadeInElement>
-    <FadeInElement delay={400}>
-      <Hitokoto />
-    </FadeInElement>
-    <FadeInElement delay={600}>
-      <Nav />
-    </FadeInElement>
-  </header>
-  <main class="flex flex-col gap-32">
-    <FadeInElement delay={800}>
-      <section class="flex justify-between gap-48 align-top">
-        <Intro />
-        <SectionTitle title="介绍" description="intro" position="right" />
-      </section>
-    </FadeInElement>
-    <FadeInElement delay={1000}>
-      <section class="flex justify-between gap-48 align-top">
-        <SectionTitle title="博客" description="blog" position="left" />
-        <div class="flex flex-1 flex-col gap-4">
-          {posts.map(({ id, data }) => <PostItem id={id} data={data} />)}
-          <div class="flex justify-end pt-16">
-            <button
-              id="more-posts"
-              class={cn(
-                "relative px-4 py-1.5 text-xs tracking-wide",
-                "bg-transparent text-zinc-500 dark:text-zinc-500",
-                "border-2 border-zinc-200 dark:border-zinc-800 rounded-xl",
-                "hover:bg-zinc-50/50 dark:hover:bg-zinc-800/30",
-                "hover:border-zinc-300 dark:hover:border-zinc-700",
-                "hover:text-zinc-700 dark:hover:text-zinc-400",
-                "transition-all duration-300 cursor-pointer"
-              )}
-            >
-              更多文章
-            </button>
-          </div>
+<Layout siteSubTitle="">
+  <FadeInElement delay={200}>
+    <section class="flex justify-between gap-48 align-top">
+      <Intro />
+      <SectionTitle title="介绍" description="intro" position="right" />
+    </section>
+  </FadeInElement>
+  <FadeInElement delay={400}>
+    <section class="flex justify-between gap-48 align-top">
+      <SectionTitle title="博客" description="blog" position="left" />
+      <div class="flex flex-1 flex-col gap-4">
+        {posts.map(({ id, data }) => <PostItem id={id} data={data} />)}
+        <div class="flex justify-end pt-16">
+          <button
+            id="more-posts"
+            class={cn(
+              "relative px-4 py-1.5 text-xs tracking-wide",
+              "bg-transparent text-zinc-500 dark:text-zinc-500",
+              "border-1 border-zinc-200 dark:border-zinc-800 rounded-xl",
+              "hover:bg-zinc-50/50 dark:hover:bg-zinc-800/30",
+              "hover:border-zinc-300 dark:hover:border-zinc-700",
+              "hover:text-zinc-700 dark:hover:text-zinc-400",
+              "transition-all duration-300 cursor-pointer"
+            )}
+          >
+            更多文章
+          </button>
         </div>
-      </section>
-    </FadeInElement>
-    <FadeInElement delay={1200}>
-      <section class="flex justify-between gap-48 align-top">
-        <div class="font-normal text-zinc-500 dark:text-zinc-400">暂时还没有作品喔~~</div>
-        <SectionTitle title="作品" description="work" position="right" />
-      </section>
-    </FadeInElement>
-  </main>
-  <FadeInElement delay={1400}>
-    <Footer />
+      </div>
+    </section>
+  </FadeInElement>
+  <FadeInElement delay={600}>
+    <section class="flex justify-between gap-48 align-top">
+      <div class="font-normal text-zinc-500 dark:text-zinc-400">暂时还没有作品喔~~</div>
+      <SectionTitle title="作品" description="work" position="right" />
+    </section>
   </FadeInElement>
 </Layout>

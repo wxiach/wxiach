@@ -10,77 +10,20 @@ interface Props {
 const { class: className } = Astro.props;
 ---
 
-<div class="avatar-container group relative cursor-pointer select-none">
-  <div
-    class="absolute inset-0 rounded-full bg-gradient-to-r from-zinc-200 to-zinc-300 opacity-0 blur-md transition-opacity duration-700 group-hover:opacity-20 dark:from-zinc-700 dark:to-zinc-600"
-  >
-  </div>
+<div class="avatar-container group relative select-none">
   <Image
     id="avatar-image"
     class={cn(
-      className,
-      "size-32 rounded-full object-cover border-4 border-zinc-200",
+      "rounded-full object-cover border-4 border-zinc-200",
       "transition-all duration-500 ease-in-out select-none",
-      "group-hover:scale-[1.02] group-hover:shadow-sm",
-      "dark:shadow-none"
+      "dark:shadow-none",
+      className
     )}
     src={avatar}
     alt="avatar"
     draggable="false"
   />
 </div>
-
-<script>
-  // 点击头像时旋转
-  document.addEventListener("DOMContentLoaded", function () {
-    setupAvatarRotation();
-  });
-
-  document.addEventListener("astro:page-load", function () {
-    setupAvatarRotation();
-  });
-
-  function setupAvatarRotation() {
-    const avatar = document.getElementById("avatar-image");
-    const container = document.querySelector(".avatar-container");
-
-    if (!avatar || !container) return;
-
-    let isRotating = false;
-
-    container.addEventListener("click", e => {
-      // 阻止默认事件和冒泡
-      e.preventDefault();
-      e.stopPropagation();
-
-      // 防止多次动画
-      if (isRotating) return;
-
-      isRotating = true;
-
-      // 应用平滑旋转
-      avatar.style.transition = "transform 3s cubic-bezier(0.1, 0.7, 0.2, 1)";
-      avatar.style.transform = "rotate(-360deg) scale(1.02)";
-
-      // 动画完成后重置
-      setTimeout(() => {
-        avatar.style.transition = "transform 0s";
-        avatar.style.transform = "";
-        setTimeout(() => {
-          avatar.style.transition = "";
-          isRotating = false;
-        }, 50);
-      }, 3000);
-    });
-
-    // 防止双击选择
-    container.addEventListener("dblclick", e => {
-      e.preventDefault();
-      e.stopPropagation();
-      return false;
-    });
-  }
-</script>
 
 <style>
   /* 防止选择高亮 */

@@ -1,23 +1,3 @@
-/* 
- * 排版样式 - 极简方法
- * 仅包含无法用实用类轻松实现的基本样式
- */
-
-/* 基础字体设置 - 这是必要的，因为它是全站字体选择 */
-
 body {
   font-family: "LXGW WenKai Screen", sans-serif;
-}
-
-/* 自定义引用块样式 - 较浅的文本，更好的强调效果 */
-.prose blockquote {
-  color: #71717a; /* zinc-500 */
-  font-style: italic;
-  border-left-color: #d4d4d8; /* zinc-300 */
-}
-
-/* 暗黑模式引用块样式 */
-.dark .prose blockquote {
-  color: #a1a1aa; /* zinc-400 */
-  border-left-color: #52525b; /* zinc-600 */
 }

@@ -9,8 +9,8 @@ interface Props {
 const { class: className, date } = Astro.props as Props;
 
 // 分别获取月日和年份
-const monthDay = date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-const year = date.toLocaleDateString("en-US", { year: "numeric" });
+const monthDay = date.toLocaleDateString("zh-CN", { month: "short", day: "numeric" });
+const year = date.toLocaleDateString("zh-CN", { year: "numeric" });
 ---
 
 <span class={cn(className, "inline-flex items-center gap-1.5 text-xs tabular-nums tracking-tight")}>
