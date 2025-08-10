@@ -3,10 +3,9 @@ import { getCollection, render } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Category from "@/components/Category.astro";
 import DateFormatter from "@/components/DateFormatter.astro";
-import FadeInElement from "@/components/FadeInElement.astro";
 
 export async function getStaticPaths() {
-  return (await getCollection("blog")).map(post => ({
+  return (await getCollection("blog")).map((post) => ({
     params: { id: post.id },
     props: post,
   }));
@@ -18,52 +17,60 @@ const { Content } = await render(post);
 
 <Layout siteSubTitle={post.data.title}>
   <article class="prose prose-zinc dark:prose-invert max-w-screen-md">
-    <FadeInElement>
-      <div class="mb-12">
-        <h1 class="mb-8 text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
-          {post.data.title}
-        </h1>
-        <div class="mt-4 flex items-center gap-4">
-          <DateFormatter date={post.data.date} />
-          <Category category={post.data.category} />
-        </div>
+    <div class="mb-12">
+      <h1
+        class="mb-8 text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100"
+      >
+        {post.data.title}
+      </h1>
+      <div class="mt-4 flex items-center gap-4">
+        <DateFormatter date={post.data.date} />
+        <Category category={post.data.category} />
       </div>
-    </FadeInElement>
+    </div>
     <Content />
   </article>
-  <FadeInElement delay={800}>
-    <div class="mt-16 flex justify-center">
-      <a
-        href="/posts"
-        class="group relative inline-flex items-center gap-2 font-medium text-zinc-500 transition-colors duration-200 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-300"
+  <div class="mt-16 flex justify-center">
+    <a
+      href="/posts"
+      class="group relative inline-flex items-center gap-2 font-medium text-zinc-500 transition-colors duration-200 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-300"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="transition-transform duration-200 group-hover:-translate-x-1"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="transition-transform duration-200 group-hover:-translate-x-1"
-        >
-          <path d="m15 18-6-6 6-6"></path>
-        </svg>
-        <span>返回文章列表</span>
-        <span
-          class="absolute -bottom-1 left-0 h-px w-full scale-x-0 bg-zinc-400 transition-transform duration-200 group-hover:scale-x-100 dark:bg-zinc-600"
-        ></span>
-      </a>
-    </div>
-  </FadeInElement>
+        <path d="m15 18-6-6 6-6"></path>
+      </svg>
+      <span>返回文章列表</span>
+      <span
+        class="absolute -bottom-1 left-0 h-px w-full scale-x-0 bg-zinc-400 transition-transform duration-200 group-hover:scale-x-100 dark:bg-zinc-600"
+      ></span>
+    </a>
+  </div>
 </Layout>
 
 <style is:inline>
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
   .prose > * {
     opacity: 0;
-    animation: fadeUp 0.8s ease-out forwards;
+    animation: fade-up 0.8s ease-out forwards;
   }
 
   .prose > *:nth-child(1) {

@@ -5,14 +5,36 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* 加载插件 */
-@plugin "tailwindcss-animate";
 @plugin "@tailwindcss/typography";
 
 /* 配置要扫描的源文件 */
 @source "./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}";
 
-/* 导入模块化CSS文件 */
-@import "./theme.css";
-@import "./base.css";
-@import "./typography.css";
-@import "./animations.css";
+@theme {
+  --animate-fade-up: fade-up 0.8s ease-out forwards;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* 基本主题设置 */
+:root {
+  color-scheme: light;
+}
+
+/* 当html元素上存在.dark类时应用这些样式 */
+.dark {
+  color-scheme: dark;
+}
+
+body {
+  font-family: sans-serif;
+}

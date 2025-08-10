@@ -17,7 +17,7 @@ const postsByYear = posts
       acc[year].push(post);
       return acc;
     },
-    {} as Record<number, Awaited<ReturnType<typeof getCollection>>>
+    {} as Record<number, Awaited<ReturnType<typeof getCollection>>>,
   );
 ---
 
@@ -30,13 +30,19 @@ const postsByYear = posts
       Object.entries(postsByYear)
         .sort(([a], [b]) => Number(b) - Number(a))
         .map(([year, posts], index) => (
-          <FadeInElement delay={((index + 2) * 200) as 400 | 600 | 800 | 1000 | 1200 | 1400}>
+          <FadeInElement
+            delay={
+              ((index + 2) * 200) as 200 | 400 | 600 | 800 | 1000 | 1200 | 1400
+            }
+          >
             <section class="flex flex-col gap-4">
               <h2 class="mb-6 text-3xl font-light tracking-wide text-zinc-400 dark:text-zinc-500">
-                <span class="font-medium text-zinc-700 dark:text-zinc-300">{year}</span>
+                <span class="font-medium text-zinc-700 dark:text-zinc-300">
+                  {year}
+                </span>
               </h2>
               <ul class="flex flex-col gap-4">
-                {posts.map(post => (
+                {posts.map((post) => (
                   <PostItem id={post.id} data={post.data} />
                 ))}
               </ul>

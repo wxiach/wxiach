@@ -1,80 +1,11 @@
 ---
 interface Props {
-  delay?: number; // 允许任何数字作为延迟
-  class?: string;
-  onlyWhenVisible?: boolean; // 是否仅在元素进入视口时触发动画
+  delay: 200 | 400 | 600 | 800 | 1000 | 1200 | 1400;
 }
 
-const { delay = 0, class: className = "", onlyWhenVisible = false } = Astro.props;
-
-// 将延迟映射到最接近的可用延迟类
-let delayClass = "";
-if (delay > 0) {
-  const delays = [200, 400, 600, 800, 1000, 1200, 1400];
-  const closest = delays.reduce((prev, curr) => 
-    Math.abs(curr - delay) < Math.abs(prev - delay) ? curr : prev
-  );
-  delayClass = `delay-${closest}`;
-}
-
-const visibilityClass = onlyWhenVisible ? "visibility-trigger" : "";
+const { delay } = Astro.props;
 ---
 
-<div class:list={["fade-up", delayClass, visibilityClass, className]}>
+<div class="animate-fade-up opacity-0" style=`animation-delay: ${delay}ms;`>
   <slot />
 </div>
-
-{onlyWhenVisible && (
-  <script>
-    // 添加交叉观察器逻辑，仅在元素进入视口时触发动画
-    document.addEventListener("DOMContentLoaded", () => {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("animate");
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.1 });
-      
-      document.querySelectorAll(".visibility-trigger").forEach(el => {
-        observer.observe(el);
-      });
-    });
-  </script>
-)} 
-
-<style>
-  .fade-up {
-    opacity: 0;
-    animation: fadeUp 0.8s ease-out forwards;
-  }
-
-  .delay-200 {
-    animation-delay: 200ms;
-  }
-
-  .delay-400 {
-    animation-delay: 400ms;
-  }
-
-  .delay-600 {
-    animation-delay: 600ms;
-  }
-
-  .delay-800 {
-    animation-delay: 800ms;
-  }
-
-  .delay-1000 {
-    animation-delay: 1000ms;
-  }
-
-  .delay-1200 {
-    animation-delay: 1200ms;
-  }
-
-  .delay-1400 {
-    animation-delay: 1400ms;
-  }
-</style> 

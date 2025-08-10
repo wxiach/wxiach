@@ -1,9 +1,0 @@
-/* 基本主题设置 */
-:root {
-  color-scheme: light;
-}
-
-/* 当html元素上存在.dark类时应用这些样式 */
-.dark {
-  color-scheme: dark;
-}

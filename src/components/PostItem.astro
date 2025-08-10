@@ -14,7 +14,9 @@ type Props = {
 const { id, data } = Astro.props as Props;
 ---
 
-<li class="group relative list-none border-b border-zinc-200 py-3 dark:border-zinc-800">
+<li
+  class="group relative list-none border-b border-zinc-200 py-3 dark:border-zinc-800"
+>
   <div class="mb-1 flex items-center">
     <DateFormatter date={data.date} />
   </div>

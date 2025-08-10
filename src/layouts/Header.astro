@@ -10,10 +10,12 @@ import Hitokoto from "@/components/Hitokoto.astro";
   class={cn(
     "fixed top-0 w-full z-10",
     "border-b border-zinc-200 dark:border-zinc-800",
-    "bg-white/30 dark:bg-zinc-900/30 backdrop-blur-xl"
+    "bg-white/30 dark:bg-zinc-900/30 backdrop-blur-xl",
   )}
 >
-  <div class="mx-auto flex h-14 max-w-screen-md items-center justify-between px-4">
+  <div
+    class="mx-auto flex h-14 max-w-screen-md items-center justify-between px-4"
+  >
     <div class="flex items-center gap-8">
       <SiteTitle class="text-2xl" />
       <Hitokoto />

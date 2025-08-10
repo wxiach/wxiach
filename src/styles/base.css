@@ -1,4 +1,0 @@
-/* 在主题切换期间禁用过渡 */
-.disable-transitions * {
-  transition: none !important;
-}

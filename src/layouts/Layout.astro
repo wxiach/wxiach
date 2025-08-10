@@ -1,14 +1,12 @@
 ---
 import { cn } from "@/lib/utils";
 import "@/styles/global.css";
-import "@/styles/animations.css";
-import "lxgw-wenkai-screen-web";
 import Head from "@/layouts/Head.astro";
 import Header from "@/layouts/Header.astro";
 import Footer from "./Footer.astro";
 
 type Props = {
-	siteSubTitle?: string;
+  siteSubTitle?: string;
 };
 
 const { siteSubTitle } = Astro.props;
@@ -24,7 +22,8 @@ const { siteSubTitle } = Astro.props;
         function applyTheme() {
           const isDark =
             localStorage.theme === "dark" ||
-            (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches);
+            (!("theme" in localStorage) &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches);
 
           if (isDark) {
             document.documentElement.classList.add("dark");
@@ -40,7 +39,7 @@ const { siteSubTitle } = Astro.props;
         document.addEventListener("astro:after-swap", applyTheme);
 
         // 添加一个全局处理程序，在主题更改时更新所有打开的标签页
-        window.addEventListener("storage", e => {
+        window.addEventListener("storage", (e) => {
           if (e.key === "theme") {
             applyTheme();
           }
@@ -64,7 +63,12 @@ const { siteSubTitle } = Astro.props;
   </head>
   <body class="bg-white text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100">
     <Header />
-    <main class={cn("flex gap-32 max-w-screen-md min-h-[90vh] flex-col", "mt-32 mx-auto px-4")}>
+    <main
+      class={cn(
+        "flex gap-32 max-w-screen-md min-h-[90vh] flex-col",
+        "mt-32 mx-auto px-4",
+      )}
+    >
       <slot />
     </main>
     <Footer />
