@@ -1,14 +1,17 @@
-/* 导入Tailwind CSS */
 @import "tailwindcss";
 
-/* 配置暗黑模式变体 - 使用.dark类手动切换 */
-@custom-variant dark (&:where(.dark, .dark *));
-
-/* 加载插件 */
 @plugin "@tailwindcss/typography";
 
-/* 配置要扫描的源文件 */
-@source "./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}";
+/* 主题色设置 */
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  color-scheme: light;
+}
+
+.dark {
+  color-scheme: dark;
+}
 
 @theme {
   --animate-fade-up: fade-up 0.8s ease-out forwards;
@@ -23,16 +26,6 @@
       transform: translateY(0);
     }
   }
-}
-
-/* 基本主题设置 */
-:root {
-  color-scheme: light;
-}
-
-/* 当html元素上存在.dark类时应用这些样式 */
-.dark {
-  color-scheme: dark;
 }
 
 body {
