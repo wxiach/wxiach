@@ -1,119 +1,46 @@
 ---
 import { site } from "@/consts";
 
-// 随机选择一条一言引用
+// 一言列表
 const hitokotoList = site.hitokoto;
+
+// 随机选择一言
 const randomIndex = Math.floor(Math.random() * hitokotoList.length);
 const randomHitokoto = hitokotoList[randomIndex];
+const characterCount = randomHitokoto.length;
+
+// 计算打字动画持续时间（单位：秒）
+const typingDuration = (characterCount * 80) / 1000;
 ---
 
-<div class="hidden min-h-[1.5rem] text-center sm:block">
+<div class="hidden min-h-[1.5rem] sm:flex sm:items-center sm:justify-start">
   <p
     id="hitokoto"
-    class="inline-block max-w-md text-center text-zinc-500 dark:text-zinc-400"
-    data-content={randomHitokoto}
+    class="inline-block max-w-md text-zinc-500"
+    style={`--character-count: ${characterCount}; --typing-duration: ${typingDuration}s;`}
   >
-    <!-- 初始状态为空，由JavaScript添加内容 -->
+    {randomHitokoto}
   </p>
 </div>
 
 <style>
-  @keyframes blink {
-    0%,
-    100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0;
-    }
+  #hitokoto {
+    /* 超出部分隐藏 */
+    overflow: hidden;
+    /* 防止文本换行 */
+    white-space: nowrap;
+    width: 0;
+    /* 动画：使用动态时长 */
+    animation: typing var(--typing-duration) steps(var(--character-count)) forwards;
+    animation-delay: 0.8s;
   }
 
-  .typing-cursor {
-    display: inline-block;
-    width: 1px;
-    height: 1em;
-    background-color: currentColor;
-    margin-left: 1px;
-    animation: blink 0.8s step-end infinite;
-    vertical-align: middle;
-  }
-
-  @media (max-width: 640px) {
-    #hitokoto {
-      font-size: 0.9rem;
-      max-width: 90vw;
+  @keyframes typing {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
     }
   }
 </style>
-
-<script>
-  // 跟踪当前打字动画ID
-  let typingTimeoutId: ReturnType<typeof setTimeout> | null = null;
-  let isTyping = false;
-
-  function initTypewriter(): void {
-    // 清除任何正在进行的打字动画
-    clearAllTypingTimeouts();
-
-    // 延迟启动以确保淡入动画完成
-    typingTimeoutId = setTimeout(() => {
-      setupTypewriter();
-    }, 800);
-  }
-
-  function clearAllTypingTimeouts(): void {
-    // 清除主打字计时器
-    if (typingTimeoutId !== null) {
-      clearTimeout(typingTimeoutId);
-      typingTimeoutId = null;
-    }
-    isTyping = false;
-  }
-
-  function setupTypewriter(): void {
-    const hitokotoElement = document.getElementById("hitokoto");
-    if (!hitokotoElement) return;
-
-    if (isTyping) return; // 防止在已经打字时重新启动
-
-    const text = hitokotoElement.getAttribute("data-content") || "";
-
-    // 完全清除内容
-    hitokotoElement.innerHTML = "";
-
-    // 创建新的光标元素
-    const cursorElement = document.createElement("span");
-    cursorElement.className = "typing-cursor";
-    hitokotoElement.appendChild(cursorElement);
-
-    let i = 0;
-    const typeSpeed = 80;
-
-    function typeNextCharacter() {
-      if (i < text.length && hitokotoElement) {
-        const char = text.charAt(i);
-        const textNode = document.createTextNode(char);
-        hitokotoElement.insertBefore(textNode, cursorElement);
-        i++;
-
-        const randomDelay = typeSpeed + Math.random() * 40 - 20;
-        typingTimeoutId = setTimeout(typeNextCharacter, randomDelay);
-      } else {
-        isTyping = false;
-      }
-    }
-
-    // 开始打字
-    typingTimeoutId = setTimeout(typeNextCharacter, 300);
-  }
-
-  // 事件监听器设置
-  function setupEventListeners() {
-    document.addEventListener("DOMContentLoaded", initTypewriter);
-    document.addEventListener("astro:page-load", initTypewriter);
-    document.addEventListener("astro:before-swap", clearAllTypingTimeouts);
-  }
-
-  // 初始化事件监听器
-  setupEventListeners();
-</script>

@@ -2,15 +2,8 @@
 
 @plugin "@tailwindcss/typography";
 
-/* 主题色设置 */
-@custom-variant dark (&:where(.dark, .dark *));
-
 :root {
   color-scheme: light;
-}
-
-.dark {
-  color-scheme: dark;
 }
 
 @theme {

@@ -15,60 +15,10 @@ const { siteSubTitle } = Astro.props;
 <html lang="en">
   <head>
     <Head siteSubTitle={siteSubTitle} />
-    <script is:inline>
-      // 主题初始化和管理脚本
-      (function () {
-        // 根据localStorage或系统偏好应用主题
-        function applyTheme() {
-          const isDark =
-            localStorage.theme === "dark" ||
-            (!("theme" in localStorage) &&
-              window.matchMedia("(prefers-color-scheme: dark)").matches);
-
-          if (isDark) {
-            document.documentElement.classList.add("dark");
-          } else {
-            document.documentElement.classList.remove("dark");
-          }
-        }
-
-        // 初始主题应用
-        applyTheme();
-
-        // 处理Astro中的页面过渡
-        document.addEventListener("astro:after-swap", applyTheme);
-
-        // 添加一个全局处理程序，在主题更改时更新所有打开的标签页
-        window.addEventListener("storage", (e) => {
-          if (e.key === "theme") {
-            applyTheme();
-          }
-        });
-
-        // 使这些函数全局可用
-        window.themeManager = {
-          applyTheme: applyTheme,
-          toggleTheme: function () {
-            const isDark = document.documentElement.classList.contains("dark");
-            localStorage.theme = isDark ? "light" : "dark";
-            applyTheme();
-          },
-          setTheme: function (theme) {
-            localStorage.theme = theme;
-            this.applyTheme();
-          },
-        };
-      })();
-    </script>
   </head>
-  <body class="bg-white text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100">
+  <body class="bg-white text-zinc-900">
     <Header />
-    <main
-      class={cn(
-        "flex gap-32 max-w-screen-md min-h-[90vh] flex-col",
-        "mt-32 mx-auto px-4",
-      )}
-    >
+    <main class={cn("flex gap-32 max-w-screen-md min-h-[90vh] flex-col", "mt-32 mx-auto px-4")}>
       <slot />
     </main>
     <Footer />

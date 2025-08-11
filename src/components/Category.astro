@@ -9,12 +9,7 @@ const { category } = Astro.props;
 
 {
   category && (
-    <span
-      class={cn(
-        "rounded-full px-2 py-1 text-xs font-medium before:content-['#']",
-        "bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300",
-      )}
-    >
+    <span class={cn("rounded-full px-2 py-1 text-xs font-medium before:content-['#']", "bg-zinc-100 text-zinc-600")}>
       {category}
     </span>
   )

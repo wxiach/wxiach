@@ -16,11 +16,9 @@ const { Content } = await render(post);
 ---
 
 <Layout siteSubTitle={post.data.title}>
-  <article class="prose prose-zinc dark:prose-invert max-w-screen-md">
+  <article class="prose prose-zinc max-w-screen-md">
     <div class="mb-12">
-      <h1
-        class="mb-8 text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100"
-      >
+      <h1 class="mb-8 text-4xl font-bold tracking-tight text-zinc-900">
         {post.data.title}
       </h1>
       <div class="mt-4 flex items-center gap-4">
@@ -33,7 +31,7 @@ const { Content } = await render(post);
   <div class="mt-16 flex justify-center">
     <a
       href="/posts"
-      class="group relative inline-flex items-center gap-2 font-medium text-zinc-500 transition-colors duration-200 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-300"
+      class="group relative inline-flex items-center gap-2 font-medium text-zinc-500 transition-colors duration-200 hover:text-zinc-700"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -51,7 +49,7 @@ const { Content } = await render(post);
       </svg>
       <span>返回文章列表</span>
       <span
-        class="absolute -bottom-1 left-0 h-px w-full scale-x-0 bg-zinc-400 transition-transform duration-200 group-hover:scale-x-100 dark:bg-zinc-600"
+        class="absolute -bottom-1 left-0 h-px w-full scale-x-0 bg-zinc-400 transition-transform duration-200 group-hover:scale-x-100"
       ></span>
     </a>
   </div>
