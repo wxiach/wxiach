@@ -8,16 +8,13 @@ interface Props {
 
 const { class: className, date } = Astro.props as Props;
 
-// 分别获取月日和年份
-const monthDay = date.toLocaleDateString("zh-CN", {
-  month: "short",
-  day: "numeric",
-});
+const day = date.toLocaleDateString("zh-CN", { day: "numeric" });
+const month = date.toLocaleDateString("zh-CN", { month: "short" });
 const year = date.toLocaleDateString("zh-CN", { year: "numeric" });
 ---
 
 <span class={cn("inline-flex items-center gap-1.5 text-xs tabular-nums tracking-tight", className)}>
-  <span class="font-normal text-zinc-500">{monthDay}</span>
-  <span class="text-zinc-300">·</span>
-  <span class="font-light text-zinc-400">{year}</span>
+  <span class="text-zinc-500">{month}{day}</span>
+  <span class="text-zinc-500">·</span>
+  <span class="text-zinc-400">{year}</span>
 </span>

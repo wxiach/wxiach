@@ -10,25 +10,12 @@ interface Props {
 const { class: className } = Astro.props;
 ---
 
-<div class="avatar-container group relative select-none">
+<div class="relative select-none">
   <Image
     id="avatar-image"
-    class={cn(
-      "rounded-full object-cover border-3 border-zinc-200",
-      "transition-all duration-500 ease-in-out select-none",
-
-      className,
-    )}
+    class={cn("rounded-full object-cover border-3 border-zinc-200", className)}
     src={avatar}
     alt="avatar"
     draggable="false"
   />
 </div>
-
-<style>
-  /* 防止选择高亮 */
-  .avatar-container * {
-    -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
-  }
-</style>

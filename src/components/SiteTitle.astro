@@ -8,6 +8,6 @@ interface Props {
 const { class: className } = Astro.props;
 ---
 
-<h1 class={cn(className, "font-extrabold tracking-tight text-zinc-900 site-title")}>
-  <a href="/" class="transition-colors duration-200 hover:text-zinc-700">{site.author}</a>
+<h1 class={cn("font-extrabold tracking-tight text-zinc-900 site-title", className)}>
+  <a href="/">{site.author}</a>
 </h1>

@@ -1,10 +1,5 @@
 @import "tailwindcss";
-
 @plugin "@tailwindcss/typography";
-
-:root {
-  color-scheme: light;
-}
 
 @theme {
   --animate-fade-up: fade-up 0.8s ease-out forwards;

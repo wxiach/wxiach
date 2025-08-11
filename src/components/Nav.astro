@@ -1,25 +1,14 @@
 ---
 import { site } from "@/consts";
-import { cn } from "@/lib/utils";
 ---
 
 <nav class="flex items-center gap-4">
   {
     site.nav.map(({ name, url }, index) => (
       <>
-        {index != 0 && <span class="text-xs text-zinc-400">/</span>}
-        <a href={url} class="group relative inline-block" rel="noopener noreferrer">
-          <span class="text-sm tracking-wide text-zinc-600 transition-all duration-300 group-hover:text-zinc-800">
-            {name}
-          </span>
-          <span
-            class={cn(
-              "absolute -bottom-[2px] left-1/2 h-[1px] w-0 bg-zinc-400",
-              "origin-center -translate-x-1/2 transform",
-              "transition-all duration-250 ease-in-out",
-              "opacity-0 group-hover:w-full group-hover:opacity-90",
-            )}
-          />
+        {index != 0 && <span class="text-sm text-zinc-400">/</span>}
+        <a href={url} class="text-zinc-900" rel="noopener noreferrer">
+          {name}
         </a>
       </>
     ))
