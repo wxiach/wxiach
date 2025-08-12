@@ -7,7 +7,9 @@ import Layout from "@/layouts/Layout.astro";
 import { cn } from "@/lib/utils";
 import FadeInElement from "@/components/FadeInElement.astro";
 
-const posts = (await getCollection("blog")).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()).slice(0, 6);
+const posts = (await getCollection("blog"))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 6);
 ---
 
 <script>

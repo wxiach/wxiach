@@ -10,7 +10,12 @@ type Props = {
 const { title, description, position } = Astro.props as Props;
 ---
 
-<div class={cn(position === "left" ? "items-start" : "items-end", "hidden flex-col sm:flex")}>
+<div
+  class={cn(
+    position === "left" ? "items-start" : "items-end",
+    "hidden flex-col sm:flex",
+  )}
+>
   <div class="flex flex-col gap-1">
     <p class="text-xs tracking-widest text-zinc-500 uppercase">
       {description}

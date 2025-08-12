@@ -13,7 +13,12 @@ const month = date.toLocaleDateString("zh-CN", { month: "short" });
 const year = date.toLocaleDateString("zh-CN", { year: "numeric" });
 ---
 
-<span class={cn("inline-flex items-center gap-1.5 text-xs tabular-nums tracking-tight", className)}>
+<span
+  class={cn(
+    "inline-flex items-center gap-1.5 text-xs tabular-nums tracking-tight",
+    className,
+  )}
+>
   <span class="text-zinc-500">{month}{day}</span>
   <span class="text-zinc-500">·</span>
   <span class="text-zinc-400">{year}</span>
