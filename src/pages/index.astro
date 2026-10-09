@@ -1,0 +1,46 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import PostList from '../components/PostList.astro';
+
+const base = import.meta.env.BASE_URL;
+const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+const recentPosts = posts.slice(0, 4);
+---
+
+<BaseLayout>
+  <!-- 介绍 -->
+  <section class="flex flex-col gap-4 sm:flex-row sm:gap-12">
+    <SectionHeading title="介绍" sub="about" />
+    <p class="min-w-0 flex-1 text-lg leading-[1.9]">无畏小生的个人博客。</p>
+  </section>
+
+  <!-- 博客 -->
+  <section
+    class="mt-14 flex flex-col gap-4 border-t border-stone-200 pt-14 sm:flex-row sm:gap-12"
+  >
+    <SectionHeading title="博客" sub="blog" />
+    <PostList posts={recentPosts}>
+      <div class="mt-6 flex justify-end">
+        <a
+          href={`${base}blog/`}
+          class="group text-sm text-stone-500 transition-colors hover:text-stone-900"
+        >
+          更多文章
+          <span class="ml-1 inline-block transition-transform group-hover:translate-x-0.5">→</span>
+        </a>
+      </div>
+    </PostList>
+  </section>
+
+  <!-- 作品 -->
+  <section
+    class="mt-14 flex flex-col gap-4 border-t border-stone-200 pt-14 sm:flex-row sm:gap-12"
+  >
+    <SectionHeading title="作品" sub="work" />
+    <p class="min-w-0 flex-1 text-lg leading-relaxed text-stone-600">暂时还没有作品喔~~</p>
+  </section>
+</BaseLayout>

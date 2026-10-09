@@ -1,0 +1,39 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  posts: CollectionEntry<'posts'>[];
+}
+const { posts } = Astro.props;
+const base = import.meta.env.BASE_URL;
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString('zh-CN', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'UTC',
+  });
+}
+---
+
+<div class="min-w-0 flex-1">
+  {
+    posts.map((post) => (
+      <article class="border-b border-stone-200 py-4 first:pt-0">
+        <p class="mb-1.5 text-sm text-stone-500">{formatDate(post.data.date)}</p>
+        <div class="flex items-baseline justify-between gap-4">
+          <h3 class="text-lg font-bold text-stone-900">
+            <a href={`${base}blog/${post.id}/`} class="hover:underline">
+              {post.data.title}
+            </a>
+          </h3>
+          {post.data.tags[0] && (
+            <span class="shrink-0 text-sm text-stone-500">#{post.data.tags[0]}</span>
+          )}
+        </div>
+      </article>
+    ))
+  }
+  <slot />
+</div>

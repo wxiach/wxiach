@@ -1,0 +1,35 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import PostList from '../../components/PostList.astro';
+
+const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const postsByYear = new Map<number, typeof posts>();
+for (const post of posts) {
+  const year = post.data.date.getUTCFullYear();
+  const group = postsByYear.get(year) ?? [];
+  group.push(post);
+  postsByYear.set(year, group);
+}
+const years = [...postsByYear.keys()].sort((a, b) => b - a);
+---
+
+<BaseLayout title="博客 - 无畏小生">
+  <section class="flex flex-col gap-4 sm:flex-row sm:gap-12">
+    <SectionHeading title="博客" sub="blog" />
+    <div class="min-w-0 flex-1">
+      {
+        years.map((year) => (
+          <section class="mb-12 last:mb-0">
+            <h3 class="mb-4 text-lg font-bold text-stone-400">{year}</h3>
+            <PostList posts={postsByYear.get(year)!} />
+          </section>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>
