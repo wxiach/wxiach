@@ -9,25 +9,35 @@ const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
 const recentPosts = posts.slice(0, 4);
+
+// 全页入场编号单调递增，形成从上到下的波浪
+let stage = 0;
+const take = (n = 1) => {
+  const s = stage;
+  stage += n;
+  return s;
+};
 ---
 
 <BaseLayout>
   <!-- 介绍 -->
-  <section class="flex flex-col gap-4 sm:flex-row sm:gap-12">
+  <section class="slide-enter-content flex flex-col gap-4 sm:flex-row sm:gap-12" style={`--enter-base: ${take(2)}`}>
     <SectionHeading title="介绍" sub="about" />
-    <p class="min-w-0 flex-1 text-lg leading-[1.9]">无畏小生的个人博客。</p>
+    <p class="min-w-0 flex-1 text-lg leading-[1.9] text-stone-800 dark:text-stone-200">无畏小生的个人博客。</p>
   </section>
 
   <!-- 博客 -->
   <section
-    class="mt-14 flex flex-col gap-4 border-t border-stone-200 pt-14 sm:flex-row sm:gap-12"
+    class="mt-14 flex flex-col gap-4 border-t border-stone-200 pt-14 sm:flex-row sm:gap-12 dark:border-stone-800"
   >
-    <SectionHeading title="博客" sub="blog" />
-    <PostList posts={recentPosts}>
-      <div class="mt-6 flex justify-end">
+    <div class="enter shrink-0" style={`--enter-stage: ${take()}`}>
+      <SectionHeading title="博客" sub="blog" />
+    </div>
+    <PostList posts={recentPosts} baseStage={take(recentPosts.length)}>
+      <div class="enter mt-6 flex justify-end" style={`--enter-stage: ${take()}`}>
         <a
           href={`${base}blog/`}
-          class="group text-sm text-stone-500 transition-colors hover:text-stone-900"
+          class="group inline-flex items-center whitespace-nowrap text-sm text-stone-500 transition-colors hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100"
         >
           更多文章
           <span class="ml-1 inline-block transition-transform group-hover:translate-x-0.5">→</span>
@@ -38,9 +48,10 @@ const recentPosts = posts.slice(0, 4);
 
   <!-- 作品 -->
   <section
-    class="mt-14 flex flex-col gap-4 border-t border-stone-200 pt-14 sm:flex-row sm:gap-12"
+    class="slide-enter-content mt-14 flex flex-col gap-4 border-t border-stone-200 pt-14 sm:flex-row sm:gap-12 dark:border-stone-800"
+    style={`--enter-base: ${take(2)}`}
   >
     <SectionHeading title="作品" sub="work" />
-    <p class="min-w-0 flex-1 text-lg leading-relaxed text-stone-600">暂时还没有作品喔~~</p>
+    <p class="min-w-0 flex-1 text-lg leading-relaxed text-stone-600 dark:text-stone-300">暂时还没有作品喔~~</p>
   </section>
 </BaseLayout>

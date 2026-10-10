@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionHeading from '../../components/SectionHeading.astro';
 import PostList from '../../components/PostList.astro';
+import TagFilter from '../../components/TagFilter.astro';
 
 const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
@@ -16,20 +17,102 @@ for (const post of posts) {
   postsByYear.set(year, group);
 }
 const years = [...postsByYear.keys()].sort((a, b) => b - a);
+
+const tagCounts = new Map<string, number>();
+for (const post of posts) {
+  for (const tag of post.data.tags) {
+    tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1);
+  }
+}
+const tags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'zh-CN'));
+
+// 全页入场编号单调递增
+let stage = 0;
+const headingStage = stage++;
+const filterStage = stage++;
+const yearGroups = years.map((year) => {
+  const group = postsByYear.get(year)!;
+  const yearHeadingStage = stage++;
+  const baseStage = stage;
+  stage += group.length;
+  return { year, posts: group, headingStage: yearHeadingStage, baseStage };
+});
 ---
 
 <BaseLayout title="博客 - 无畏小生">
   <section class="flex flex-col gap-4 sm:flex-row sm:gap-12">
-    <SectionHeading title="博客" sub="blog" />
+    <div class="enter w-32 shrink-0" style={`--enter-stage: ${headingStage}`}>
+      <SectionHeading title="博客" sub="blog" />
+    </div>
     <div class="min-w-0 flex-1">
+      <div class="enter" style={`--enter-stage: ${filterStage}`}>
+        <TagFilter tags={tags} />
+      </div>
       {
-        years.map((year) => (
-          <section class="mb-12 last:mb-0">
-            <h3 class="mb-4 text-lg font-bold text-stone-400">{year}</h3>
-            <PostList posts={postsByYear.get(year)!} />
+        yearGroups.map(({ year, posts: group, headingStage: ys, baseStage }) => (
+          <section class="mb-12 last:mb-0" data-year-section>
+            <h3
+              class="enter mb-4 text-lg font-bold text-stone-400 dark:text-stone-500"
+              style={`--enter-stage: ${ys}`}
+            >
+              {year}
+            </h3>
+            <PostList posts={group} baseStage={baseStage} />
           </section>
         ))
       }
     </div>
   </section>
+
+  <script>
+    const chips = document.querySelectorAll<HTMLElement>('[data-tag-chip]');
+    const articles = document.querySelectorAll<HTMLElement>('article[data-tags]');
+    const yearSections = document.querySelectorAll<HTMLElement>('[data-year-section]');
+
+    // 入场动画播完即摘除 .enter，避免过滤显隐时重播动画造成"有的动有的不动"
+    document.addEventListener('animationend', (e) => {
+      const el = e.target as HTMLElement;
+      if (el.classList?.contains('enter')) {
+        el.classList.remove('enter');
+        el.style.removeProperty('--enter-stage');
+      }
+    });
+
+    function applyFilter(tag: string) {
+      chips.forEach((c) => (c.dataset.active = String(c.dataset.tagChip === tag)));
+      articles.forEach((a) => {
+        const show = !tag || (a.dataset.tags ?? '').split('|').includes(tag);
+        a.style.display = show ? '' : 'none';
+      });
+      yearSections.forEach((s) => {
+        const visible = [...s.querySelectorAll<HTMLElement>('article[data-tags]')].some(
+          (a) => a.style.display !== 'none'
+        );
+        s.style.display = visible ? '' : 'none';
+      });
+    }
+
+    function setFilter(tag: string, push = true) {
+      applyFilter(tag);
+      if (push) {
+        const url = tag ? `?tag=${encodeURIComponent(tag)}` : location.pathname;
+        history.pushState(null, '', url);
+      }
+    }
+
+    chips.forEach((c) => c.addEventListener('click', () => setFilter(c.dataset.tagChip ?? '')));
+
+    // 文章行尾的 #标签 链接在列表页内拦截，直接过滤不跳页
+    document.querySelectorAll<HTMLAnchorElement>('a[href*="?tag="]').forEach((a) => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        setFilter(new URL(a.href).searchParams.get('tag') ?? '');
+      });
+    });
+
+    window.addEventListener('popstate', () =>
+      applyFilter(new URLSearchParams(location.search).get('tag') ?? '')
+    );
+    applyFilter(new URLSearchParams(location.search).get('tag') ?? '');
+  </script>
 </BaseLayout>
