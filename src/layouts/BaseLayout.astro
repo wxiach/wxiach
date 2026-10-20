@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { site } from '../site.config';
 
 interface Props {
   title?: string;
@@ -7,20 +8,19 @@ interface Props {
   type?: 'website' | 'article';
 }
 const {
-  title = '无畏小生的博客',
-  description = '无畏小生的个人博客。',
+  title = site.title,
+  description = site.description,
   type = 'website',
 } = Astro.props;
-const base = import.meta.env.BASE_URL;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const path = Astro.url.pathname;
 const year = new Date().getFullYear();
-const ogImage = new URL(`${base}avatar.jpg`, Astro.site).href;
+const ogImage = new URL(`${base}${site.avatar.replace(/^\//, '')}`, Astro.site).href;
 
-const navItems = [
-  { href: base, label: '首页' },
-  { href: `${base}blog/`, label: '博客' },
-  { href: `${base}works/`, label: '作品' },
-];
+const navItems = site.nav.map((item) => ({
+  href: item.href === '/' ? base : `${base}${item.href.replace(/^\//, '')}`,
+  label: item.label,
+}));
 const isActive = (href: string) => {
   if (href === base) return path === base;
   if (href === `${base}blog/`) return path.startsWith(href);
@@ -36,7 +36,7 @@ const isActive = (href: string) => {
     <link rel="apple-touch-icon" href={`${base}apple-touch-icon.png`} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    <meta property="og:site_name" content="无畏小生" />
+    <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content={type} />
@@ -64,14 +64,14 @@ const isActive = (href: string) => {
       <div class="mx-auto flex h-16 max-w-3xl items-center justify-between px-4 sm:px-6">
         <a href={base} class="flex items-center gap-2.5">
           <img
-            src={`${base}avatar-small.jpg`}
-            alt="无畏小生的头像"
+            src={`${base}${site.avatarSmall.replace(/^\//, '')}`}
+            alt={`${site.name}的头像`}
             width="32"
             height="32"
             class="h-8 w-8 rounded-full object-cover ring-1 ring-stone-300 ring-offset-1 ring-offset-[#f7f4ee] dark:ring-stone-600 dark:ring-offset-[#1c1917]"
           />
           <span class="text-xl font-bold tracking-[0.05em] text-stone-900 sm:text-2xl dark:text-stone-100">
-            无畏小生
+            {site.name}
           </span>
         </a>
         <nav class="flex items-center gap-4 sm:gap-6">
@@ -130,8 +130,8 @@ const isActive = (href: string) => {
     </main>
     <footer class="border-t border-stone-200 dark:border-stone-800">
       <div class="mx-auto flex max-w-3xl flex-col items-center gap-2 px-6 py-8 text-sm text-stone-400 sm:flex-row sm:justify-between dark:text-stone-500">
-        <p>© {year} · 无畏小生</p>
-        <p>「路虽远，行则将至。」</p>
+        <p>© {year} · {site.name}</p>
+        <p>{site.footerQuote}</p>
       </div>
     </footer>
     <button

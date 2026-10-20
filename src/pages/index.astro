@@ -3,8 +3,9 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import PostList from '../components/PostList.astro';
+import { site } from '../site.config';
 
-const base = import.meta.env.BASE_URL;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
@@ -23,7 +24,7 @@ const take = (n = 1) => {
   <!-- 介绍 -->
   <section class="slide-enter-content flex flex-col gap-4 sm:flex-row sm:gap-12" style={`--enter-base: ${take(2)}`}>
     <SectionHeading title="介绍" sub="about" />
-    <p class="min-w-0 flex-1 text-lg leading-[1.9] text-stone-800 dark:text-stone-200">无畏小生的个人博客。</p>
+    <p class="min-w-0 flex-1 text-lg leading-[1.9] text-stone-800 dark:text-stone-200">{site.intro}</p>
   </section>
 
   <!-- 博客 -->

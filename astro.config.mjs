@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
+import { site } from './src/site.config.ts';
 
 // 正文图片统一加懒加载与异步解码
 function rehypeLazyImages() {
@@ -18,7 +19,7 @@ function rehypeLazyImages() {
 //   把 site 改成 https://<username>.github.io，base 改成 '/<repo>'
 // 如果使用 username.github.io 仓库或自定义域名，base 保持 '/' 即可。
 export default defineConfig({
-  site: 'https://wxiach.cn',
+  site: site.url,
   base: '/',
   // 悬停导航链接时预取页面，站内跳转秒开
   prefetch: true,
