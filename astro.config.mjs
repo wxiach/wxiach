@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
+import { fileURLToPath } from 'node:url';
 import { site } from './src/site.config.ts';
 
 // 正文图片统一加懒加载与异步解码
@@ -15,9 +16,6 @@ function rehypeLazyImages() {
   return (tree) => walk(tree);
 }
 
-// 部署到 GitHub Pages 项目站点（username.github.io/<repo>）时：
-//   把 site 改成 https://<username>.github.io，base 改成 '/<repo>'
-// 如果使用 username.github.io 仓库或自定义域名，base 保持 '/' 即可。
 export default defineConfig({
   site: site.url,
   base: '/',
@@ -28,5 +26,10 @@ export default defineConfig({
   },
   vite: {
     plugins: [tailwindcss()],
+    resolve: {
+      alias: {
+        '@site-config': fileURLToPath(new URL('./src/site.config.ts', import.meta.url)),
+      },
+    },
   },
 });

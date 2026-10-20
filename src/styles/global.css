@@ -1,6 +1,9 @@
 @import "lxgw-wenkai-screen-webfont/lxgwwenkaiscreen.css";
 @import "tailwindcss";
 
+/* 主题包内的 .astro/.ts 也要参与 Tailwind 类名扫描（node_modules 默认不扫描） */
+@source "..";
+
 @plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:where(.dark, .dark *));
