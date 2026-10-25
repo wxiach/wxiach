@@ -1,20 +1,38 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* 主题包内的 .astro/.ts 也要参与 Tailwind 类名扫描（node_modules 默认不扫描） */
-@source "..";
+@source '..';
 
-@plugin "@tailwindcss/typography";
+@plugin '@tailwindcss/typography';
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   /* 系统字体栈：macOS 用苹方、Windows 用雅黑，两者字形风格最接近 */
-  --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
-    "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", "Noto Sans SC",
-    "Source Han Sans SC", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-main:
+    system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', 'Noto Sans SC',
+    'Source Han Sans SC', 'Helvetica Neue', Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   --color-accent: #b23a2e;
   --animate-fade-up: slide-enter 1s both;
+  --animate-wave: wave 0.9s ease-in-out;
+
+  @keyframes wave {
+    0%,
+    100% {
+      rotate: 0deg;
+    }
+    25% {
+      rotate: 16deg;
+    }
+    50% {
+      rotate: -8deg;
+    }
+    75% {
+      rotate: 10deg;
+    }
+  }
 
   @keyframes slide-enter {
     from {
@@ -56,6 +74,11 @@ html.dark .toc-active {
 
 body {
   @apply font-main bg-[#f7f4ee] text-stone-800 dark:bg-[#1c1917] dark:text-stone-200;
+}
+
+/* 所有链接统一小手光标 */
+a {
+  cursor: pointer;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -147,23 +170,63 @@ html.dark .tag-chip:hover {
   animation: slide-enter 1s both;
   animation-delay: calc((var(--enter-base, 0) + var(--enter-stage, 0)) * 90ms);
 }
-.slide-enter-content > :nth-child(1) { --enter-stage: 1; }
-.slide-enter-content > :nth-child(2) { --enter-stage: 2; }
-.slide-enter-content > :nth-child(3) { --enter-stage: 3; }
-.slide-enter-content > :nth-child(4) { --enter-stage: 4; }
-.slide-enter-content > :nth-child(5) { --enter-stage: 5; }
-.slide-enter-content > :nth-child(6) { --enter-stage: 6; }
-.slide-enter-content > :nth-child(7) { --enter-stage: 7; }
-.slide-enter-content > :nth-child(8) { --enter-stage: 8; }
-.slide-enter-content > :nth-child(9) { --enter-stage: 9; }
-.slide-enter-content > :nth-child(10) { --enter-stage: 10; }
-.slide-enter-content > :nth-child(11) { --enter-stage: 11; }
-.slide-enter-content > :nth-child(12) { --enter-stage: 12; }
-.slide-enter-content > :nth-child(13) { --enter-stage: 13; }
-.slide-enter-content > :nth-child(14) { --enter-stage: 14; }
-.slide-enter-content > :nth-child(15) { --enter-stage: 15; }
-.slide-enter-content > :nth-child(16) { --enter-stage: 16; }
-.slide-enter-content > :nth-child(17) { --enter-stage: 17; }
-.slide-enter-content > :nth-child(18) { --enter-stage: 18; }
-.slide-enter-content > :nth-child(19) { --enter-stage: 19; }
-.slide-enter-content > :nth-child(20) { --enter-stage: 20; }
+.slide-enter-content > :nth-child(1) {
+  --enter-stage: 1;
+}
+.slide-enter-content > :nth-child(2) {
+  --enter-stage: 2;
+}
+.slide-enter-content > :nth-child(3) {
+  --enter-stage: 3;
+}
+.slide-enter-content > :nth-child(4) {
+  --enter-stage: 4;
+}
+.slide-enter-content > :nth-child(5) {
+  --enter-stage: 5;
+}
+.slide-enter-content > :nth-child(6) {
+  --enter-stage: 6;
+}
+.slide-enter-content > :nth-child(7) {
+  --enter-stage: 7;
+}
+.slide-enter-content > :nth-child(8) {
+  --enter-stage: 8;
+}
+.slide-enter-content > :nth-child(9) {
+  --enter-stage: 9;
+}
+.slide-enter-content > :nth-child(10) {
+  --enter-stage: 10;
+}
+.slide-enter-content > :nth-child(11) {
+  --enter-stage: 11;
+}
+.slide-enter-content > :nth-child(12) {
+  --enter-stage: 12;
+}
+.slide-enter-content > :nth-child(13) {
+  --enter-stage: 13;
+}
+.slide-enter-content > :nth-child(14) {
+  --enter-stage: 14;
+}
+.slide-enter-content > :nth-child(15) {
+  --enter-stage: 15;
+}
+.slide-enter-content > :nth-child(16) {
+  --enter-stage: 16;
+}
+.slide-enter-content > :nth-child(17) {
+  --enter-stage: 17;
+}
+.slide-enter-content > :nth-child(18) {
+  --enter-stage: 18;
+}
+.slide-enter-content > :nth-child(19) {
+  --enter-stage: 19;
+}
+.slide-enter-content > :nth-child(20) {
+  --enter-stage: 20;
+}

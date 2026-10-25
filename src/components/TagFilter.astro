@@ -6,13 +6,18 @@ const { tags } = Astro.props;
 ---
 
 <nav class="mb-8 flex flex-wrap items-center gap-2" aria-label="按标签筛选">
-  <button type="button" class="tag-chip" data-tag-chip="" data-active="true">全部</button>
-  {
-    tags.map(([tag, count]) => (
-      <button type="button" class="tag-chip" data-tag-chip={tag} data-active="false">
-        #{tag}
-        <span class="ml-1 text-xs opacity-60">{count}</span>
-      </button>
-    ))
-  }
+  <button type="button" class="tag-chip" data-tag-chip="" data-active="true">
+    全部
+  </button>
+  {tags.map(([tag, count]) => (
+    <button
+      type="button"
+      class="tag-chip"
+      data-tag-chip={tag}
+      data-active="false"
+    >
+      #{tag}
+      <span class="ml-1 text-xs opacity-60">{count}</span>
+    </button>
+  ))}
 </nav>

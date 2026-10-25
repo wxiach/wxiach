@@ -17,11 +17,14 @@ const toc = headings.filter((h) => h.depth === 2);
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 
 const allPosts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
 const postIndex = allPosts.findIndex((p) => p.id === post.id);
 const prevPost = postIndex > 0 ? allPosts[postIndex - 1] : undefined;
-const nextPost = postIndex >= 0 && postIndex < allPosts.length - 1 ? allPosts[postIndex + 1] : undefined;
+const nextPost =
+  postIndex >= 0 && postIndex < allPosts.length - 1
+    ? allPosts[postIndex + 1]
+    : undefined;
 
 const date = post.data.date.toLocaleDateString('zh-CN', {
   year: 'numeric',
@@ -50,47 +53,56 @@ const readTime = Math.max(1, Math.round(wordCount / 400));
   <article class="relative mx-auto w-full max-w-2xl">
     <header class="enter" style="--enter-stage: 0">
       <p class="text-sm text-stone-500 dark:text-stone-400">{date}</p>
-      <h1 class="mt-3 text-3xl font-bold leading-snug text-stone-900 dark:text-stone-100">{post.data.title}</h1>
+      <h1 class="mt-3 text-2xl font-bold leading-snug text-stone-900 dark:text-stone-100">
+        {post.data.title}
+      </h1>
       <div class="mt-3 flex items-baseline justify-between gap-4 text-sm text-stone-500 dark:text-stone-400">
         <p class="flex gap-3">
-          {
-            post.data.tags.map((tag) => (
-              <a
-                href={`${base}blog/?tag=${encodeURIComponent(tag)}`}
-                class="transition-colors hover:text-stone-900 dark:hover:text-stone-100"
-              >
-                #{tag}
-              </a>
-            ))
-          }
+          {post.data.tags.map((tag) => (
+            <a
+              href={`${base}blog/?tag=${encodeURIComponent(tag)}`}
+              class="transition-colors hover:text-stone-900 dark:hover:text-stone-100"
+            >
+              #{tag}
+            </a>
+          ))}
         </p>
-        <p class="shrink-0">共 {wordCount} 字 · 约 {readTime} 分钟</p>
+        <p class="shrink-0">
+          共 {wordCount} 字 · 约 {readTime} 分钟
+        </p>
       </div>
       <div class="mt-8 border-t border-dashed border-stone-300 dark:border-stone-700"></div>
     </header>
-    {
-      toc.length > 0 && (
-        <aside class="absolute top-0 left-full ml-10 hidden h-full w-52 xl:block">
-          <nav class="enter sticky top-28" style="--enter-stage: 1" aria-label="文章目录">
-            <p class="text-sm font-bold text-stone-900 dark:text-stone-100">目录</p>
-            <ul class="mt-3 space-y-2 border-l border-stone-200 text-sm dark:border-stone-800">
-              {toc.map((h) => (
-                <li>
-                  <a
-                    href={`#${h.slug}`}
-                    data-toc-link={h.slug}
-                    class="-ml-px block border-l-2 border-transparent py-0.5 pl-4 text-stone-500 transition-colors hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100"
-                  >
-                    {h.text}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </aside>
-      )
-    }
-    <div class="slide-enter-content prose prose-stone prose-lg dark:prose-invert max-w-none mt-10 prose-h2:text-2xl prose-h3:text-xl" style="--enter-base: 1">
+    {toc.length > 0 && (
+      <aside class="absolute top-0 left-full ml-10 hidden h-full w-52 xl:block">
+        <nav
+          class="enter sticky top-28"
+          style="--enter-stage: 1"
+          aria-label="文章目录"
+        >
+          <p class="text-sm font-bold text-stone-900 dark:text-stone-100">
+            目录
+          </p>
+          <ul class="mt-3 space-y-2 border-l border-stone-200 text-sm dark:border-stone-800">
+            {toc.map((h) => (
+              <li>
+                <a
+                  href={`#${h.slug}`}
+                  data-toc-link={h.slug}
+                  class="-ml-px block border-l-2 border-transparent py-0.5 pl-4 text-stone-500 transition-colors hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100"
+                >
+                  {h.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </aside>
+    )}
+    <div
+      class="slide-enter-content prose prose-stone dark:prose-invert max-w-none mt-10 prose-h2:text-xl prose-h3:text-lg"
+      style="--enter-base: 1"
+    >
       <Content />
     </div>
     <footer class="enter mt-16" style="--enter-stage: 3">
@@ -99,36 +111,46 @@ const readTime = Math.max(1, Math.round(wordCount / 400));
         aria-label="上一篇 / 下一篇"
       >
         <div class="min-w-0">
-          {
-            prevPost && (
-              <a
-                href={`${base}blog/${prevPost.id}/`}
-                class="group block text-stone-500 transition-colors hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100"
-              >
-                <span class="block text-xs text-stone-400 dark:text-stone-500">上一篇</span>
-                <span class="mt-1 block truncate group-hover:underline">{prevPost.data.title}</span>
-              </a>
-            )
-          }
+          {prevPost && (
+            <a
+              href={`${base}blog/${prevPost.id}/`}
+              class="group block text-stone-500 transition-colors hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100"
+            >
+              <span class="block text-xs text-stone-400 dark:text-stone-500">
+                上一篇
+              </span>
+              <span class="mt-1 block truncate group-hover:underline">
+                {prevPost.data.title}
+              </span>
+            </a>
+          )}
         </div>
         <div class="min-w-0 text-right">
-          {
-            nextPost && (
-              <a
-                href={`${base}blog/${nextPost.id}/`}
-                class="group block text-stone-500 transition-colors hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100"
-              >
-                <span class="block text-xs text-stone-400 dark:text-stone-500">下一篇</span>
-                <span class="mt-1 block truncate group-hover:underline">{nextPost.data.title}</span>
-              </a>
-            )
-          }
+          {nextPost && (
+            <a
+              href={`${base}blog/${nextPost.id}/`}
+              class="group block text-stone-500 transition-colors hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100"
+            >
+              <span class="block text-xs text-stone-400 dark:text-stone-500">
+                下一篇
+              </span>
+              <span class="mt-1 block truncate group-hover:underline">
+                {nextPost.data.title}
+              </span>
+            </a>
+          )}
         </div>
       </nav>
     </footer>
   </article>
 
-  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="查看图片">
+  <div
+    id="lightbox"
+    class="lightbox"
+    role="dialog"
+    aria-modal="true"
+    aria-label="查看图片"
+  >
     <img src="" alt="" />
   </div>
 
@@ -136,8 +158,10 @@ const readTime = Math.max(1, Math.round(wordCount / 400));
     const progressBar = document.getElementById('reading-progress');
     if (progressBar) {
       const updateProgress = () => {
-        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-        const progress = scrollable > 0 ? Math.min(1, window.scrollY / scrollable) : 0;
+        const scrollable =
+          document.documentElement.scrollHeight - window.innerHeight;
+        const progress =
+          scrollable > 0 ? Math.min(1, window.scrollY / scrollable) : 0;
         progressBar.style.transform = `scaleX(${progress})`;
       };
       updateProgress();
@@ -154,7 +178,10 @@ const readTime = Math.max(1, Math.round(wordCount / 400));
           if (h.getBoundingClientRect().top <= 96) currentId = h.id;
         }
         tocLinks.forEach((link) =>
-          link.classList.toggle('toc-active', link.dataset.tocLink === currentId)
+          link.classList.toggle(
+            'toc-active',
+            link.dataset.tocLink === currentId,
+          ),
         );
       };
       activate();
