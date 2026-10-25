@@ -3,7 +3,6 @@
   "type": "module",
   "version": "0.0.1",
   "private": true,
-  "packageManager": "pnpm@12.10.1",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -11,16 +10,10 @@
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.20",
-    "astro": "^5.0.0",
-    "lxgw-wenkai-screen-webfont": "^1.7.0"
+    "astro": "^5.0.0"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.3",
     "tailwindcss": "^4.3.3"
-  },
-  "pnpm": {
-    "overrides": {
-      "vite": "6.4.4"
-    }
   }
 }
