@@ -59,7 +59,11 @@ const yearGroups = years.map((year) => {
           >
             {year}
           </h3>
-          <PostList posts={group} baseStage={baseStage} />
+          <PostList
+            posts={group}
+            baseStage={baseStage}
+            showDescription={false}
+          />
         </section>
       ))}
     </div>

@@ -4,8 +4,9 @@ import type { CollectionEntry } from 'astro:content';
 interface Props {
   posts: CollectionEntry<'posts'>[];
   baseStage?: number;
+  showDescription?: boolean;
 }
-const { posts, baseStage = 0 } = Astro.props;
+const { posts, baseStage = 0, showDescription = true } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 
 function formatDate(date: Date) {
@@ -21,18 +22,18 @@ function formatDate(date: Date) {
 <div class="min-w-0 flex-1">
   {posts.map((post, i) => (
     <article
-      class="enter border-b border-stone-200 py-4 first:pt-0 dark:border-stone-800"
+      class="group enter border-b border-stone-200 py-5 first:pt-0 dark:border-stone-800"
       style={`--enter-stage: ${baseStage + i}`}
       data-tags={post.data.tags.join('|')}
     >
-      <p class="mb-1.5 text-sm text-stone-500 dark:text-stone-400">
+      <p class="mb-2 text-[0.82rem] tracking-wide text-stone-400 dark:text-stone-500">
         {formatDate(post.data.date)}
       </p>
-      <div class="flex items-baseline justify-between gap-4">
-        <h3 class="text-base text-stone-900 dark:text-stone-100">
+      <div class="flex items-baseline justify-between gap-5">
+        <h3 class="text-[1.05rem] leading-7 font-medium text-stone-900 dark:text-stone-100">
           <a
             href={`${base}blog/${post.id}/`}
-            class="inline-block transition-all duration-300 hover:translate-x-2 hover:text-accent active:text-accent"
+            class="inline-block underline decoration-transparent decoration-[1.5px] underline-offset-5 transition-all duration-200 group-hover:text-accent group-hover:decoration-accent active:text-accent"
           >
             {post.data.title}
           </a>
@@ -40,12 +41,17 @@ function formatDate(date: Date) {
         {post.data.tags[0] && (
           <a
             href={`${base}blog/?tag=${encodeURIComponent(post.data.tags[0])}`}
-            class="shrink-0 text-sm text-stone-500 transition-colors hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100"
+            class="shrink-0 text-sm text-stone-500 transition-colors hover:text-accent dark:text-stone-400 dark:hover:text-accent"
           >
             #{post.data.tags[0]}
           </a>
         )}
       </div>
+      {showDescription && post.data.description && (
+        <p class="mt-2 text-[0.95rem] leading-7 text-stone-500 transition-colors duration-200 group-hover:text-stone-600 dark:text-stone-400 dark:group-hover:text-stone-300">
+          {post.data.description}
+        </p>
+      )}
     </article>
   ))}
   <slot />

@@ -6,16 +6,22 @@ interface Props {
   title?: string;
   description?: string;
   type?: 'website' | 'article';
+  publishedTime?: Date;
+  noindex?: boolean;
 }
 const {
   title = site.name,
   description = '无畏小生的个人博客。',
   type = 'website',
+  publishedTime,
+  noindex = false,
 } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const path = Astro.url.pathname;
 const year = new Date().getFullYear();
 const ogImage = new URL(`${base}avatar.jpg`, Astro.site).href;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
+const articlePublishedTime = publishedTime?.toISOString();
 
 const navItems = [
   { href: base, label: '首页' },
@@ -35,14 +41,28 @@ const isActive = (href: string) => {
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href={`${base}favicon.png`} />
     <link rel="apple-touch-icon" href={`${base}apple-touch-icon.png`} />
+    <link rel="canonical" href={canonicalUrl} />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={`${site.name} RSS`}
+      href={`${base}rss.xml`}
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    <meta name="author" content={site.name} />
+    {noindex && <meta name="robots" content="noindex" />}
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content={type} />
-    <meta property="og:url" content={Astro.url.href} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:locale" content="zh_CN" />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content={`${site.name}的头像`} />
+    {articlePublishedTime && (
+      <meta property="article:published_time" content={articlePublishedTime} />
+    )}
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
@@ -61,7 +81,7 @@ const isActive = (href: string) => {
     <title>{title}</title>
   </head>
   <body>
-    <header class="sticky top-0 z-50 border-b border-stone-900/10 bg-[#f7f4ee]/60 backdrop-blur-xl backdrop-saturate-150 dark:border-stone-100/10 dark:bg-[#1c1917]/60">
+    <header class="sticky top-0 z-50 border-b border-stone-900/[0.07] bg-[#f8f6f1]/75 backdrop-blur-xl backdrop-saturate-150 dark:border-stone-100/10 dark:bg-[#191917]/75">
       <div class="mx-auto flex h-16 max-w-3xl items-center justify-between px-4 sm:px-6">
         <a href={base} class="flex items-center gap-2.5">
           <img
@@ -69,7 +89,7 @@ const isActive = (href: string) => {
             alt={`${site.name}的头像`}
             width="32"
             height="32"
-            class="h-8 w-8 rounded-full object-cover ring-1 ring-stone-300 ring-offset-1 ring-offset-[#f7f4ee] dark:ring-stone-600 dark:ring-offset-[#1c1917]"
+            class="h-8 w-8 rounded-full object-cover ring-1 ring-stone-300 ring-offset-1 ring-offset-[#f8f6f1] dark:ring-stone-600 dark:ring-offset-[#191917]"
           />
           <span class="text-lg font-bold tracking-[0.05em] text-stone-900 sm:text-xl dark:text-stone-100">
             {site.name}
@@ -80,9 +100,9 @@ const isActive = (href: string) => {
             <a
               href={item.href}
               class:list={[
-                'transition-colors hover:text-stone-900 dark:hover:text-stone-100',
+                'py-1 text-[0.95rem] transition-colors hover:text-stone-800 dark:hover:text-stone-100',
                 isActive(item.href)
-                  ? 'font-bold text-stone-900 dark:text-stone-100'
+                  ? 'font-semibold text-stone-900 dark:text-stone-100'
                   : 'text-stone-500 dark:text-stone-400',
               ]}
             >
@@ -94,6 +114,7 @@ const isActive = (href: string) => {
             type="button"
             role="switch"
             aria-checked="false"
+            aria-pressed="false"
             aria-label="切换深色模式"
             class="relative h-7 w-12 shrink-0 cursor-pointer rounded-full bg-stone-200 shadow-inner transition-colors dark:bg-stone-700"
           >
@@ -130,14 +151,43 @@ const isActive = (href: string) => {
         <p>
           © {year} · {site.name}
         </p>
-        <p>「路虽远，行则将至。」</p>
+        <div class="flex items-center gap-4">
+          <a
+            href={`${base}rss.xml`}
+            aria-label="RSS 订阅"
+            class="text-stone-400 transition-colors hover:text-accent dark:text-stone-500 dark:hover:text-accent"
+          >
+            RSS
+          </a>
+          <a
+            href="https://github.com/wxiach"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="GitHub 主页"
+            class="text-stone-400 transition-colors hover:text-accent dark:text-stone-500 dark:hover:text-accent"
+          >
+            <svg
+              class="h-4 w-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21" />
+            </svg>
+          </a>
+          <p>「路虽远，行则将至。」</p>
+        </div>
       </div>
     </footer>
     <button
       id="back-to-top"
       type="button"
       aria-label="回到顶部"
-      class="pointer-events-none fixed right-6 bottom-6 z-50 flex h-10 w-10 translate-y-2 cursor-pointer items-center justify-center rounded-full border border-stone-300 bg-[#f7f4ee]/80 text-stone-500 opacity-0 backdrop-blur transition-all duration-300 hover:border-accent hover:text-accent dark:border-stone-700 dark:bg-[#1c1917]/80 dark:text-stone-400"
+      class="pointer-events-none fixed right-6 bottom-6 z-50 flex h-10 w-10 translate-y-2 cursor-pointer items-center justify-center rounded-full border border-stone-300 bg-[#f8f6f1]/80 text-stone-500 opacity-0 backdrop-blur transition-all duration-300 hover:border-accent hover:text-accent dark:border-stone-700 dark:bg-[#191917]/80 dark:text-stone-400"
     >
       <svg
         class="h-4 w-4"
@@ -166,11 +216,11 @@ const isActive = (href: string) => {
       );
 
       const themeToggle = document.getElementById('theme-toggle');
-      const syncSwitch = () =>
-        themeToggle?.setAttribute(
-          'aria-checked',
-          String(document.documentElement.classList.contains('dark')),
-        );
+      const syncSwitch = () => {
+        const isDark = document.documentElement.classList.contains('dark');
+        themeToggle?.setAttribute('aria-checked', String(isDark));
+        themeToggle?.setAttribute('aria-pressed', String(isDark));
+      };
       syncSwitch();
       themeToggle?.addEventListener('click', () => {
         const root = document.documentElement;
