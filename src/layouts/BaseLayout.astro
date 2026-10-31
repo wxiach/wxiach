@@ -179,35 +179,39 @@ const isActive = (href: string) => {
         </div>
       </div>
     </footer>
-    <button
-      id="back-to-top"
-      type="button"
-      aria-label="回到顶部"
-      title="回到顶部"
-      disabled
-      class="pointer-events-none fixed bottom-6 z-50 flex h-11 w-11 translate-y-2 cursor-pointer flex-col items-center justify-center gap-0.5 rounded-full border border-stone-300 bg-[#f8f6f1]/90 text-stone-500 opacity-0 backdrop-blur transition-[opacity,transform,color,border-color] duration-200 hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent dark:border-stone-700 dark:bg-[#191917]/90 dark:text-stone-400"
-    >
-      <svg
-        class="h-3 w-3"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        aria-hidden="true"
-      >
-        <path d="M12 19V5M5 12l7-7 7 7" />
-      </svg>
-      <span id="scroll-percentage" class="text-[10px] leading-none tabular-nums" aria-hidden="true">0%</span>
-    </button>
-    <style>
-      #back-to-top {
-        /* 宽屏时靠近内容区，窄屏时保留边缘间距。 */
-        right: max(1.5rem, calc(50% - 27.5rem));
-        bottom: max(1.5rem, env(safe-area-inset-bottom));
-      }
-    </style>
+    {type === 'article' && (
+      <>
+        <button
+          id="back-to-top"
+          type="button"
+          aria-label="回到顶部"
+          title="回到顶部"
+          disabled
+          class="pointer-events-none fixed bottom-6 z-50 flex h-11 w-11 translate-y-2 cursor-pointer flex-col items-center justify-center gap-0.5 rounded-full border border-stone-300 bg-[#f8f6f1]/90 text-stone-500 opacity-0 backdrop-blur transition-[opacity,transform,color,border-color] duration-200 hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent dark:border-stone-700 dark:bg-[#191917]/90 dark:text-stone-400"
+        >
+          <svg
+            class="h-3 w-3"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M12 19V5M5 12l7-7 7 7" />
+          </svg>
+          <span id="scroll-percentage" class="text-[10px] leading-none tabular-nums" aria-hidden="true">0%</span>
+        </button>
+        <style>
+          #back-to-top {
+            /* 宽屏时靠近内容区，窄屏时保留边缘间距。 */
+            right: max(1.5rem, calc(50% - 27.5rem));
+            bottom: max(1.5rem, env(safe-area-inset-bottom));
+          }
+        </style>
+      </>
+    )}
     <script>
       const backToTop = document.querySelector<HTMLButtonElement>('#back-to-top');
       const percentage = document.getElementById('scroll-percentage');
