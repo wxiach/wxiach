@@ -79,7 +79,7 @@ const readTime = Math.max(1, Math.round(wordCount / 400));
     {toc.length > 0 && (
       <aside class="absolute top-0 left-full ml-10 hidden h-full w-52 xl:block">
         <nav
-          class="enter sticky top-28"
+          class="enter sticky top-28 max-h-[calc(100vh-12rem)] overflow-y-auto"
           style="--enter-stage: 1"
           aria-label="文章目录"
         >
@@ -115,32 +115,32 @@ const readTime = Math.max(1, Math.round(wordCount / 400));
       >
         <div class="min-w-0">
           {prevPost && (
-            <a
-              href={`${base}blog/${prevPost.id}/`}
-              class="group block text-stone-500 transition-colors hover:text-accent dark:text-stone-400 dark:hover:text-accent"
-            >
-              <span class="block text-xs text-stone-400 dark:text-stone-500">
+            <>
+              <p class="text-xs text-stone-400 dark:text-stone-500">
                 上一篇
-              </span>
-              <span class="mt-1 block truncate group-hover:underline">
+              </p>
+              <a
+                href={`${base}blog/${prevPost.id}/`}
+                class="mt-1 inline-block max-w-full truncate align-bottom text-stone-500 underline decoration-transparent underline-offset-4 transition-colors hover:text-accent hover:decoration-accent focus-visible:text-accent focus-visible:decoration-accent dark:text-stone-400 dark:hover:text-accent"
+              >
                 {prevPost.data.title}
-              </span>
-            </a>
+              </a>
+            </>
           )}
         </div>
         <div class="min-w-0 text-right">
           {nextPost && (
-            <a
-              href={`${base}blog/${nextPost.id}/`}
-              class="group block text-stone-500 transition-colors hover:text-accent dark:text-stone-400 dark:hover:text-accent"
-            >
-              <span class="block text-xs text-stone-400 dark:text-stone-500">
+            <>
+              <p class="text-xs text-stone-400 dark:text-stone-500">
                 下一篇
-              </span>
-              <span class="mt-1 block truncate group-hover:underline">
+              </p>
+              <a
+                href={`${base}blog/${nextPost.id}/`}
+                class="mt-1 inline-block max-w-full truncate align-bottom text-stone-500 underline decoration-transparent underline-offset-4 transition-colors hover:text-accent hover:decoration-accent focus-visible:text-accent focus-visible:decoration-accent dark:text-stone-400 dark:hover:text-accent"
+              >
                 {nextPost.data.title}
-              </span>
-            </a>
+              </a>
+            </>
           )}
         </div>
       </nav>
@@ -163,20 +163,6 @@ const readTime = Math.max(1, Math.round(wordCount / 400));
   </div>
 
   <script>
-    const progressBar = document.getElementById('reading-progress');
-    if (progressBar) {
-      const updateProgress = () => {
-        const scrollable =
-          document.documentElement.scrollHeight - window.innerHeight;
-        const progress =
-          scrollable > 0 ? Math.min(1, window.scrollY / scrollable) : 0;
-        progressBar.style.transform = `scaleX(${progress})`;
-      };
-      updateProgress();
-      window.addEventListener('scroll', updateProgress, { passive: true });
-      window.addEventListener('resize', updateProgress);
-    }
-
     const tocLinks = document.querySelectorAll('[data-toc-link]');
     const headings = [...document.querySelectorAll('.prose h2')];
     if (tocLinks.length > 0 && headings.length > 0) {

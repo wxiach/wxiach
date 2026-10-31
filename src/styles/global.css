@@ -49,6 +49,8 @@
 html {
   color-scheme: light;
   scroll-behavior: smooth;
+  /* 限制页面顶部、底部的回弹和下拉刷新手势。 */
+  overscroll-behavior-y: none;
   /* macOS 默认的灰度抗锯齿偏粗，关掉后观感更接近 Windows 的 ClearType（仅影响 mac，Windows 忽略） */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

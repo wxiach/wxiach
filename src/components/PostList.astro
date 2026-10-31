@@ -22,7 +22,7 @@ function formatDate(date: Date) {
 <div class="min-w-0 flex-1">
   {posts.map((post, i) => (
     <article
-      class="group enter border-b border-stone-200 py-5 first:pt-0 dark:border-stone-800"
+      class="enter border-b border-stone-200 py-5 first:pt-0 dark:border-stone-800"
       style={`--enter-stage: ${baseStage + i}`}
       data-tags={post.data.tags.join('|')}
     >
@@ -33,7 +33,7 @@ function formatDate(date: Date) {
         <h3 class="text-[1.05rem] leading-7 font-medium text-stone-900 dark:text-stone-100">
           <a
             href={`${base}blog/${post.id}/`}
-            class="inline-block underline decoration-transparent decoration-[1.5px] underline-offset-5 transition-all duration-200 group-hover:text-accent group-hover:decoration-accent active:text-accent"
+            class="inline-block underline decoration-transparent decoration-[1.5px] underline-offset-5 transition-colors duration-200 hover:text-accent hover:decoration-accent focus-visible:text-accent focus-visible:decoration-accent active:text-accent"
           >
             {post.data.title}
           </a>
@@ -48,7 +48,7 @@ function formatDate(date: Date) {
         )}
       </div>
       {showDescription && post.data.description && (
-        <p class="mt-2 text-[0.95rem] leading-7 text-stone-500 transition-colors duration-200 group-hover:text-stone-600 dark:text-stone-400 dark:group-hover:text-stone-300">
+        <p class="mt-2 text-[0.95rem] leading-7 text-stone-500 dark:text-stone-400">
           {post.data.description}
         </p>
       )}

@@ -39,8 +39,8 @@ const isActive = (href: string) => {
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href={`${base}favicon.png`} />
-    <link rel="apple-touch-icon" href={`${base}apple-touch-icon.png`} />
+    <link rel="icon" type="image/png" sizes="48x48" href={`${base}favicon-avatar.png?v=3`} />
+    <link rel="apple-touch-icon" sizes="180x180" href={`${base}apple-touch-icon.png?v=2`} />
     <link rel="canonical" href={canonicalUrl} />
     <link
       rel="alternate"
@@ -168,15 +168,11 @@ const isActive = (href: string) => {
           >
             <svg
               class="h-4 w-4"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.8"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              viewBox="0 0 16 16"
+              fill="currentColor"
               aria-hidden="true"
             >
-              <path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21" />
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.65 7.65 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z" />
             </svg>
           </a>
           <p>「路虽远，行则将至。」</p>
@@ -187,33 +183,62 @@ const isActive = (href: string) => {
       id="back-to-top"
       type="button"
       aria-label="回到顶部"
-      class="pointer-events-none fixed right-6 bottom-6 z-50 flex h-10 w-10 translate-y-2 cursor-pointer items-center justify-center rounded-full border border-stone-300 bg-[#f8f6f1]/80 text-stone-500 opacity-0 backdrop-blur transition-all duration-300 hover:border-accent hover:text-accent dark:border-stone-700 dark:bg-[#191917]/80 dark:text-stone-400"
+      title="回到顶部"
+      disabled
+      class="pointer-events-none fixed bottom-6 z-50 flex h-11 w-11 translate-y-2 cursor-pointer flex-col items-center justify-center gap-0.5 rounded-full border border-stone-300 bg-[#f8f6f1]/90 text-stone-500 opacity-0 backdrop-blur transition-[opacity,transform,color,border-color] duration-200 hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent dark:border-stone-700 dark:bg-[#191917]/90 dark:text-stone-400"
     >
       <svg
-        class="h-4 w-4"
+        class="h-3 w-3"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
+        aria-hidden="true"
       >
         <path d="M12 19V5M5 12l7-7 7 7" />
       </svg>
+      <span id="scroll-percentage" class="text-[10px] leading-none tabular-nums" aria-hidden="true">0%</span>
     </button>
+    <style>
+      #back-to-top {
+        /* 宽屏时靠近内容区，窄屏时保留边缘间距。 */
+        right: max(1.5rem, calc(50% - 27.5rem));
+        bottom: max(1.5rem, env(safe-area-inset-bottom));
+      }
+    </style>
     <script>
-      const backToTop = document.getElementById('back-to-top');
-      const toggleBackToTop = () => {
-        const show = window.scrollY > 400;
+      const backToTop = document.querySelector<HTMLButtonElement>('#back-to-top');
+      const percentage = document.getElementById('scroll-percentage');
+      const progressBar = document.getElementById('reading-progress');
+      const updateScrollProgress = () => {
+        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = scrollable > 0
+          ? Math.max(0, Math.min(1, window.scrollY / scrollable))
+          : 0;
+        const percent = Math.round(progress * 100);
+        if (percentage) percentage.textContent = `${percent}%`;
+        if (progressBar) progressBar.style.transform = `scaleX(${progress})`;
+
+        const show = scrollable > 0 && window.scrollY >= Math.min(400, scrollable);
+        if (backToTop) {
+          backToTop.disabled = !show;
+          backToTop.setAttribute('aria-label', `回到顶部，已滚动 ${percent}%`);
+        }
         backToTop?.classList.toggle('opacity-0', !show);
         backToTop?.classList.toggle('translate-y-2', !show);
         backToTop?.classList.toggle('pointer-events-none', !show);
       };
-      toggleBackToTop();
-      window.addEventListener('scroll', toggleBackToTop, { passive: true });
-      backToTop?.addEventListener('click', () =>
-        window.scrollTo({ top: 0, behavior: 'smooth' }),
-      );
+      updateScrollProgress();
+      window.addEventListener('scroll', updateScrollProgress, { passive: true });
+      window.addEventListener('resize', updateScrollProgress);
+      window.addEventListener('pageshow', updateScrollProgress);
+      new ResizeObserver(updateScrollProgress).observe(document.body);
+      backToTop?.addEventListener('click', () => {
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        window.scrollTo({ top: 0, behavior: reducedMotion ? 'instant' : 'smooth' });
+      });
 
       const themeToggle = document.getElementById('theme-toggle');
       const syncSwitch = () => {
