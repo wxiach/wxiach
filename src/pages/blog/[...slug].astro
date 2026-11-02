@@ -46,6 +46,7 @@ const readTime = Math.max(1, Math.round(wordCount / 400));
 
 <BaseLayout
   title={`${post.data.title} - ${site.name}`}
+  articleTitle={post.data.title}
   description={description}
   type="article"
   publishedTime={post.data.date}
@@ -58,7 +59,7 @@ const readTime = Math.max(1, Math.round(wordCount / 400));
   <article class="relative mx-auto w-full max-w-2xl">
     <header class="enter" style="--enter-stage: 0">
       <p class="text-sm text-muted">{date}</p>
-      <h1 class="mt-3 text-2xl font-bold leading-snug text-heading">
+      <h1 id="article-title" tabindex="-1" class="mt-3 scroll-mt-20 text-2xl font-bold leading-snug text-heading">
         {post.data.title}
       </h1>
       <div class="mt-3 flex items-baseline justify-between gap-4 text-sm text-muted">

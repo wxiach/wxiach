@@ -4,6 +4,7 @@ import { site } from '@site-config';
 
 interface Props {
   title?: string;
+  articleTitle?: string;
   description?: string;
   type?: 'website' | 'article';
   publishedTime?: Date;
@@ -11,6 +12,7 @@ interface Props {
 }
 const {
   title = site.name,
+  articleTitle,
   description = '无畏小生的个人博客。',
   type = 'website',
   publishedTime,
@@ -81,21 +83,37 @@ const isActive = (href: string) => {
     <title>{title}</title>
   </head>
   <body>
-    <header class="sticky top-0 z-50 border-b border-line bg-page/85 backdrop-blur-xl backdrop-saturate-150">
-      <div class="mx-auto flex h-16 max-w-3xl items-center justify-between px-4 sm:px-6">
-        <a href={base} class="flex items-center gap-2.5">
-          <img
-            src={`${base}avatar-small.jpg`}
-            alt={`${site.name}的头像`}
-            width="32"
-            height="32"
-            class="h-8 w-8 rounded-full object-cover ring-1 ring-line-strong ring-offset-1 ring-offset-page"
-          />
-          <span class="text-lg font-bold tracking-[0.05em] text-heading sm:text-xl">
-            {site.name}
-          </span>
-        </a>
-        <nav class="flex items-center gap-4 sm:gap-6">
+    <header id="site-header" class="sticky top-0 z-50 border-b border-line bg-page/85 backdrop-blur-xl backdrop-saturate-150">
+      <div class="mx-auto flex h-16 max-w-3xl items-center justify-between gap-4 px-4 sm:px-6">
+        <div class="flex min-w-0 flex-1 items-center gap-3">
+          <a href={base} class="flex shrink-0 items-center gap-2.5">
+            <img
+              src={`${base}avatar-small.jpg`}
+              alt={`${site.name}的头像`}
+              width="32"
+              height="32"
+              class="h-8 w-8 rounded-full object-cover ring-1 ring-line-strong ring-offset-1 ring-offset-page"
+            />
+            <span class="text-lg font-bold tracking-[0.05em] text-heading sm:text-xl">
+              {site.name}
+            </span>
+          </a>
+          {articleTitle && (
+            <button
+              id="header-article-title"
+              type="button"
+              data-visible="false"
+              aria-hidden="true"
+              aria-label={`回到文章标题：${articleTitle}`}
+              inert
+              title={articleTitle}
+              class="hidden min-w-0 cursor-pointer truncate border-l border-line-strong pl-3 text-left text-sm font-medium text-muted hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:block"
+            >
+              {articleTitle}
+            </button>
+          )}
+        </div>
+        <nav class="flex shrink-0 items-center gap-4 sm:gap-6">
           {navItems.map((item) => (
             <a
               href={item.href}
@@ -216,6 +234,9 @@ const isActive = (href: string) => {
       const backToTop = document.querySelector<HTMLButtonElement>('#back-to-top');
       const percentage = document.getElementById('scroll-percentage');
       const progressBar = document.getElementById('reading-progress');
+      const articleHeading = document.getElementById('article-title');
+      const siteHeader = document.getElementById('site-header');
+      const articleTitleButton = document.querySelector<HTMLButtonElement>('#header-article-title');
       const updateScrollProgress = () => {
         const scrollable = document.documentElement.scrollHeight - window.innerHeight;
         const progress = scrollable > 0
@@ -233,6 +254,15 @@ const isActive = (href: string) => {
         backToTop?.classList.toggle('opacity-0', !show);
         backToTop?.classList.toggle('translate-y-2', !show);
         backToTop?.classList.toggle('pointer-events-none', !show);
+
+        if (articleHeading && siteHeader && articleTitleButton) {
+          const showArticleTitle = articleHeading.getBoundingClientRect().bottom <= siteHeader.getBoundingClientRect().bottom;
+          if (articleTitleButton.dataset.visible !== String(showArticleTitle)) {
+            articleTitleButton.dataset.visible = String(showArticleTitle);
+            articleTitleButton.inert = !showArticleTitle;
+            articleTitleButton.setAttribute('aria-hidden', String(!showArticleTitle));
+          }
+        }
       };
       updateScrollProgress();
       window.addEventListener('scroll', updateScrollProgress, { passive: true });
@@ -242,6 +272,14 @@ const isActive = (href: string) => {
       backToTop?.addEventListener('click', () => {
         const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         window.scrollTo({ top: 0, behavior: reducedMotion ? 'instant' : 'smooth' });
+      });
+      articleTitleButton?.addEventListener('click', () => {
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        articleHeading?.focus({ preventScroll: true });
+        articleHeading?.scrollIntoView({
+          block: 'start',
+          behavior: reducedMotion ? 'instant' : 'smooth',
+        });
       });
 
       const themeToggle = document.getElementById('theme-toggle');
@@ -263,3 +301,20 @@ const isActive = (href: string) => {
     </script>
   </body>
 </html>
+
+<style>
+  #header-article-title {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      color 0.2s ease,
+      opacity 0.2s ease,
+      visibility 0.2s ease;
+  }
+  #header-article-title[data-visible='true'] {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+</style>
