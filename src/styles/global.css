@@ -14,7 +14,18 @@
     'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', 'Noto Sans SC',
     'Source Han Sans SC', 'Helvetica Neue', Arial, sans-serif,
     'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  --color-accent: #a95037;
+  --color-page: #faf9f6;
+  --color-surface: #ffffff;
+  --color-heading: #292724;
+  --color-ink: #48453f;
+  --color-muted: #6f6961;
+  --color-subtle: #756e65;
+  --color-line: #e8e2d9;
+  --color-line-strong: #d7cdbf;
+  --color-accent: #9b672a;
+  --color-accent-hover: #7b4c18;
+  --color-accent-soft: #f5efe4;
+  --color-selection: #ecdfc7;
   --animate-fade-up: slide-enter 1s both;
   --animate-wave: wave 0.9s ease-in-out;
 
@@ -57,7 +68,18 @@ html {
 }
 html.dark {
   color-scheme: dark;
-  --color-accent: #d28b70;
+  --color-page: #191919;
+  --color-surface: #222222;
+  --color-heading: #e6e6e6;
+  --color-ink: #cccccc;
+  --color-muted: #aaaaaa;
+  --color-subtle: #929292;
+  --color-line: #333333;
+  --color-line-strong: #484848;
+  --color-accent: #69c69b;
+  --color-accent-hover: #91dab7;
+  --color-accent-soft: #282828;
+  --color-selection: #35473e;
 }
 
 .prose h2,
@@ -66,8 +88,23 @@ html.dark {
   scroll-margin-top: 5rem;
 }
 
-/* 阅读体验：让长文更像纸面文章，但仍保留原来干净的 stone 排版 */
 .prose {
+  --tw-prose-body: var(--color-ink);
+  --tw-prose-headings: var(--color-heading);
+  --tw-prose-lead: var(--color-muted);
+  --tw-prose-links: var(--color-accent);
+  --tw-prose-bold: var(--color-heading);
+  --tw-prose-counters: var(--color-subtle);
+  --tw-prose-bullets: var(--color-subtle);
+  --tw-prose-hr: var(--color-line);
+  --tw-prose-quotes: var(--color-ink);
+  --tw-prose-quote-borders: var(--color-line-strong);
+  --tw-prose-captions: var(--color-muted);
+  --tw-prose-code: var(--color-heading);
+  --tw-prose-pre-code: var(--color-ink);
+  --tw-prose-pre-bg: var(--color-surface);
+  --tw-prose-th-borders: var(--color-line-strong);
+  --tw-prose-td-borders: var(--color-line);
   font-size: 1.06rem;
   line-height: 1.95;
   letter-spacing: 0.005em;
@@ -85,7 +122,7 @@ html.dark {
   text-underline-offset: 4px;
 }
 .article-content a:hover {
-  color: color-mix(in oklab, var(--color-accent) 82%, var(--color-ink));
+  color: var(--color-accent-hover);
   text-decoration: underline;
 }
 .article-content h2,
@@ -104,30 +141,37 @@ html.dark {
   margin-top: 2rem;
   margin-bottom: 2rem;
   border-radius: 0.25rem;
-  box-shadow: 0 12px 30px -24px rgb(41 37 36 / 0.45);
+  box-shadow: 0 12px 30px -24px
+    color-mix(in oklab, var(--color-heading) 30%, transparent);
 }
 .prose blockquote {
   font-style: normal;
-  color: var(--color-stone-600);
-  background: color-mix(in oklab, var(--color-stone-300) 18%, transparent);
+  font-weight: 400;
+  color: var(--color-ink);
+  background: color-mix(in oklab, var(--color-surface) 60%, var(--color-page));
+  border: 1px solid var(--color-line);
+  border-left: 3px solid
+    color-mix(in oklab, var(--color-accent) 55%, var(--color-line));
   padding: 0.75rem 1rem;
-  border-radius: 0.25rem;
+  border-radius: 0.375rem;
 }
-html.dark .prose blockquote {
-  color: var(--color-stone-300);
-  background: color-mix(in oklab, var(--color-stone-700) 22%, transparent);
+.prose blockquote p:first-of-type::before,
+.prose blockquote p:last-of-type::after {
+  content: none;
 }
-
+.prose blockquote > :first-child {
+  margin-top: 0;
+}
+.prose blockquote > :last-child {
+  margin-bottom: 0;
+}
 .toc-active {
   border-color: var(--color-accent) !important;
-  color: var(--color-stone-900);
-}
-html.dark .toc-active {
-  color: var(--color-stone-100);
+  color: var(--color-heading);
 }
 
 body {
-  @apply font-main bg-[#f8f6f1] text-stone-800 dark:bg-[#191917] dark:text-stone-200;
+  @apply font-main bg-page text-ink;
 }
 
 /* 所有链接统一小手光标 */
@@ -145,7 +189,8 @@ a {
 }
 
 ::selection {
-  @apply bg-stone-300/60;
+  background: var(--color-selection);
+  color: var(--color-heading);
 }
 
 /* 标签筛选 chip，激活态由 JS 切换 data-active */
@@ -153,30 +198,24 @@ a {
   display: inline-flex;
   align-items: center;
   cursor: pointer;
-  border: 1px solid var(--color-stone-300);
+  border: 1px solid var(--color-line-strong);
   border-radius: 9999px;
   padding: 0.25rem 0.75rem;
   font-size: 0.875rem;
-  color: var(--color-stone-500);
+  color: var(--color-muted);
   transition:
     color 0.2s ease,
-    border-color 0.2s ease;
+    border-color 0.2s ease,
+    background-color 0.2s ease;
 }
 .tag-chip:hover {
   border-color: var(--color-accent);
   color: var(--color-accent);
 }
-html.dark .tag-chip {
-  border-color: var(--color-stone-700);
-  color: var(--color-stone-400);
-}
-html.dark .tag-chip:hover {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
-}
 .tag-chip[data-active='true'] {
   border-color: var(--color-accent);
-  color: var(--color-accent);
+  color: var(--color-accent-hover);
+  background-color: var(--color-accent-soft);
 }
 
 /* 文章图片灯箱 */

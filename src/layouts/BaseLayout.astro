@@ -81,7 +81,7 @@ const isActive = (href: string) => {
     <title>{title}</title>
   </head>
   <body>
-    <header class="sticky top-0 z-50 border-b border-stone-900/[0.07] bg-[#f8f6f1]/75 backdrop-blur-xl backdrop-saturate-150 dark:border-stone-100/10 dark:bg-[#191917]/75">
+    <header class="sticky top-0 z-50 border-b border-line bg-page/85 backdrop-blur-xl backdrop-saturate-150">
       <div class="mx-auto flex h-16 max-w-3xl items-center justify-between px-4 sm:px-6">
         <a href={base} class="flex items-center gap-2.5">
           <img
@@ -89,9 +89,9 @@ const isActive = (href: string) => {
             alt={`${site.name}的头像`}
             width="32"
             height="32"
-            class="h-8 w-8 rounded-full object-cover ring-1 ring-stone-300 ring-offset-1 ring-offset-[#f8f6f1] dark:ring-stone-600 dark:ring-offset-[#191917]"
+            class="h-8 w-8 rounded-full object-cover ring-1 ring-line-strong ring-offset-1 ring-offset-page"
           />
-          <span class="text-lg font-bold tracking-[0.05em] text-stone-900 sm:text-xl dark:text-stone-100">
+          <span class="text-lg font-bold tracking-[0.05em] text-heading sm:text-xl">
             {site.name}
           </span>
         </a>
@@ -100,10 +100,10 @@ const isActive = (href: string) => {
             <a
               href={item.href}
               class:list={[
-                'py-1 text-[0.95rem] transition-colors hover:text-stone-800 dark:hover:text-stone-100',
+                'py-1 text-[0.95rem] transition-colors hover:text-accent',
                 isActive(item.href)
-                  ? 'font-semibold text-stone-900 dark:text-stone-100'
-                  : 'text-stone-500 dark:text-stone-400',
+                  ? 'font-semibold text-heading'
+                  : 'text-muted',
               ]}
             >
               {item.label}
@@ -116,9 +116,9 @@ const isActive = (href: string) => {
             aria-checked="false"
             aria-pressed="false"
             aria-label="切换深色模式"
-            class="relative h-7 w-12 shrink-0 cursor-pointer rounded-full bg-stone-200 shadow-inner transition-colors dark:bg-stone-700"
+            class="relative h-7 w-12 shrink-0 cursor-pointer rounded-full bg-line-strong shadow-inner transition-colors"
           >
-            <span class="absolute top-1 left-1 flex h-5 w-5 items-center justify-center rounded-full bg-white shadow-md transition-transform duration-300 ease-out dark:translate-x-5 dark:bg-stone-900">
+            <span class="absolute top-1 left-1 flex h-5 w-5 items-center justify-center rounded-full bg-surface shadow-md transition-transform duration-300 ease-out dark:translate-x-5">
               <svg
                 class="h-3 w-3 text-amber-500 dark:hidden"
                 viewBox="0 0 24 24"
@@ -146,8 +146,8 @@ const isActive = (href: string) => {
     <main class="mx-auto flex min-h-[60vh] max-w-3xl flex-col px-6 py-16">
       <slot />
     </main>
-    <footer class="border-t border-stone-200 dark:border-stone-800">
-      <div class="mx-auto flex max-w-3xl flex-col items-center gap-2 px-6 py-8 text-sm text-stone-400 sm:flex-row sm:justify-between dark:text-stone-500">
+    <footer class="border-t border-line">
+      <div class="mx-auto flex max-w-3xl flex-col items-center gap-2 px-6 py-8 text-sm text-subtle sm:flex-row sm:justify-between">
         <p>
           © {year} · {site.name}
         </p>
@@ -155,7 +155,7 @@ const isActive = (href: string) => {
           <a
             href={`${base}rss.xml`}
             aria-label="RSS 订阅"
-            class="text-stone-400 transition-colors hover:text-accent dark:text-stone-500 dark:hover:text-accent"
+            class="text-subtle transition-colors hover:text-accent"
           >
             RSS
           </a>
@@ -164,7 +164,7 @@ const isActive = (href: string) => {
             target="_blank"
             rel="noreferrer"
             aria-label="GitHub 主页"
-            class="text-stone-400 transition-colors hover:text-accent dark:text-stone-500 dark:hover:text-accent"
+            class="text-subtle transition-colors hover:text-accent"
           >
             <svg
               class="h-4 w-4"
@@ -187,7 +187,7 @@ const isActive = (href: string) => {
           aria-label="回到顶部"
           title="回到顶部"
           disabled
-          class="pointer-events-none fixed bottom-6 z-50 flex h-11 w-11 translate-y-2 cursor-pointer flex-col items-center justify-center gap-0.5 rounded-full border border-stone-300 bg-[#f8f6f1]/90 text-stone-500 opacity-0 backdrop-blur transition-[opacity,transform,color,border-color] duration-200 hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent dark:border-stone-700 dark:bg-[#191917]/90 dark:text-stone-400"
+          class="pointer-events-none fixed bottom-6 z-50 flex h-11 w-11 translate-y-2 cursor-pointer flex-col items-center justify-center gap-0.5 rounded-full border border-line-strong bg-page/90 text-muted opacity-0 backdrop-blur transition-[opacity,transform,color,border-color] duration-200 hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
         >
           <svg
             class="h-3 w-3"

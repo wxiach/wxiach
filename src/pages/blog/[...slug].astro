@@ -57,16 +57,16 @@ const readTime = Math.max(1, Math.round(wordCount / 400));
   ></div>
   <article class="relative mx-auto w-full max-w-2xl">
     <header class="enter" style="--enter-stage: 0">
-      <p class="text-sm text-stone-500 dark:text-stone-400">{date}</p>
-      <h1 class="mt-3 text-2xl font-bold leading-snug text-stone-900 dark:text-stone-100">
+      <p class="text-sm text-muted">{date}</p>
+      <h1 class="mt-3 text-2xl font-bold leading-snug text-heading">
         {post.data.title}
       </h1>
-      <div class="mt-3 flex items-baseline justify-between gap-4 text-sm text-stone-500 dark:text-stone-400">
+      <div class="mt-3 flex items-baseline justify-between gap-4 text-sm text-muted">
         {post.data.tags[0] && (
           <p>
             <a
               href={`${base}blog/?tag=${encodeURIComponent(post.data.tags[0])}`}
-              class="transition-colors hover:text-accent dark:hover:text-accent"
+              class="transition-colors hover:text-accent"
             >
               #{post.data.tags[0]}
             </a>
@@ -76,7 +76,7 @@ const readTime = Math.max(1, Math.round(wordCount / 400));
           共 {wordCount} 字 · 约 {readTime} 分钟
         </p>
       </div>
-      <div class="mt-8 border-t border-dashed border-stone-300 dark:border-stone-700"></div>
+      <div class="mt-8 border-t border-dashed border-line-strong"></div>
     </header>
     {toc.length > 0 && (
       <aside class="absolute top-0 left-full ml-10 hidden h-full w-52 xl:block">
@@ -85,16 +85,16 @@ const readTime = Math.max(1, Math.round(wordCount / 400));
           style="--enter-stage: 1"
           aria-label="文章目录"
         >
-          <p class="text-sm font-bold text-stone-900 dark:text-stone-100">
+          <p class="text-sm font-bold text-heading">
             目录
           </p>
-          <ul class="mt-3 space-y-2 border-l border-stone-200 text-sm dark:border-stone-800">
+          <ul class="mt-3 space-y-2 border-l border-line text-sm">
             {toc.map((h) => (
               <li>
                 <a
                   href={`#${h.slug}`}
                   data-toc-link={h.slug}
-                  class="-ml-px block border-l-2 border-transparent py-0.5 pl-4 text-stone-500 transition-colors hover:text-accent dark:text-stone-400 dark:hover:text-accent"
+                  class="-ml-px block border-l-2 border-transparent py-0.5 pl-4 text-muted transition-colors hover:text-accent"
                 >
                   {h.text}
                 </a>
@@ -105,25 +105,25 @@ const readTime = Math.max(1, Math.round(wordCount / 400));
       </aside>
     )}
     <div
-      class="article-content slide-enter-content prose prose-stone dark:prose-invert mt-10 max-w-none prose-h2:text-xl prose-h3:text-lg"
+      class="article-content slide-enter-content prose mt-10 max-w-none prose-h2:text-xl prose-h3:text-lg"
       style="--enter-base: 1"
     >
       <Content />
     </div>
     <footer class="enter mt-16" style="--enter-stage: 3">
       <nav
-        class="flex items-start justify-between gap-6 border-t border-dashed border-stone-300 pt-8 text-sm dark:border-stone-700"
+        class="flex items-start justify-between gap-6 border-t border-dashed border-line-strong pt-8 text-sm"
         aria-label="上一篇 / 下一篇"
       >
         <div class="min-w-0">
           {prevPost && (
             <>
-              <p class="text-xs text-stone-400 dark:text-stone-500">
+              <p class="text-xs text-subtle">
                 上一篇
               </p>
               <a
                 href={`${base}blog/${prevPost.id}/`}
-                class="mt-1 inline-block max-w-full truncate align-bottom text-stone-500 underline decoration-transparent underline-offset-4 transition-colors hover:text-accent hover:decoration-accent focus-visible:text-accent focus-visible:decoration-accent dark:text-stone-400 dark:hover:text-accent"
+                class="mt-1 inline-block max-w-full truncate align-bottom text-muted underline decoration-transparent underline-offset-4 transition-colors hover:text-accent hover:decoration-accent focus-visible:text-accent focus-visible:decoration-accent"
               >
                 {prevPost.data.title}
               </a>
@@ -133,12 +133,12 @@ const readTime = Math.max(1, Math.round(wordCount / 400));
         <div class="min-w-0 text-right">
           {nextPost && (
             <>
-              <p class="text-xs text-stone-400 dark:text-stone-500">
+              <p class="text-xs text-subtle">
                 下一篇
               </p>
               <a
                 href={`${base}blog/${nextPost.id}/`}
-                class="mt-1 inline-block max-w-full truncate align-bottom text-stone-500 underline decoration-transparent underline-offset-4 transition-colors hover:text-accent hover:decoration-accent focus-visible:text-accent focus-visible:decoration-accent dark:text-stone-400 dark:hover:text-accent"
+                class="mt-1 inline-block max-w-full truncate align-bottom text-muted underline decoration-transparent underline-offset-4 transition-colors hover:text-accent hover:decoration-accent focus-visible:text-accent focus-visible:decoration-accent"
               >
                 {nextPost.data.title}
               </a>

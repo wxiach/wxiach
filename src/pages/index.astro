@@ -8,7 +8,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
-const recentPosts = posts.slice(0, 4);
+const recentPosts = posts.slice(0, 3);
 
 // 全页入场编号单调递增，形成从上到下的波浪
 let stage = 0;
@@ -26,9 +26,9 @@ const take = (n = 1) => {
     style={`--enter-base: ${take(2)}`}
   >
     <SectionHeading title="介绍" sub="about" />
-    <div class="min-w-0 flex-1 space-y-4 text-base leading-loose text-stone-800 dark:text-stone-200">
+    <div class="min-w-0 flex-1 space-y-4 text-base leading-loose text-ink">
       <p>偶尔写写代码，也在这里记些近况和想法。</p>
-      <p class="text-stone-500 dark:text-stone-400">
+      <p class="text-muted">
         年少时的一些<span
           class="underline decoration-accent decoration-wavy decoration-[1.5px] underline-offset-[6px]"
         >执念</span>，仍想慢慢实现。
@@ -37,7 +37,7 @@ const take = (n = 1) => {
   </section>
 
   <!-- 博客 -->
-  <section class="mt-16 flex flex-col gap-5 border-t border-stone-200 pt-16 sm:flex-row sm:gap-12 dark:border-stone-800">
+  <section class="mt-16 flex flex-col gap-5 border-t border-line pt-16 sm:flex-row sm:gap-12">
     <div class="enter shrink-0" style={`--enter-stage: ${take()}`}>
       <SectionHeading title="博客" sub="blog" />
     </div>
@@ -48,7 +48,7 @@ const take = (n = 1) => {
       >
         <a
           href={`${base}blog/`}
-          class="inline-flex items-center gap-1.5 rounded-sm py-1 whitespace-nowrap text-sm text-stone-500 transition-colors duration-200 hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent dark:text-stone-400 dark:hover:text-accent"
+          class="inline-flex items-center gap-1.5 rounded-sm py-1 whitespace-nowrap text-sm text-muted transition-colors duration-200 hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
         >
           更多文章
           <svg
@@ -70,11 +70,11 @@ const take = (n = 1) => {
 
   <!-- 作品 -->
   <section
-    class="slide-enter-content mt-16 flex flex-col gap-5 border-t border-stone-200 pt-16 sm:flex-row sm:gap-12 dark:border-stone-800"
+    class="slide-enter-content mt-16 flex flex-col gap-5 border-t border-line pt-16 sm:flex-row sm:gap-12"
     style={`--enter-base: ${take(2)}`}
   >
     <SectionHeading title="作品" sub="work" />
-    <p class="min-w-0 flex-1 text-base leading-relaxed text-stone-600 dark:text-stone-300">
+    <p class="min-w-0 flex-1 text-base leading-relaxed text-muted">
       还在慢慢积累，等有满意的作品再放在这里。
     </p>
   </section>
