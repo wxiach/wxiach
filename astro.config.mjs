@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import mdx from '@astrojs/mdx';
 import tailwindcss from '@tailwindcss/vite';
 import { fileURLToPath } from 'node:url';
 
@@ -20,6 +21,7 @@ export default defineConfig({
   base: '/',
   // 悬停导航链接时预取页面，站内跳转秒开
   prefetch: true,
+  integrations: [mdx()],
   markdown: {
     rehypePlugins: [rehypeLazyImages],
   },
