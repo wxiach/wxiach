@@ -7,8 +7,9 @@ const { title, sub } = Astro.props;
 ---
 
 <div class="flex w-32 shrink-0 flex-col gap-2">
-  <h2 class="text-xl font-bold text-heading">{title}</h2>
-  <span class="text-[0.7rem] uppercase tracking-[0.22em] text-subtle">
+  <h2 class="text-lg font-semibold text-heading">{title}</h2>
+  <!-- 补偿 Maple 中文字形的左侧留白，让英文与中文字面视觉左对齐。 -->
+  <span class="pl-[0.12rem] text-[0.7rem] uppercase tracking-[0.16em] text-subtle">
     {sub}
   </span>
 </div>

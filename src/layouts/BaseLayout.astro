@@ -41,6 +41,8 @@ const isActive = (href: string) => {
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fontsapi.zeoseven.com" crossorigin />
+    <link rel="stylesheet" href="https://fontsapi.zeoseven.com/442/main/result.css" />
     <link rel="icon" type="image/png" sizes="48x48" href={`${base}favicon-avatar.png?v=3`} />
     <link rel="apple-touch-icon" sizes="180x180" href={`${base}apple-touch-icon.png?v=2`} />
     <link rel="canonical" href={canonicalUrl} />
@@ -94,7 +96,7 @@ const isActive = (href: string) => {
               height="32"
               class="h-8 w-8 rounded-full object-cover ring-1 ring-line-strong ring-offset-1 ring-offset-page"
             />
-            <span class="text-lg font-bold tracking-[0.05em] text-heading sm:text-xl">
+            <span class="text-lg font-bold tracking-[0.02em] text-heading sm:text-xl">
               {site.name}
             </span>
           </a>
@@ -117,8 +119,9 @@ const isActive = (href: string) => {
           {navItems.map((item) => (
             <a
               href={item.href}
+              aria-current={isActive(item.href) ? 'page' : undefined}
               class:list={[
-                'py-1 text-[0.95rem] transition-colors hover:text-accent',
+                'py-1 text-[0.9rem] transition-colors hover:text-heading focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent',
                 isActive(item.href)
                   ? 'font-semibold text-heading'
                   : 'text-muted',
@@ -161,7 +164,7 @@ const isActive = (href: string) => {
         </nav>
       </div>
     </header>
-    <main class="mx-auto flex min-h-[60vh] max-w-3xl flex-col px-6 py-16">
+    <main class="mx-auto flex min-h-[60vh] max-w-3xl flex-col px-6 py-12 sm:py-14">
       <slot />
     </main>
     <footer class="border-t border-line">

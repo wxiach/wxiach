@@ -26,22 +26,18 @@ const take = (n = 1) => {
     style={`--enter-base: ${take(2)}`}
   >
     <SectionHeading title="介绍" sub="about" />
-    <div class="min-w-0 flex-1 space-y-4 text-base leading-loose text-ink">
+    <div class="min-w-0 flex-1 space-y-3 text-base leading-[1.85] text-ink">
       <p>偶尔写写代码，也在这里记些近况和想法。</p>
-      <p class="text-muted">
-        年少时的一些<span
-          class="underline decoration-accent decoration-wavy decoration-[1.5px] underline-offset-[6px]"
-        >执念</span>，仍想慢慢实现。
-      </p>
+      <p>年少时的一些执念，仍想慢慢实现。</p>
     </div>
   </section>
 
   <!-- 博客 -->
-  <section class="mt-16 flex flex-col gap-5 border-t border-line pt-16 sm:flex-row sm:gap-12">
+  <section class="mt-12 flex flex-col gap-5 border-t border-line pt-10 sm:pt-12 sm:flex-row sm:gap-12">
     <div class="enter shrink-0" style={`--enter-stage: ${take()}`}>
       <SectionHeading title="博客" sub="blog" />
     </div>
-    <PostList posts={recentPosts} baseStage={take(recentPosts.length)}>
+    <PostList titleSize="text-base" posts={recentPosts} baseStage={take(recentPosts.length)}>
       <div
         class="enter mt-4 flex"
         style={`--enter-stage: ${take()}`}
@@ -70,7 +66,7 @@ const take = (n = 1) => {
 
   <!-- 作品 -->
   <section
-    class="slide-enter-content mt-16 flex flex-col gap-5 border-t border-line pt-16 sm:flex-row sm:gap-12"
+    class="slide-enter-content mt-12 flex flex-col gap-5 border-t border-line pt-10 sm:pt-12 sm:flex-row sm:gap-12"
     style={`--enter-base: ${take(2)}`}
   >
     <SectionHeading title="作品" sub="work" />
