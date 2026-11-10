@@ -138,12 +138,11 @@ html {
 }
 
 body {
-  @apply font-main bg-page text-ink font-semibold;
+  @apply font-main bg-page text-ink font-normal;
 }
 
-:where(h1, h2, h3, h4, h5, h6, a, b, strong, blockquote, code, dt, kbd, pre, th),
-li::marker {
-  font-weight: inherit;
+:where(h1, h2, h3, h4, h5, h6) {
+  font-weight: 600;
 }
 
 a {
