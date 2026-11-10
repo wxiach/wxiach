@@ -90,7 +90,7 @@ const navLinkClass =
             class="size-8 shrink-0 rounded-full object-cover ring-1 ring-line-strong"
           />
           <div>
-            <SiteName class="block text-name leading-5 font-medium text-heading">
+            <SiteName class="block text-name leading-5 text-heading">
               {site.name}
             </SiteName>
             <p class="mt-0.5 text-meta leading-4 text-subtle">{site.tagline}</p>
@@ -122,7 +122,7 @@ const navLinkClass =
         <p>
           © {year} {site.name}
         </p>
-        {!isHome && <a href={basePath}>返回首页</a>}
+        {!isHome && type !== 'article' && <a href={basePath}>返回首页</a>}
       </div>
     </footer>
     {type === 'article' && <ReadingProgress />}
