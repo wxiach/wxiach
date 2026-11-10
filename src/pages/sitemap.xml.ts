@@ -1,21 +1,20 @@
-import { getCollection } from 'astro:content';
-import type { APIContext } from 'astro';
+import { basePath, postPath } from '../lib/paths';
+import { getPublishedPosts } from '../lib/posts';
+import { site } from '../site.config';
 
-export async function GET({ site }: APIContext) {
-  const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
-  const posts = await getCollection('posts', ({ data }) => !data.draft);
+export async function GET() {
+  const posts = await getPublishedPosts();
   const pages = [
-    { path: '', lastmod: undefined },
-    { path: 'blog/', lastmod: undefined },
-    { path: 'works/', lastmod: undefined },
+    { path: basePath },
+    { path: `${basePath}works/` },
     ...posts.map((post) => ({
-      path: `blog/${post.id}/`,
+      path: postPath(post.id),
       lastmod: post.data.date.toISOString(),
     })),
   ];
   const urls = pages
     .map(({ path, lastmod }) => {
-      const url = new URL(`${base}${path}`, site).href;
+      const url = new URL(path, site.url).href;
       return `  <url>
     <loc>${url}</loc>${lastmod ? `\n    <lastmod>${lastmod}</lastmod>` : ''}
   </url>`;

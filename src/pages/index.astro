@@ -1,77 +1,82 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import SectionHeading from '../components/SectionHeading.astro';
 import PostList from '../components/PostList.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import ProjectCards from '../components/ProjectCards.astro';
+import { getPublishedPosts } from '../lib/posts';
+import { site } from '../site.config';
 
-const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
-const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
-);
-const recentPosts = posts.slice(0, 3);
-
-// 全页入场编号单调递增，形成从上到下的波浪
-let stage = 0;
-const take = (n = 1) => {
-  const s = stage;
-  stage += n;
-  return s;
-};
+const posts = await getPublishedPosts();
+const postsHeadingStage = site.introduction.length;
+const postsStage = postsHeadingStage + 1;
+const projectsStage = postsStage + posts.length;
 ---
 
 <BaseLayout>
-  <!-- 介绍 -->
-  <section
-    class="slide-enter-content flex flex-col gap-4 sm:flex-row sm:gap-12"
-    style={`--enter-base: ${take(2)}`}
-  >
-    <SectionHeading title="介绍" sub="about" />
-    <div class="min-w-0 flex-1 space-y-3 text-base leading-[1.85] text-ink">
-      <p>偶尔写写代码，也在这里记些近况和想法。</p>
-      <p>年少时的一些执念，仍想慢慢实现。</p>
+  <div class="home-content space-y-12 sm:space-y-14">
+    <div class="space-y-2 text-base leading-7">
+      {site.introduction.map((paragraph, index) => (
+        <p class="enter" style={`--enter-stage: ${index}`}>
+          {paragraph}
+        </p>
+      ))}
     </div>
-  </section>
 
-  <!-- 博客 -->
-  <section class="mt-12 flex flex-col gap-5 border-t border-line pt-10 sm:pt-12 sm:flex-row sm:gap-12">
-    <div class="enter shrink-0" style={`--enter-stage: ${take()}`}>
-      <SectionHeading title="博客" sub="blog" />
-    </div>
-    <PostList titleSize="text-base" posts={recentPosts} baseStage={take(recentPosts.length)}>
-      <div
-        class="enter mt-4 flex"
-        style={`--enter-stage: ${take()}`}
+    <section aria-labelledby="posts-heading">
+      <h2
+        id="posts-heading"
+        class="section-label enter"
+        style={`--enter-stage: ${postsHeadingStage}`}
       >
-        <a
-          href={`${base}blog/`}
-          class="inline-flex items-center gap-1.5 rounded-sm py-1 whitespace-nowrap text-sm text-muted transition-colors duration-200 hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
-        >
-          更多文章
-          <svg
-            class="h-3 w-3"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
-          >
-            <path d="M5 12h14m-6-6 6 6-6 6" />
-          </svg>
-        </a>
-      </div>
-    </PostList>
-  </section>
+        博客
+      </h2>
+      <PostList posts={posts} baseStage={postsStage} />
+    </section>
 
-  <!-- 作品 -->
-  <section
-    class="slide-enter-content mt-12 flex flex-col gap-5 border-t border-line pt-10 sm:pt-12 sm:flex-row sm:gap-12"
-    style={`--enter-base: ${take(2)}`}
-  >
-    <SectionHeading title="作品" sub="work" />
-    <p class="min-w-0 flex-1 text-base leading-relaxed text-muted">
-      还在慢慢积累，等有满意的作品再放在这里。
-    </p>
-  </section>
+    <section aria-labelledby="projects-heading">
+      <h2
+        id="projects-heading"
+        class="section-label enter"
+        style={`--enter-stage: ${projectsStage}`}
+      >
+        作品
+      </h2>
+      <div class="enter" style={`--enter-stage: ${projectsStage + 1}`}>
+        {site.projects.length > 0 ? (
+          <ProjectCards>
+            {site.projects.map((project) => (
+              <ProjectCard {...project} />
+            ))}
+          </ProjectCards>
+        ) : (
+          <p class="text-summary text-muted">{site.projectsPlaceholder}</p>
+        )}
+      </div>
+    </section>
+  </div>
 </BaseLayout>
+
+<style>
+  .home-content {
+    --enter-max-delay: 720ms;
+  }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    margin-bottom: 1rem;
+    color: var(--color-muted);
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.25rem;
+    letter-spacing: 0.08em;
+  }
+
+  .section-label::after {
+    content: '';
+    width: 1.25rem;
+    height: 1px;
+    background-color: var(--color-line-strong);
+  }
+</style>

@@ -1,23 +1,22 @@
-import { getCollection } from 'astro:content';
-import type { APIContext } from 'astro';
-import { site } from '@site-config';
+import { postPath } from '../lib/paths';
+import { getPublishedPosts } from '../lib/posts';
+import { site } from '../site.config';
 
-const escapeXml = (value: string) =>
-  value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;');
+function escapeXml(value: string) {
+  return value
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&apos;');
+}
 
-export async function GET({ site: siteUrl }: APIContext) {
-  const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
-    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
-  );
-  const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+export async function GET() {
+  const siteUrl = new URL(site.url);
+  const posts = await getPublishedPosts();
   const items = posts
     .map((post) => {
-      const url = new URL(`${base}blog/${post.id}/`, siteUrl).href;
+      const url = new URL(postPath(post.id), siteUrl).href;
       const title = escapeXml(post.data.title);
       const description = escapeXml(post.data.description ?? '');
       return `
@@ -36,8 +35,8 @@ export async function GET({ site: siteUrl }: APIContext) {
   <channel>
     <title>${escapeXml(site.name)}</title>
     <link>${siteUrl.href}</link>
-    <description>${escapeXml('无畏小生的个人博客。')}</description>
-    <language>zh-CN</language>${items}
+    <description>${escapeXml(site.description)}</description>
+    <language>${site.language}</language>${items}
   </channel>
 </rss>`;
 

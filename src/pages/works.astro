@@ -1,14 +1,18 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import SectionHeading from '../components/SectionHeading.astro';
-import { site } from '@site-config';
+import { site } from '../site.config';
 ---
 
 <BaseLayout title={`作品 - ${site.name}`}>
   <section class="slide-enter-content flex flex-col gap-4 sm:flex-row sm:gap-12">
-    <SectionHeading title="作品" sub="work" />
+    <div class="flex w-32 shrink-0 flex-col gap-2">
+      <h2 class="text-lg font-semibold text-heading">作品</h2>
+      <span class="pl-[0.12rem] text-[0.7rem] uppercase tracking-[0.16em] text-subtle">
+        work
+      </span>
+    </div>
     <p class="min-w-0 flex-1 text-base leading-relaxed text-muted">
-      还在慢慢积累，等有满意的作品再放在这里。
+      {site.projectsPlaceholder}
     </p>
   </section>
 </BaseLayout>
