@@ -11,8 +11,7 @@
   "dependencies": {
     "@astrojs/mdx": "^4.3.14",
     "@tailwindcss/typography": "^0.5.20",
-    "astro": "^5.0.0",
-    "lxgw-wenkai-screen-webfont": "1.7.0"
+    "astro": "^5.0.0"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.3",
