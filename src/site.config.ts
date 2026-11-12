@@ -1,12 +1,3 @@
-export interface Project {
-  title: string;
-  description: string;
-  href: string;
-  label?: string;
-}
-
-const projects: Project[] = [];
-
 export const site = {
   name: '无畏小生',
   url: 'https://wxiach.cn',
@@ -26,5 +17,4 @@ export const site = {
   },
   charactersPerMinute: 400,
   projectsPlaceholder: '还在慢慢积累，等有满意的作品再放在这里。',
-  projects,
 };

@@ -4,29 +4,34 @@
 
 @plugin '@tailwindcss/typography';
 
+@font-face {
+  font-family: 'Inter Variable';
+  src: url('/fonts/inter-variable.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
 @theme {
   --container-site: 37.5rem;
   --font-main:
-    system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
-    'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei',
-    'Noto Sans CJK SC', 'Noto Sans SC', sans-serif, 'Apple Color Emoji',
+    'Inter Variable', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --text-meta: 0.8125rem;
   --text-meta--line-height: 1.125rem;
   --text-summary: 0.9375rem;
   --text-summary--line-height: 1.5rem;
-  --text-name: 1.0625rem;
-  --color-page: #ffffff;
-  --color-surface: #ffffff;
-  --color-heading: #181818;
-  --color-ink: #262626;
-  --color-muted: #595959;
-  --color-subtle: #666666;
-  --color-line: #e7e7eb;
-  --color-line-strong: #d4d4da;
-  --color-accent: #ad461c;
-  --color-selection: #ffdfcc;
+  --color-page: #f8f7f4;
+  --color-surface: #f0eee8;
+  --color-heading: #292823;
+  --color-ink: #45433d;
+  --color-muted: #6c6960;
+  --color-subtle: #77736a;
+  --color-line: #e6e3db;
+  --color-line-strong: #d5cfc2;
+  --color-accent: #a64d2f;
+  --color-selection: #eddacb;
 }
 
 html {
@@ -38,16 +43,16 @@ html {
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
-    --color-page: #141413;
-    --color-surface: #1b1b19;
-    --color-heading: #ecece9;
-    --color-ink: #d0d0cb;
-    --color-muted: #b6b5ae;
-    --color-subtle: #abaaa3;
-    --color-line: #2c2c28;
-    --color-line-strong: #494943;
-    --color-accent: #ffad79;
-    --color-selection: #503528;
+    --color-page: #191917;
+    --color-surface: #23231f;
+    --color-heading: #e8e5dc;
+    --color-ink: #ccc9bf;
+    --color-muted: #aaa69a;
+    --color-subtle: #a29e92;
+    --color-line: #33332c;
+    --color-line-strong: #4b493e;
+    --color-accent: #e4a17e;
+    --color-selection: #4c382c;
   }
 }
 

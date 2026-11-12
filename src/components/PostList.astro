@@ -9,32 +9,135 @@ interface Props {
 }
 
 const { posts, baseStage } = Astro.props;
+const formatMonthDay = (date: Date) =>
+  `${date.getUTCMonth() + 1}月${date.getUTCDate()}日`;
+const postsByYear = new Map<number, { post: Post; index: number }[]>();
+
+posts.forEach((post, index) => {
+  const year = post.data.date.getUTCFullYear();
+  const entries = postsByYear.get(year) ?? [];
+  entries.push({ post, index });
+  postsByYear.set(year, entries);
+});
+
+const years = [...postsByYear.entries()].sort(
+  ([firstYear], [secondYear]) => secondYear - firstYear,
+);
 ---
 
-<div class="min-w-0 flex-1">
-  {posts.map((post, index) => (
-    <article
-      class="enter border-b border-line py-5 first:pt-0"
-      style={`--enter-stage: ${baseStage + index}`}
-    >
-      <p class="mb-1.5 text-meta tabular-nums text-subtle">
-        {formatPostDate(post.data.date)}
-      </p>
-      <div class="flex items-baseline justify-between gap-3">
-        <h3 class="text-base leading-7 text-ink">
-          <a
-            href={postPath(post.id)}
-            class="inline-block focus-visible:outline-none"
-          >
-            {post.data.title}
-          </a>
-        </h3>
-        {post.data.tags[0] && (
-          <span class="shrink-0 text-meta text-muted">
-            #{post.data.tags[0]}
-          </span>
-        )}
-      </div>
-    </article>
+<div class="post-archive">
+  {years.map(([year, entries]) => (
+    <section class="year-group" aria-labelledby={`posts-year-${year}`}>
+      <h3
+        id={`posts-year-${year}`}
+        class="year-label enter"
+        style={`--enter-stage: ${baseStage + entries[0].index}`}
+      >
+        {year}
+      </h3>
+      <ul class="year-posts">
+        {entries.map(({ post, index }) => (
+          <li class="enter" style={`--enter-stage: ${baseStage + index}`}>
+            <a href={postPath(post.id)} class="post-link">
+              <h4 class="post-title">{post.data.title}</h4>
+              <time
+                datetime={post.data.date.toISOString()}
+                class="post-date"
+                aria-label={formatPostDate(post.data.date)}
+                title={formatPostDate(post.data.date)}
+              >
+                {formatMonthDay(post.data.date)}
+              </time>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
   ))}
 </div>
+
+<style>
+  .post-archive {
+    display: grid;
+    gap: 1.75rem;
+    min-width: 0;
+  }
+
+  .year-group {
+    display: grid;
+    align-items: baseline;
+    gap: 0.375rem;
+    min-width: 0;
+  }
+
+  .year-label {
+    color: var(--color-subtle);
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.5rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .year-posts {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .post-link {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 4.5rem;
+    align-items: baseline;
+    gap: 1.5rem;
+    padding-block: 0.5rem;
+  }
+
+  .post-title {
+    min-width: 0;
+    color: var(--color-ink);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+    transition: color 0.15s ease;
+  }
+
+  .post-link:is(:hover, :focus-visible) .post-title {
+    color: var(--color-accent);
+  }
+
+  .post-link:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+  }
+
+  .post-date {
+    text-align: right;
+    color: var(--color-subtle);
+    font-size: 0.75rem;
+    line-height: 2;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  @media (min-width: 40rem) {
+    .year-group {
+      grid-template-columns: 5rem minmax(0, 1fr);
+      gap: 1.5rem;
+    }
+  }
+
+  @media (max-width: 30rem) {
+    .post-link {
+      gap: 0.75rem;
+    }
+  }
+
+  @media (pointer: coarse) {
+    .post-link {
+      min-height: 2.75rem;
+      padding-block: 0.625rem;
+    }
+  }
+</style>
